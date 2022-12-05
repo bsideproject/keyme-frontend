@@ -1,11 +1,13 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { BrowserRouter } from "react-router-dom";
+import { RecoilRoot } from "recoil";
+
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { RecoilRoot } from "recoil";
-import { BrowserRouter } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
+
+import "./index.css";
 
 const queryClient = new QueryClient();
 
@@ -15,7 +17,9 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
         <BrowserRouter>
-          <App />
+          <Suspense fallback={<div>Loading...</div>}>
+            <App />
+          </Suspense>
         </BrowserRouter>
       </RecoilRoot>
     </QueryClientProvider>

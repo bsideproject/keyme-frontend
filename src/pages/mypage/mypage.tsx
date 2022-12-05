@@ -1,7 +1,7 @@
 import React from "react";
 
-function mypage() {
+function MyPage() {
   return <div>mypage</div>;
 }
 
-export default mypage;
+export default MyPage;
