@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 
 import useThemes from "@hooks/useTheme";
 import AllRoutes from "@routes/index";
+import AppContainer from "@styles/app";
 import GlobalStyle from "@styles/globalStyle";
 import THEME from "@styles/theme";
 
@@ -16,13 +17,15 @@ function App() {
     <>
       <ThemeProvider theme={THEME[theme]}>
         <GlobalStyle />
-        <DarkModeSwitch
-          style={{ marginBottom: "2rem" }}
-          checked={theme === "dark"}
-          onChange={onToggleTheme}
-          size={30}
-        />
-        <AllRoutes />
+        <AppContainer id="App">
+          <DarkModeSwitch
+            style={{ marginBottom: "2rem" }}
+            checked={theme === "dark"}
+            onChange={onToggleTheme}
+            size={30}
+          />
+          <AllRoutes />
+        </AppContainer>
       </ThemeProvider>
     </>
   );
