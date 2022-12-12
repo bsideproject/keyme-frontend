@@ -6,11 +6,16 @@ import PrivateRoute from "@routes/PrivateRoute";
 const Home = React.lazy(() => import("@pages/home/home"));
 const Login = React.lazy(() => import("@pages/login/login"));
 const MyPage = React.lazy(() => import("@pages/mypage/mypage"));
-
-export const routePath = { LOGIN: "/login", MYPAGE: "/mypage", HOME: "/" };
+const KaKaoCallback = React.lazy(() => import("@pages/kakao/kakaoCallback"));
+export const routePath = {
+  LOGIN: "/login",
+  MYPAGE: "/mypage",
+  HOME: "/",
+  KAKAO_CALLBACK: "/auth/kakao/callback",
+};
 
 const AllRoutes = () => {
-  const { LOGIN, MYPAGE, HOME } = routePath;
+  const { LOGIN, MYPAGE, HOME, KAKAO_CALLBACK } = routePath;
 
   return (
     <Routes>
@@ -19,6 +24,7 @@ const AllRoutes = () => {
       </Route>
       <Route element={<Home />} path={HOME} />
       <Route element={<Login />} path={LOGIN} />
+      <Route element={<KaKaoCallback />} path={KAKAO_CALLBACK} />
     </Routes>
   );
 };
