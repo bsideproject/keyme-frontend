@@ -8,16 +8,18 @@ const Login = React.lazy(() => import("@pages/login/login"));
 const Report = React.lazy(() => import("@pages/report/report"));
 const MyPage = React.lazy(() => import("@pages/mypage/mypage"));
 const KaKaoCallback = React.lazy(() => import("@pages/kakao/kakaoCallback"));
+const NotFound = React.lazy(() => import("@pages/404/notfound"));
 export const routePath = {
   LOGIN: "/login",
   MYPAGE: "/mypage",
   HOME: "/",
   REPORT: "/report",
   KAKAO_CALLBACK: "/auth/kakao/callback",
+  NOT_FOUND: "*",
 };
 
 const AllRoutes = () => {
-  const { LOGIN, MYPAGE, HOME, REPORT, KAKAO_CALLBACK } = routePath;
+  const { LOGIN, MYPAGE, HOME, REPORT, KAKAO_CALLBACK, NOT_FOUND } = routePath;
 
   return (
     <Routes>
@@ -28,6 +30,7 @@ const AllRoutes = () => {
       <Route element={<Login />} path={LOGIN} />
       <Route element={<Report />} path={REPORT} />
       <Route element={<KaKaoCallback />} path={KAKAO_CALLBACK} />
+      <Route element={<NotFound />} path={NOT_FOUND} />
     </Routes>
   );
 };
