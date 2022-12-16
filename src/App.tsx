@@ -3,6 +3,7 @@ import { useQueryErrorResetBoundary } from "react-query";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { ThemeProvider } from "styled-components";
 
+import BottomNav from "@components/bottomNav/bottomNav";
 import ApiErrorBoundary from "@components/ErrorBoundary/ApiErrorBoundary";
 import BaseErrorBoundary from "@components/ErrorBoundary/BaseErrorBoundary";
 import BaseFallback from "@components/ErrorBoundary/BaseFallback";
@@ -34,6 +35,7 @@ function App() {
                   size={30}
                 />
                 <AllRoutes />
+                <BottomNav />
               </AppContainer>
             </ThemeProvider>
           </AxiosInterceptor>
