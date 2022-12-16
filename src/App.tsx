@@ -1,25 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useQueryErrorResetBoundary } from "react-query";
+import { DarkModeSwitch } from "react-toggle-dark-mode";
+import { ThemeProvider } from "styled-components";
+
+import BottomNav from "@components/bottomNav/bottomNav";
+import ApiErrorBoundary from "@components/ErrorBoundary/ApiErrorBoundary";
+import BaseErrorBoundary from "@components/ErrorBoundary/BaseErrorBoundary";
+import BaseFallback from "@components/ErrorBoundary/BaseFallback";
+import AxiosInterceptor from "@hooks/axiosInterceptor";
+import useThemes from "@hooks/useTheme";
+import AllRoutes from "@routes/index";
+import AppContainer from "@styles/app";
+import GlobalStyle from "@styles/globalStyle";
+import THEME from "@styles/theme";
+
+import "./App.css";
 
 function App() {
+  const [theme, onToggleTheme] = useThemes();
+  const { reset } = useQueryErrorResetBoundary();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BaseErrorBoundary fallbackRender={BaseFallback} onReset={reset}>
+        <ApiErrorBoundary>
+          <AxiosInterceptor>
+            <ThemeProvider theme={THEME[theme]}>
+              <GlobalStyle />
+              <AppContainer id="App">
+                <DarkModeSwitch
+                  style={{ marginBottom: "2rem" }}
+                  checked={theme === "dark"}
+                  onChange={onToggleTheme}
+                  size={30}
+                />
+                <AllRoutes />
+                <BottomNav />
+              </AppContainer>
+            </ThemeProvider>
+          </AxiosInterceptor>
+        </ApiErrorBoundary>
+      </BaseErrorBoundary>
+    </>
   );
 }
 

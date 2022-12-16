@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "kiime",
+  "name": "나만의 OKR 관리 툴",
   "icons": [
     {
       "src": "favicon.ico",

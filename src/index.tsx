@@ -1,13 +1,26 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { BrowserRouter } from "react-router-dom";
+import { RecoilRoot } from "recoil";
+
+import * as Sentry from "@sentry/react";
+import { BrowserTracing } from "@sentry/tracing";
+import { queryClient } from "@utils/react-query/queryClient";
+
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { RecoilRoot } from "recoil";
-import { BrowserRouter } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
 
-const queryClient = new QueryClient();
+import "./index.css";
+
+Sentry.init({
+  dsn: "https://d6ce4371f66b41caafe857cd57f6d4fd@o4504334336458752.ingest.sentry.io/4504334337835008",
+  release: "0.1.0",
+  environment: process.env.NODE_ENV,
+  normalizeDepth: 6,
+  integrations: [new Sentry.Integrations.Breadcrumbs({ console: true }), new BrowserTracing()],
+  enabled: process.env.NODE_ENV === "production",
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
@@ -15,7 +28,9 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
         <BrowserRouter>
-          <App />
+          <Suspense fallback={<div>Loading...</div>}>
+            <App />
+          </Suspense>
         </BrowserRouter>
       </RecoilRoot>
     </QueryClientProvider>
