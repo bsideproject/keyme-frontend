@@ -1,6 +1,12 @@
 import { axiosClient } from "@utils/axios";
 
-export const getUser = async () => {
-  const data = axiosClient.get("/user").then((resp) => resp?.data);
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+export const getUser = async (): Promise<User> => {
+  const data = axiosClient.get("/user").then((resp) => resp.data.data);
   return data;
 };
