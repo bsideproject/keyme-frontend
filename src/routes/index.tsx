@@ -14,7 +14,7 @@ export const routePath = {
   MYPAGE: "/mypage",
   HOME: "/",
   REPORT: "/report",
-  KAKAO_CALLBACK: "/auth/kakao/callback",
+  KAKAO_CALLBACK: "/users/kakao/callback",
   NOT_FOUND: "*",
 };
 
@@ -26,7 +26,9 @@ const AllRoutes = () => {
       <Route element={<PrivateRoute />}>
         <Route element={<MyPage />} path={MYPAGE} />
       </Route>
-      <Route element={<Home />} path={HOME} />
+      <Route element={<PrivateRoute />}>
+        <Route element={<Home />} path={HOME} />
+      </Route>
       <Route element={<Login />} path={LOGIN} />
       <Route element={<Report />} path={REPORT} />
       <Route element={<KaKaoCallback />} path={KAKAO_CALLBACK} />

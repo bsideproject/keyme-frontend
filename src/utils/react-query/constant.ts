@@ -1,3 +1,5 @@
 // useQuery key
 
-export const queryKeys = {};
+export const queryKeys = {
+  user: "user",
+};
