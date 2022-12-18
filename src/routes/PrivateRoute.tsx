@@ -11,8 +11,7 @@ const PrivateRoute = () => {
 
   console.log(user, isLoading, "test");
 
-  const sessionCheck = false;
-  if (sessionCheck) {
+  if (!user && !isLoading) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
