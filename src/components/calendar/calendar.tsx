@@ -3,6 +3,8 @@ import { addMonths, format, subMonths } from "date-fns";
 import { endOfMonth, endOfWeek, startOfMonth, startOfWeek } from "date-fns";
 import { addDays, isSameDay, isSameMonth } from "date-fns";
 
+import StatusBox from "@components/statusBox/statusBox";
+
 // import { Icon } from "@iconify/react";
 import "./calendar.css";
 
@@ -48,9 +50,18 @@ const RenderDays = () => {
 interface rProps {
   currentMonth: number | Date;
   selectedDate: Date;
+  completeStatus: object;
   onDateClick: (day: Date) => void;
 }
-const RenderCells = ({ currentMonth, selectedDate, onDateClick }: rProps) => {
+interface dateProps {
+  year: string;
+  month: string;
+  day: string;
+}
+const dateFormatter = ({ year, month, day }: dateProps) => {
+  return year + "-" + month.padStart(2, "0") + "-" + day.padStart(2, "0");
+};
+const RenderCells = ({ currentMonth, selectedDate, completeStatus, onDateClick }: rProps) => {
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
   const startDate = startOfWeek(monthStart);
@@ -65,6 +76,9 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }: rProps) => {
     for (let i = 0; i < 7; i++) {
       formattedDate = format(day, "d");
       const cloneDay = day;
+      const monthStr = format(day, "M");
+      const yearStr = format(day, "Y");
+      const dayText = dateFormatter({ year: yearStr, month: monthStr, day: formattedDate });
       days.push(
         <div
           className={`col cell ${
@@ -78,9 +92,25 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }: rProps) => {
           }`}
           key={day.toString()}
           onClick={() => onDateClick(cloneDay)}>
-          <span className={format(currentMonth, "M") !== format(day, "M") ? "text not-valid" : ""}>
+          <div className={format(currentMonth, "M") !== format(day, "M") ? "text not-valid" : ""}>
             {formattedDate}
-          </span>
+            <br />
+
+            {dayText in completeStatus ? (
+              <StatusBox
+                status={
+                  {
+                    red: 30,
+                    blue: 20,
+                    green: 50,
+                  }
+                  // completeStatus[dayText as keyof typeof completeStatus]["categoryPercentile"]
+                }
+              />
+            ) : (
+              ""
+            )}
+          </div>
         </div>
       );
       day = addDays(day, 1);
@@ -108,6 +138,9 @@ export const Calender = () => {
   const onDateClick = (day: Date) => {
     setSelectedDate(day);
   };
+  const completeStatus = {
+    "2022-12-16": { categoryName: "건강", categoryColor: "red", categoryPercentile: 30 },
+  };
   return (
     <div className="calendar" role={"calendar"}>
       <RenderHeader currentMonth={currentMonth} prevMonth={prevMonth} nextMonth={nextMonth} />
@@ -116,6 +149,7 @@ export const Calender = () => {
         currentMonth={currentMonth}
         selectedDate={selectedDate}
         onDateClick={onDateClick}
+        completeStatus={completeStatus}
       />
     </div>
   );
