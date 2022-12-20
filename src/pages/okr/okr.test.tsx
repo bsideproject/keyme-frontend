@@ -1,34 +1,28 @@
-import { render, fireEvent, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 
-import Home from "./home";
+import OKR from "./okr";
 
-describe("홈 화면 테스트", () => {
-  it("신규 사용자 가이드 렌더링 체크", () => {
-    // render(<Guide />)
+describe("OKR 화면 테스트", () => {
+  it("OKR 화면 기본 렌더링 체크", () => {
+    render(<OKR />);
 
-    // 가이드 화면
-    screen.getByText("사용법");
+    // 로고 체크
+    screen.getByRole("logo");
+
+    // 환영문구 체크
+    screen.getByText("반갑습니다. /[가-힣0-9a-zA-Z]{2:8}/님!");
+
+    // 검색버튼 체크
+    screen.getByAltText("search");
+
+    // 알람버튼 체크
+    screen.getByAltText("alarm");
+
+    // 마이페이지 프로필 체크
+    screen.getByAltText("profile");
   }),
-    it("홈 화면 기본 렌더링 체크", () => {
-      render(<Home />);
-
-      // 로고 체크
-      screen.getByRole("logo");
-
-      // 환영문구 체크
-      screen.getByText("반갑습니다. /[가-힣0-9a-zA-Z]{2:8}/님!");
-
-      // 검색버튼 체크
-      screen.getByAltText("search");
-
-      // 알람버튼 체크
-      screen.getByAltText("alarm");
-
-      // 마이페이지 프로필 체크
-      screen.getByAltText("profile");
-    }),
     it("홈 화면 OKR 데이터 통신 체크", () => {
-      render(<Home />);
+      render(<OKR />);
 
       // Objective 체크 (async, await)
       screen.findByText("목표");
@@ -40,7 +34,7 @@ describe("홈 화면 테스트", () => {
       screen.findByText("Initiative");
     }),
     it("홈 화면 OKR 등록 모달 체크", () => {
-      render(<Home />);
+      render(<OKR />);
 
       // OKR 추가 버튼 클릭
       const btn = screen.getByAltText("addokr");

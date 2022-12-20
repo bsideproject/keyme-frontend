@@ -13,9 +13,9 @@ describe("바텀 네비게이션 테스트", () => {
     );
 
     // 기본 텍스트 체크
-    screen.getByText("Home");
     screen.getByText("OKR");
     screen.getByText("ToDo");
     screen.getByText("Report");
+    screen.getByText("Mypage");
   });
 });

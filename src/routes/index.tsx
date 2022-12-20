@@ -3,23 +3,25 @@ import { Route, Routes } from "react-router-dom";
 
 import PrivateRoute from "@routes/PrivateRoute";
 
-const Home = React.lazy(() => import("@pages/home/home"));
 const Login = React.lazy(() => import("@pages/login/login"));
+const Okr = React.lazy(() => import("@pages/okr/okr"));
+const Todo = React.lazy(() => import("@pages/todo/todo"));
 const Report = React.lazy(() => import("@pages/report/report"));
 const MyPage = React.lazy(() => import("@pages/mypage/mypage"));
 const KaKaoCallback = React.lazy(() => import("@pages/kakao/kakaoCallback"));
 const NotFound = React.lazy(() => import("@pages/404/notfound"));
 export const routePath = {
   LOGIN: "/login",
-  MYPAGE: "/mypage",
-  HOME: "/",
+  OKR: "/",
+  TODO: "/todo",
   REPORT: "/report",
+  MYPAGE: "/mypage",
   KAKAO_CALLBACK: "/users/kakao/callback",
   NOT_FOUND: "*",
 };
 
 const AllRoutes = () => {
-  const { LOGIN, MYPAGE, HOME, REPORT, KAKAO_CALLBACK, NOT_FOUND } = routePath;
+  const { LOGIN, OKR, TODO, REPORT, MYPAGE, KAKAO_CALLBACK, NOT_FOUND } = routePath;
 
   return (
     <Routes>
@@ -27,7 +29,8 @@ const AllRoutes = () => {
         <Route element={<MyPage />} path={MYPAGE} />
       </Route>
       <Route element={<PrivateRoute />}>
-        <Route element={<Home />} path={HOME} />
+        <Route element={<Okr />} path={OKR} />
+        <Route element={<Todo />} path={TODO} />
       </Route>
       <Route element={<Login />} path={LOGIN} />
       <Route element={<Report />} path={REPORT} />
