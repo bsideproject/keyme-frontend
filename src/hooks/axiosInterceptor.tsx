@@ -12,6 +12,9 @@ const AxiosInterceptor: FC<Props> = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // 세션 쿠키 확인 용 코드
+    // axiosClient.get("https://keyme.kr/api/v1/user", { withCredentials: true })
+
     const resInterceptor = (res: AxiosResponse) => {
       return res;
     };

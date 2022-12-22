@@ -1,8 +1,11 @@
 import React from "react";
 const REST_API_KEY = "e343ec0ab898e9e061e401e7c145bbd4";
 const REDIRECT_URI = "http://localhost:3000/auth/kakao/callback";
+const SERVICE_URL = 'https://keyme.kr'
 
-export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+export const KAKAO_AUTH_URL = `${SERVICE_URL}/api/v1/oauth2/authorization/kakao`;
+// 로컬 개발용
+// export const KAKAO_AUTH_URL = `${SERVICE_URL}/api/v1/oauth2/authorization/kakao-by-local-dev`;
 
 function Login() {
   return (
