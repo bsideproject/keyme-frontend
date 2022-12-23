@@ -7,10 +7,10 @@ export const generateQueryClient = () => {
         refetchOnMount: false,
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
-        useErrorBoundary: true,
+        // useErrorBoundary: true, // 필요한 쿼리에 맞게 설정하면 될듯
       },
       mutations: {
-        useErrorBoundary: true,
+        // useErrorBoundary: true,
       },
     },
   });

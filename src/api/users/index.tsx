@@ -7,6 +7,6 @@ export interface User {
 }
 
 export const getUser = async (): Promise<User> => {
-  const data = axiosClient.get("/user").then((resp) => resp.data.data);
+  const data = axiosClient.get("/user").then((resp) => resp?.data?.data);
   return data;
 };

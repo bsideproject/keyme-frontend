@@ -17,6 +17,15 @@ const ApiErrorBoundary: FC<Props> = ({ children }) => {
     if (!axios.isAxiosError(error)) {
       throw error;
     }
+    if (
+      axios.isAxiosError(error) &&
+      error.config &&
+      error.response &&
+      error.response.status === 401
+    ) {
+      Sentry.captureException(error);
+    }
+
     // 500 ~ server error
     if (
       axios.isAxiosError(error) &&
