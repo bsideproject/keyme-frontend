@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 export const OkrContainer = styled.div`
   overflow-y: auto;
@@ -98,4 +98,30 @@ export const OktAddBtn = styled.button`
   &:hover {
     background-color: #8f8f8f;
   }
+`;
+
+const ltranimation = keyframes`
+  0% {
+    left: 100%;
+  }
+  100% {
+    left: 0;
+  }
+`;
+
+export const bganim = keyframes`
+  0% {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.25);
+  }
+`;
+
+export const OkrCreationBg = styled.div`
+  animation: ${bganim} 0.5s ease-in-out;
+`;
+
+export const OkrModal = styled.div`
+  animation: ${ltranimation} 0.5s ease-in-out;
 `;
