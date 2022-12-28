@@ -39,20 +39,20 @@
   justify-content: flex-end;
   align-items: baseline;
 }
-svg {
+.calnedar svg {
   width: 11%;
   height: fit-content;
   margin-left: 5%;
   color: transparentize(gray, 0.2);
 }
-svg:hover {
+.calnedar svg:hover {
   transform: scale(1.15);
   color: darkgray;
   cursor: pointer;
 }
 
 .days {
-  width: 100%;
+  /* width: 100%; */
   height: fit-content;
   display: flex;
   justify-content: space-between;
