@@ -11,7 +11,7 @@ import BaseFallback from "@components/ErrorBoundary/BaseFallback";
 import AxiosInterceptor from "@hooks/axiosInterceptor";
 import useThemes from "@hooks/useTheme";
 import AllRoutes from "@routes/index";
-import AppContainer from "@styles/app";
+import { AppContainer } from "@styles/app";
 import GlobalStyle from "@styles/globalStyle";
 import THEME from "@styles/theme";
 
