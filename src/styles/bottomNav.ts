@@ -10,6 +10,7 @@ export const BottomNavigation = styled.nav`
   position: fixed;
   bottom: 0;
   width: 100%;
+  max-width: 393px;
   height: 100px;
 
   padding: 0;

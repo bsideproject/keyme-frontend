@@ -11,7 +11,7 @@ interface ThemeGroup {
 }
 
 export const light: Theme = {
-  primary: "#35c5f0",
+  primary: "#335BF0",
   bgColor: "#fff",
   textColor: "#000",
   secondary: "green",
