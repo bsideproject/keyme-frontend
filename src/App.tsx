@@ -1,5 +1,6 @@
 import React from "react";
 import { useQueryErrorResetBoundary } from "react-query";
+import { useLocation } from "react-router-dom";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { ThemeProvider } from "styled-components";
 
@@ -19,6 +20,8 @@ import "./App.css";
 function App() {
   const [theme, onToggleTheme] = useThemes();
   const { reset } = useQueryErrorResetBoundary();
+  const location = useLocation();
+  const excludesBottomNavRoutes = ["/login"];
 
   return (
     <>
@@ -28,14 +31,14 @@ function App() {
             <ThemeProvider theme={THEME[theme]}>
               <GlobalStyle />
               <AppContainer id="App">
-                <DarkModeSwitch
-                  style={{ marginBottom: "2rem" }}
-                  checked={theme === "dark"}
-                  onChange={onToggleTheme}
-                  size={30}
-                />
+                {/*<DarkModeSwitch*/}
+                {/*  style={{ marginBottom: "2rem" }}*/}
+                {/*  checked={theme === "dark"}*/}
+                {/*  onChange={onToggleTheme}*/}
+                {/*  size={30}*/}
+                {/*/>*/}
                 <AllRoutes />
-                <BottomNav />
+                {!excludesBottomNavRoutes.includes(location.pathname) ? <BottomNav /> : null}
               </AppContainer>
             </ThemeProvider>
           </AxiosInterceptor>
