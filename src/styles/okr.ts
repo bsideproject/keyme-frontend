@@ -8,17 +8,27 @@ export const OkrContainer = styled.div`
 `;
 
 export const OkrBox = styled.div`
-  padding: 0.5rem 1rem;
-  min-height: 120px;
-  background-color: #f6f6f6;
+  padding: 0.5rem 0;
+  /* min-height: 120px; */
+  background-color: #f0f0f0;
   border-radius: 20px;
   margin-bottom: 1rem;
+  transition: 0.5s;
+  overflow: hidden;
 `;
 
 export const OkrHeader = styled.div`
+  margin: 1rem 0;
   display: flex;
   justify-content: flex-start;
   gap: 1rem;
+  align-items: center;
+`;
+
+export const OkrCategoryHeader = styled.div`
+  margin: 0 1rem;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -26,25 +36,29 @@ const categoryBackgroundColor = ["#F2FAFE", "#FEF6F2", "#FDEFF1", "#F1FEF3", "#E
 const categoryTextColor = ["#4284E8", "#F08538", "#EE4E6E", "#71E07C", "#4CD2D3", "#CA82EC"];
 
 export const OkrCategory = styled.div<{ colorIndex: number }>`
-  flex: 4;
   background-color: ${(props) => categoryBackgroundColor[props.colorIndex]};
   color: ${(props) => categoryTextColor[props.colorIndex]};
   border-radius: 10px;
-  height: 100%;
+  width: 86px;
+  height: 40px;
   display: flex;
-  padding-left: 1rem;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
   font-weight: 700;
+  font-size: 20px;
+  text-align: center;
 `;
 
 export const OkrDDay = styled.span`
-  flex: 1;
-  text-align: right;
+  text-align: center;
+`;
+
+export const OkrContentBox = styled.div`
+  margin: 0 1rem;
 `;
 
 export const OkrTitle = styled.div`
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   font-weight: 700;
 `;
 
@@ -53,7 +67,8 @@ export const OkrKrs = styled.div``;
 export const KrsBox = styled.div`
   margin-top: 0.5rem;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
   gap: 1rem;
 `;
 
@@ -67,18 +82,25 @@ export const KrsCircle = styled.div`
 export const KrsTitle = styled.span``;
 
 export const OkrFooter = styled.div`
-  margin-top: 0.5rem;
+  margin-top: 1rem;
+  justify-content: center;
   display: flex;
   gap: 1rem;
 `;
 
 export const OkrStatusBox = styled.div`
-  flex: auto;
+  margin-top: 1rem;
+  height: 18px;
   border-radius: 10px;
   background-color: #d9d9d9;
 `;
+
+export const OkrDetailStatusBox = styled(OkrStatusBox)`
+  margin-top: 0;
+`;
 export const OkrStatusFill = styled.div`
   border-radius: 10px;
+  height: 18px;
 `;
 
 export const OkrDetailBtn = styled.div``;
@@ -201,6 +223,7 @@ export const OkrModalCategoryHeader = styled.div`
 export const OkrModalHeaderText = styled.div`
   font-weight: 700;
   font-size: 18px;
+  color: #222222;
 `;
 
 export const OkrModalCategoryHeaderSetting = styled.div``;

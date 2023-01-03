@@ -1,0 +1,25 @@
+#okr-detail {
+  margin: 1rem 1rem 0;
+}
+
+.todo-status {
+  border-radius: 50px;
+  width: 16px;
+  height: 16px;
+  background-color: #d9d9d9;
+}
+
+.todo-status.complete {
+  background-color: #ffa7a7;
+}
+
+.okr-input-container {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+.okr-detail-input {
+  border: none;
+  background-color: transparent;
+  outline: none;
+}

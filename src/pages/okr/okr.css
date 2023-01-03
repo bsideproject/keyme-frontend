@@ -1,5 +1,5 @@
 #okr {
-  margin: 0 1rem;
+  padding: 1rem 1rem 100px; /* bottom nav height */
 }
 
 .logo {

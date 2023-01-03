@@ -1,22 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import iconKey from "@assets/icons/icoKey.svg";
+import { ReactComponent as IconDown } from "@assets/icons/ico_down.svg";
+import { ReactComponent as IconUp } from "@assets/icons/ico_up.svg";
+import { ReactComponent as IconKey } from "@assets/icons/icoKey.svg";
 import { ReactComponent as IconPlus } from "@assets/icons/icoPlus.svg";
-import OkrCreateModal from "@components/okrModal/okrModal";
+import OkrCreateModal from "@components/okrCreateModal/okrCreateModal";
+import OkrDetail from "@components/okrDetail/okrDetail";
 import { useOkr } from "@hooks/useOkr";
 import { useUser } from "@hooks/useUser";
 import {
-  KrsBox,
-  KrsCircle,
-  KrsTitle,
   OkrBox,
   OkrCategory,
+  OkrCategoryHeader,
   OkrContainer,
+  OkrContentBox,
   OkrDDay,
-  OkrDetailBtn,
   OkrFooter,
   OkrHeader,
-  OkrKrs,
   OkrStatusBox,
   OkrStatusFill,
   OkrTitle,
@@ -28,7 +28,82 @@ import "./okr.css";
 
 function Okr() {
   const { user } = useUser();
-  const { okrs } = useOkr();
+  // const { okrs } = useOkr();
+  // test 용
+  const okrs = [
+    {
+      id: 1,
+      category: {
+        title: "업무",
+        colorIndex: 1,
+      },
+      dDay: 90,
+      title: "업무 제목입니다.",
+      // 이거 빠질듯
+      keyResults: [
+        {
+          id: 1,
+          title: "키 리절트 입니다.",
+          progress: 80,
+        },
+      ],
+      progress: 40,
+    },
+    {
+      id: 2,
+      category: {
+        title: "업무",
+        colorIndex: 1,
+      },
+      dDay: 90,
+      title: "업무 제목입니다.",
+      // 이거 빠질듯
+      keyResults: [
+        {
+          id: 1,
+          title: "키 리절트 입니다.",
+          progress: 80,
+        },
+      ],
+      progress: 20,
+    },
+    {
+      id: 3,
+      category: {
+        title: "업무",
+        colorIndex: 1,
+      },
+      dDay: 90,
+      title: "업무 제목입니다.",
+      // 이거 빠질듯
+      keyResults: [
+        {
+          id: 1,
+          title: "키 리절트 입니다.",
+          progress: 80,
+        },
+      ],
+      progress: 60,
+    },
+    {
+      id: 4,
+      category: {
+        title: "업무",
+        colorIndex: 1,
+      },
+      dDay: 90,
+      title: "업무 제목입니다.",
+      // 이거 빠질듯
+      keyResults: [
+        {
+          id: 1,
+          title: "키 리절트 입니다.",
+          progress: 80,
+        },
+      ],
+      progress: 90,
+    },
+  ];
 
   const [showModal, setShowModal] = useState(false);
 
@@ -36,7 +111,7 @@ function Okr() {
     <div id="okr">
       <OkrHeader>
         <div className="logo" role={"logo"}>
-          <img src={iconKey} alt="" />
+          <IconKey />
         </div>
         <div className="header-user">{user?.name}님의 OKR</div>
       </OkrHeader>
@@ -47,81 +122,38 @@ function Okr() {
           <div className="no-okr">아직 진행중인 OKR이 없어요.</div>
         ) : (
           okrs?.map(({ id, category, dDay, title, keyResults, progress }) => {
+            const [detailShow, setDetailShow] = useState(false);
+            // 둘다 동작하넹?
+            // useEffect(() => {
+            //   console.log("here");
+            // }, [detailShow]);
             return (
-              <OkrBox key={id}>
-                <OkrHeader>
+              <OkrBox key={`o-${id}`}>
+                <OkrCategoryHeader>
                   <OkrCategory colorIndex={category.colorIndex}>{category.title}</OkrCategory>
                   <OkrDDay>{dDay ? `D-${dDay}` : ""}</OkrDDay>
-                </OkrHeader>
+                </OkrCategoryHeader>
 
-                <OkrTitle>{title}</OkrTitle>
-                {/* Detail 페이지 이동? 그러면 애니메이션 넣을 수 없지않나 위에서 아래로, 현재 위치에서 펼쳐지는 느낌으로 */}
-                <OkrKrs>
-                  {/* key results 목록 */}
-                  {keyResults
-                    ? keyResults.map(({ id, title, progress }) => {
-                        return (
-                          <KrsBox key={id}>
-                            <KrsCircle
-                              style={{
-                                backgroundColor: progress === 100 ? "#ff9494" : "",
-                                display: progress === 0 ? "block" : "none",
-                              }}>
-                              &nbsp;
-                            </KrsCircle>
-                            <KrsTitle>{title}</KrsTitle>
-                            <OkrStatusBox style={{ display: progress === 0 ? "none" : "flex" }}>
-                              <OkrStatusFill
-                                style={{
-                                  backgroundColor: "#FF9494",
-                                  width: progress,
-                                }}></OkrStatusFill>
-                            </OkrStatusBox>
-                          </KrsBox>
-                        );
-                      })
-                    : ""}
-                </OkrKrs>
-
-                {/* todo list는 컴포넌트 분리해야 할듯 -> okrId로 받아오기.. */}
-                {/* <div
-                  className="okrTodos"
-                  style={{ display: todoList.length === 0 ? "none" : "block" }}>
-                  <hr style={{ margin: "1rem 0" }} />
-                  {todoList.map(({ id, title }) => {
-                    return (
-                      <div
-                        key={`todo-${id}`}
-                        style={{ display: "flex", justifyContent: "space-between" }}>
-                        <div>{title}</div>
-                        <div>수정</div>
-                      </div>
-                    );
-                  })}
-                </div> */}
-                <OkrFooter>
-                  {/* todo list length로 체크 */}
-                  <OkrStatusBox style={{ display: keyResults.length === 0 ? "flex" : "none" }}>
+                <OkrContentBox>
+                  <OkrTitle>{title}</OkrTitle>
+                  {/* 0.5초 뒤 등장하게 */}
+                  <OkrStatusBox style={{ display: detailShow ? "none" : "block" }}>
                     <OkrStatusFill
-                      style={{ backgroundColor: "#FF9494", width: progress }}></OkrStatusFill>
+                      style={{ backgroundColor: "#FF9494", width: `${progress}%` }}></OkrStatusFill>
                   </OkrStatusBox>
-                  {keyResults.length === 0 ? (
-                    <OkrDetailBtn
-                      onClick={() => {
-                        console.log("here");
-                        //getDetail(id)
-                      }}>
-                      더보기
-                    </OkrDetailBtn>
-                  ) : (
-                    <OkrDetailBtn
-                      onClick={() => {
-                        console.log("here");
-                        // resetDetail(id);
-                      }}>
-                      숨기기
-                    </OkrDetailBtn>
-                  )}
+                </OkrContentBox>
+
+                <OkrDetail okrId={id} detailShow={detailShow} />
+
+                <OkrFooter>
+                  <div
+                    className="scroller"
+                    style={{ width: "100%", display: "flex", justifyContent: "center" }}
+                    onClick={() => setDetailShow(!detailShow)}>
+                    <IconDown width={24} style={{ display: detailShow ? "none" : "block" }} />
+                    {/* 올라갈 땐 0.5초 뒤 바뀌게 */}
+                    <IconUp width={24} style={{ display: detailShow ? "block" : "none" }} />
+                  </div>
                 </OkrFooter>
               </OkrBox>
             );

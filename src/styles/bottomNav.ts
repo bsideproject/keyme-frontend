@@ -28,7 +28,7 @@ export const NavigationLink = styled(NavLink)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 0.25rem;
+  gap: 6px;
 
   margin-top: 1rem;
 
