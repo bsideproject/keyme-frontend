@@ -18,7 +18,7 @@ export const OkrBox = styled.div`
 `;
 
 export const OkrHeader = styled.div`
-  margin: 1rem 0;
+  margin-bottom: 1rem;
   display: flex;
   justify-content: flex-start;
   gap: 1rem;
@@ -216,6 +216,7 @@ export const OkrModalBody = styled.div`
 `;
 
 export const OkrModalCategoryHeader = styled.div`
+  margin-top: 1rem;
   display: flex;
   justify-content: space-between;
 `;

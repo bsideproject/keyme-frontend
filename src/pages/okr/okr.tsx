@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 import { ReactComponent as IconDown } from "@assets/icons/ico_down.svg";
+import { ReactComponent as IconPlus } from "@assets/icons/ico_plus.svg";
 import { ReactComponent as IconUp } from "@assets/icons/ico_up.svg";
 import { ReactComponent as IconKey } from "@assets/icons/icoKey.svg";
-import { ReactComponent as IconPlus } from "@assets/icons/icoPlus.svg";
 import OkrCreateModal from "@components/okrCreateModal/okrCreateModal";
 import OkrDetail from "@components/okrDetail/okrDetail";
 import { useOkr } from "@hooks/useOkr";
@@ -49,60 +49,60 @@ function Okr() {
       ],
       progress: 40,
     },
-    {
-      id: 2,
-      category: {
-        title: "업무",
-        colorIndex: 1,
-      },
-      dDay: 90,
-      title: "업무 제목입니다.",
-      // 이거 빠질듯
-      keyResults: [
-        {
-          id: 1,
-          title: "키 리절트 입니다.",
-          progress: 80,
-        },
-      ],
-      progress: 20,
-    },
-    {
-      id: 3,
-      category: {
-        title: "업무",
-        colorIndex: 1,
-      },
-      dDay: 90,
-      title: "업무 제목입니다.",
-      // 이거 빠질듯
-      keyResults: [
-        {
-          id: 1,
-          title: "키 리절트 입니다.",
-          progress: 80,
-        },
-      ],
-      progress: 60,
-    },
-    {
-      id: 4,
-      category: {
-        title: "업무",
-        colorIndex: 1,
-      },
-      dDay: 90,
-      title: "업무 제목입니다.",
-      // 이거 빠질듯
-      keyResults: [
-        {
-          id: 1,
-          title: "키 리절트 입니다.",
-          progress: 80,
-        },
-      ],
-      progress: 90,
-    },
+    // {
+    //   id: 2,
+    //   category: {
+    //     title: "업무",
+    //     colorIndex: 1,
+    //   },
+    //   dDay: 90,
+    //   title: "업무 제목입니다.",
+    //   // 이거 빠질듯
+    //   keyResults: [
+    //     {
+    //       id: 1,
+    //       title: "키 리절트 입니다.",
+    //       progress: 80,
+    //     },
+    //   ],
+    //   progress: 20,
+    // },
+    // {
+    //   id: 3,
+    //   category: {
+    //     title: "업무",
+    //     colorIndex: 1,
+    //   },
+    //   dDay: 90,
+    //   title: "업무 제목입니다.",
+    //   // 이거 빠질듯
+    //   keyResults: [
+    //     {
+    //       id: 1,
+    //       title: "키 리절트 입니다.",
+    //       progress: 80,
+    //     },
+    //   ],
+    //   progress: 60,
+    // },
+    // {
+    //   id: 4,
+    //   category: {
+    //     title: "업무",
+    //     colorIndex: 1,
+    //   },
+    //   dDay: 90,
+    //   title: "업무 제목입니다.",
+    //   // 이거 빠질듯
+    //   keyResults: [
+    //     {
+    //       id: 1,
+    //       title: "키 리절트 입니다.",
+    //       progress: 80,
+    //     },
+    //   ],
+    //   progress: 90,
+    // },
   ];
 
   const [showModal, setShowModal] = useState(false);
