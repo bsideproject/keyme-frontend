@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 import { ReactComponent as IconDown } from "@assets/icons/ico_down.svg";
+import { ReactComponent as IconKey } from "@assets/icons/ico_key.svg";
 import { ReactComponent as IconPlus } from "@assets/icons/ico_plus.svg";
 import { ReactComponent as IconUp } from "@assets/icons/ico_up.svg";
-import { ReactComponent as IconKey } from "@assets/icons/icoKey.svg";
 import OkrCreateModal from "@components/okrCreateModal/okrCreateModal";
 import OkrDetail from "@components/okrDetail/okrDetail";
 import { useOkr } from "@hooks/useOkr";
