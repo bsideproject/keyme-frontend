@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { ReactComponent as IconPlus } from "@assets/icons/icoPlus.svg";
+import { ReactComponent as IconPlus } from "@assets/icons/ico_plus.svg";
 import useInput from "@hooks/useInput";
 import { KrsBox, KrsCircle, KrsTitle, OkrKrs, OkrStatusFill } from "@styles/okr";
 
