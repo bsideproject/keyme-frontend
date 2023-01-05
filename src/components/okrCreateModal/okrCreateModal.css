@@ -1,0 +1,10 @@
+.okr-objective-header {
+  display: flex;
+  gap: 1rem;
+
+  align-items: center;
+}
+
+.okr-objective-header > span {
+  font-size: 20px;
+}
