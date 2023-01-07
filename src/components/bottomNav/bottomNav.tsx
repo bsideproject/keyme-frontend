@@ -18,7 +18,7 @@ function BottomNav() {
         <IconTodo />
         <NavigationText>ToDo</NavigationText>
       </NavigationLink>
-      <NavigationLink to={routePath.REPORT}>
+      <NavigationLink to={routePath.CALENDAR}>
         <IconCalendar />
         <NavigationText>캘린더</NavigationText>
       </NavigationLink>
