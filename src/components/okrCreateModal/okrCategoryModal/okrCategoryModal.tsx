@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { ReactComponent as IconClose } from "@assets/icons/ico_close2.svg";
 import { ReactComponent as IconFin } from "@assets/icons/ico_fin.svg";
 import useInput from "@hooks/useInput";
+import { subColor } from "@styles/color";
 import {
   CategoryBody,
   CategoryColorBox,
@@ -29,23 +30,14 @@ interface cProps {
 }
 
 function OkrCategoryModal({ showModal, setShowModal, categories }: cProps) {
+  const [modalAnim, setModalAnim] = useState<boolean>(true);
+
   const [categoryName, onChange, onReset, setCategoryName] = useInput("");
   const [cateogryColor, setCategoryColor] = useState(0);
   const [categoryId, setCategoryId] = useState(-1);
-  const colors = [
-    "#4284E8",
-    "#EE8235",
-    "#F14567",
-    "#51E660",
-    "#36E2E3",
-    "#BE67E6",
-    "#F4B026",
-    "#DE2F95",
-    "#604EDB",
-    "#707070",
-  ];
+
   return (
-    <CategoryModal showModal={showModal}>
+    <CategoryModal anim={modalAnim} showModal={showModal}>
       <CategoryContainer showModal={showModal}>
         <CategoryHeader>
           <IconClose onClick={() => setShowModal(false)} />
@@ -87,7 +79,7 @@ function OkrCategoryModal({ showModal, setShowModal, categories }: cProps) {
           <div className="category-color-container">
             <CategoryExplainMain>대표색을 골라주세요.</CategoryExplainMain>
             <CategoryColorBox>
-              {colors.map((v, idx) => {
+              {subColor.map((v, idx) => {
                 return (
                   <CategoryColorItem
                     key={`color-${idx}`}

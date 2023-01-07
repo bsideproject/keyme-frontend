@@ -1,6 +1,40 @@
 import styled, { keyframes } from "styled-components";
 
-export const BaseModal = styled.div`
+export const bganim = keyframes`
+  0% {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+`;
+export const revbganim = keyframes`
+  0% {
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0);
+  }
+`;
+
+const ltranimation = keyframes`
+  0% {
+    right: 100%;
+  }
+  100% {
+    right: 0;
+  }
+`;
+const rtlanimation = keyframes`
+  0% {
+    right: 0;
+  }
+  100% {
+    right: 100%;
+  }
+`;
+
+export const BaseModal = styled.div<{ anim: boolean; showModal: boolean }>`
   width: 100%;
   max-width: 393px;
   height: 100%;
@@ -11,14 +45,46 @@ export const BaseModal = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
+
+  background-color: rgba(0, 0, 0, 0.75);
+
+  animation: ${(props) => (props.anim ? bganim : revbganim)} 0.5s ease-in-out;
+  display: ${(props) => (props.showModal ? "flex" : "none")};
+`;
+
+// create modal
+export const OkrModal = styled(BaseModal)<{ showModal: boolean }>`
+  overflow: hidden;
+`;
+
+export const OkrContainer = styled.div<{ anim: boolean }>`
+  position: absolute;
+  width: 100%;
+  max-width: 393px;
+  height: 100%;
+  background-color: white;
+  animation: ${(props) => (props.anim ? ltranimation : rtlanimation)} 0.5s ease-in-out;
+  overflow-y: auto;
+`;
+
+export const OkrModalHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #efefef;
+  & > * {
+    flex: 1;
+  }
+  & span {
+    text-align: center;
+    font-weight: 700;
+    font-size: 24px;
+  }
 `;
 
 // category modal
 export const CategoryModal = styled(BaseModal)<{ showModal: boolean }>`
-  /* anim */
-  background-color: rgba(0, 0, 0, 0.75);
-  /* anim 이후에 d-none */
-  display: ${(props) => (props.showModal ? "flex" : "none")};
   align-items: flex-end;
   /* 9999만 적용이 되네..? */
   z-index: 9999;
@@ -109,7 +175,6 @@ export const CategoryColorItem = styled.div<{ isChecked: boolean; bgColor: strin
 // info modal
 export const InfoModal = styled(BaseModal)<{ showModal: boolean }>`
   display: ${(props) => (props.showModal ? "flex" : "none")};
-  background-color: rgba(0, 0, 0, 0.75);
   align-items: center;
   z-index: 9999;
 `;
@@ -133,52 +198,4 @@ export const InfoHeaderTitle = styled.div`
   font-weight: bold;
   font-size: 24px;
   text-align: center;
-`;
-export const InfoBox = styled.div`
-  border-radius: 10px;
-  background-color: #f1fef3;
-  padding: 1rem;
-  margin-top: 1rem;
-`;
-
-export const InfoBoxHeader = styled.div`
-  font-weight: bold;
-  font-size: 18px;
-  color: #707070;
-`;
-
-export const InfoBoxBody = styled.div`
-  margin-top: 1rem;
-`;
-
-export const InfoItem = styled.div`
-  margin-top: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-`;
-
-export const InfoBadge = styled.div`
-  border-radius: 17px;
-  height: 30px;
-  background-color: #51e660;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &.circle {
-    width: 30px;
-  }
-
-  &.text {
-    height: 34px;
-    width: fit-content;
-    padding: 0 0.5rem;
-  }
-`;
-
-export const InfoText = styled.div`
-  font-size: 15px;
-  color: #222;
 `;
