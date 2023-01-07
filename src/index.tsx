@@ -12,7 +12,6 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import "./index.css";
-import "./assets/fonts/font.css";
 
 Sentry.init({
   dsn: "https://d6ce4371f66b41caafe857cd57f6d4fd@o4504334336458752.ingest.sentry.io/4504334337835008",
