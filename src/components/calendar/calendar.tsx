@@ -1,156 +1,96 @@
-import React, { MouseEventHandler, useState } from "react";
-import { addMonths, format, subMonths } from "date-fns";
-import { endOfMonth, endOfWeek, startOfMonth, startOfWeek } from "date-fns";
-import { addDays, isSameDay, isSameMonth } from "date-fns";
+import React, { useEffect, useState } from "react";
+import { addMonths, startOfMonth, subMonths } from "date-fns";
+import { endOfWeek, startOfWeek } from "date-fns";
+import { endOfMonth } from "date-fns/esm";
 
-import StatusBox from "@components/statusBox/statusBox";
+import { CalendarBox } from "@styles/calendar";
+import { dateFormatter } from "@utils/datetime";
 
-// import { Icon } from "@iconify/react";
-import "./calendar.css";
+import { RenderDays } from "./days/days";
+import { RenderHeader } from "./header/header";
+import { RenderWeeks } from "./weeks/weeks";
 
-interface cMonths {
-  currentMonth: number | Date;
-  prevMonth: MouseEventHandler;
-  nextMonth: MouseEventHandler;
+interface category {
+  id: number;
+  title: string;
+  colorIdx: number;
 }
-const RenderHeader = ({ currentMonth, prevMonth, nextMonth }: cMonths) => {
-  return (
-    <div className="header row">
-      <div className="col col-start">
-        <span className="text">
-          <span className="text month">{format(currentMonth, "M")}월</span>
-          {format(currentMonth, "yyyy")}
-        </span>
-      </div>
-      <div className="col col-end">
-        <span onClick={prevMonth}>이전</span>
-        <span onClick={nextMonth}>다음</span>
-        {/* <Icon icon="bi:arrow-left-circle-fill"  />
-        <Icon icon="bi:arrow-right-circle-fill" /> */}
-      </div>
-    </div>
-  );
-};
 
-const RenderDays = () => {
-  const days = [];
-  const date = ["Sun", "Mon", "Thu", "Wed", "Thrs", "Fri", "Sat"];
-
-  for (let i = 0; i < 7; i++) {
-    days.push(
-      <div className="col" key={i}>
-        {date[i]}
-      </div>
-    );
-  }
-
-  return <div className="days row">{days}</div>;
-};
-
-interface rProps {
-  currentMonth: number | Date;
-  selectedDate: Date;
-  completeStatus: object;
-  onDateClick: (day: Date) => void;
+interface todo {
+  id: number;
+  // categoryIdx or categoryId -> user category로 체크
+  category: category;
+  title: string;
 }
-interface dateProps {
-  year: string;
-  month: string;
-  day: string;
+
+interface calendarTodos {
+  date: Date;
+  todos: todo[];
 }
-const dateFormatter = ({ year, month, day }: dateProps) => {
-  return year + "-" + month.padStart(2, "0") + "-" + day.padStart(2, "0");
-};
-const RenderCells = ({ currentMonth, selectedDate, completeStatus, onDateClick }: rProps) => {
-  const monthStart = startOfMonth(currentMonth);
-  const monthEnd = endOfMonth(monthStart);
-  const startDate = startOfWeek(monthStart);
-  const endDate = endOfWeek(monthEnd);
 
-  const rows = [];
-  let days = [];
-  let day = startDate;
-  let formattedDate = "";
+interface cProps {
+  calendarTodos: calendarTodos[];
+  selectedDay: Date;
+  setSelectedDay: (params: Date) => void;
+}
 
-  while (day <= endDate) {
-    for (let i = 0; i < 7; i++) {
-      formattedDate = format(day, "d");
-      const cloneDay = day;
-      const monthStr = format(day, "M");
-      const yearStr = format(day, "Y");
-      const dayText = dateFormatter({ year: yearStr, month: monthStr, day: formattedDate });
-      days.push(
-        <div
-          className={`col cell ${
-            !isSameMonth(day, monthStart)
-              ? "disabled"
-              : isSameDay(day, selectedDate)
-              ? "selected"
-              : format(currentMonth, "M") !== format(day, "M")
-              ? "not-valid"
-              : "valid"
-          }`}
-          key={day.toString()}
-          onClick={() => onDateClick(cloneDay)}>
-          <div className={format(currentMonth, "M") !== format(day, "M") ? "text not-valid" : ""}>
-            {formattedDate}
-            <br />
+interface tempType {
+  [key: string]: Set<number>;
+}
 
-            {dayText in completeStatus ? (
-              <StatusBox
-                status={
-                  {
-                    red: 30,
-                    blue: 20,
-                    green: 50,
-                  }
-                  // completeStatus[dayText as keyof typeof completeStatus]["categoryPercentile"]
-                }
-              />
-            ) : (
-              ""
-            )}
-          </div>
-        </div>
-      );
-      day = addDays(day, 1);
-    }
-    rows.push(
-      <div className="row" key={day.toString()}>
-        {days}
-      </div>
-    );
-    days = [];
-  }
-  return <div className="body">{rows}</div>;
-};
-
-export const Calender = () => {
-  const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(new Date());
+export const GrassCalendar = ({ calendarTodos, selectedDay, setSelectedDay }: cProps) => {
+  const [currentDay, setCurrentDay] = useState(new Date());
+  const [completeStatus, setCompleteStatus] = useState<tempType>({});
+  const [weekCount, setWeekCount] = useState<number>(5);
 
   const prevMonth = () => {
-    setCurrentMonth(subMonths(currentMonth, 1));
+    setCurrentDay(startOfMonth(subMonths(currentDay, 1)));
   };
   const nextMonth = () => {
-    setCurrentMonth(addMonths(currentMonth, 1));
+    setCurrentDay(startOfMonth(addMonths(currentDay, 1)));
   };
+
   const onDateClick = (day: Date) => {
-    setSelectedDate(day);
+    setSelectedDay(day);
   };
-  const completeStatus = {
-    "2022-12-16": { categoryName: "건강", categoryColor: "red", categoryPercentile: 30 },
-  };
+
+  useEffect(() => {
+    const temp: tempType = {};
+    for (let i = 0; i < calendarTodos.length; i++) {
+      const uniqueColors = new Set<number>();
+
+      calendarTodos[i].todos.map(({ category: { colorIdx } }) => {
+        uniqueColors.add(colorIdx);
+      });
+      const dateStr: string = dateFormatter(calendarTodos[i].date);
+      temp[dateStr] = uniqueColors;
+    }
+
+    setCompleteStatus(temp);
+
+    setWeekCount(
+      Math.ceil(
+        (+endOfWeek(endOfMonth(currentDay)) - +startOfWeek(startOfMonth(currentDay))) /
+          3600 /
+          24 /
+          7 /
+          1000
+      )
+    );
+
+    setSelectedDay(currentDay);
+  }, [currentDay]);
+
   return (
-    <div className="calendar" role={"calendar"}>
-      <RenderHeader currentMonth={currentMonth} prevMonth={prevMonth} nextMonth={nextMonth} />
-      <RenderDays />
-      <RenderCells
-        currentMonth={currentMonth}
-        selectedDate={selectedDate}
+    <CalendarBox weekCount={weekCount}>
+      <RenderHeader currentDay={currentDay} prevMonth={prevMonth} nextMonth={nextMonth} />
+      <RenderWeeks />
+      <RenderDays
+        currentDay={currentDay}
+        selectedDate={selectedDay}
         onDateClick={onDateClick}
         completeStatus={completeStatus}
       />
-    </div>
+    </CalendarBox>
   );
 };
