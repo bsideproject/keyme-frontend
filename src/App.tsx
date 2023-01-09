@@ -15,8 +15,6 @@ import { AppContainer } from "@styles/app";
 import GlobalStyle from "@styles/globalStyle";
 import THEME from "@styles/theme";
 
-import "./App.css";
-
 function App() {
   const [theme, onToggleTheme] = useThemes();
   const { reset } = useQueryErrorResetBoundary();

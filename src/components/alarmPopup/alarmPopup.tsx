@@ -4,11 +4,10 @@ import { AlarmContainer, AlarmExplain, AlarmPopupModal, BtnBox, BtnNo, BtnOk } f
 
 interface cProps {
   showModal: boolean;
-  setShowModal: (param: boolean) => void;
   setState: (param: boolean) => void;
 }
 
-function AlarmPopup({ showModal, setShowModal, setState }: cProps) {
+function AlarmPopup({ showModal, setState }: cProps) {
   // 타이틀, 버튼 안 텍스트 전달받기
   return (
     <AlarmPopupModal style={{ display: showModal ? "flex" : "none" }}>

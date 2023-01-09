@@ -11,7 +11,7 @@ export const BottomNavigation = styled.nav`
   bottom: 0;
   width: 100%;
   max-width: 393px;
-  height: 100px;
+  height: 90px;
 
   padding: 0;
   z-index: 100;
