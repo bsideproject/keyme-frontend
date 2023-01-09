@@ -40,7 +40,13 @@ export const RenderDays = ({
       const cloneDay = day;
       const dayText = dateFormatter(day);
       days.push(
-        <DaysCell key={day.toString()} onClick={() => onDateClick(cloneDay)}>
+        <DaysCell
+          key={day.toString()}
+          onClick={() => {
+            if (isSameMonth(cloneDay, currentDay)) {
+              onDateClick(cloneDay);
+            }
+          }}>
           <DaysDay
             isSameDay={isSameDay(day, selectedDate)}
             isSameMonth={isSameMonth(day, currentDay)}>
