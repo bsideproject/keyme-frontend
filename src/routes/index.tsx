@@ -1,6 +1,9 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
+import AllTabPage from "@pages/todo/all";
+import CompletedTab from "@pages/todo/complete";
+import InProgressTab from "@pages/todo/inProgress";
 import PrivateRoute from "@routes/PrivateRoute";
 
 const Login = React.lazy(() => import("@pages/login/login"));
@@ -17,11 +20,25 @@ export const routePath = {
   REPORT: "/report",
   MYPAGE: "/mypage",
   KAKAO_CALLBACK: "/users/kakao/callback",
+  ALL_TAB: "?tab=all",
+  IN_PROGRESS_TAB: "?tab=in-progress",
+  COMPLETE_TAB: "?tab=complete",
   NOT_FOUND: "*",
 };
 
 const AllRoutes = () => {
-  const { LOGIN, OKR, TODO, REPORT, MYPAGE, KAKAO_CALLBACK, NOT_FOUND } = routePath;
+  const {
+    LOGIN,
+    OKR,
+    TODO,
+    REPORT,
+    MYPAGE,
+    KAKAO_CALLBACK,
+    NOT_FOUND,
+    ALL_TAB,
+    IN_PROGRESS_TAB,
+    COMPLETE_TAB,
+  } = routePath;
 
   return (
     <Routes>
@@ -30,7 +47,11 @@ const AllRoutes = () => {
       </Route>
       <Route element={<PrivateRoute />}>
         <Route element={<Okr />} path={OKR} />
-        <Route element={<Todo />} path={TODO} />
+        <Route element={<Todo />} path={TODO}>
+          <Route element={<AllTabPage />} path={ALL_TAB} />
+          <Route element={<InProgressTab />} path={IN_PROGRESS_TAB} />
+          <Route element={<CompletedTab />} path={COMPLETE_TAB} />
+        </Route>
       </Route>
       <Route element={<Login />} path={LOGIN} />
       <Route element={<Report />} path={REPORT} />
