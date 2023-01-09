@@ -18,6 +18,9 @@ export const routePath = {
   MYPAGE: "/mypage",
   KAKAO_CALLBACK: "/users/kakao/callback",
   NOT_FOUND: "*",
+  ALL_TAB: "?tab=all",
+  IN_PROGRESS_TAB: "?tab=in-progress",
+  COMPLETE_TAB: "?tab=completed",
 };
 
 const AllRoutes = () => {
