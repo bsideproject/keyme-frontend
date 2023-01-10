@@ -6,18 +6,20 @@ import BaseButton from "@components/baseButton/baseButton";
 import KrAddButton from "@components/baseButton/krAddButton";
 import OkrInfoModal from "@components/okrCreateModal/okfInfoModal/okrInfoModal";
 import useInput from "@hooks/useInput";
+import { useOkrDetail } from "@hooks/useOkr";
 import { OkrModalFooter, OkrModalHeaderText, OkrObjectiveBox } from "@styles/okr";
 
 import "./keyResult.css";
 
 interface cProps {
   title: string;
-  categoryId: number;
-  categories: {
-    id: number;
-    title: string;
-    colorIndex: number;
-  }[];
+  nowCategory:
+    | {
+        id: number;
+        title: string;
+        colorIndex: number;
+      }
+    | undefined;
   isKeyReulst: boolean;
 }
 
@@ -26,12 +28,15 @@ interface krListType {
   title: string;
 }
 
-function KeyResult({ title, categoryId, categories, isKeyReulst }: cProps) {
+function KeyResult({ title, nowCategory, isKeyReulst }: cProps) {
   const [krTitle, onKrTitleChange, onReset, setKrTitle] = useInput("");
   const [btnDisable, setBtnDisable] = useState<boolean>(false);
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
 
   const [krList, setKrList] = useState<krListType[]>([]);
+
+  // okrId 필요
+  // const {mutation} = useOkrDetail()
 
   useEffect(() => {
     if (Object.keys(krList).length === 0) {
@@ -44,6 +49,7 @@ function KeyResult({ title, categoryId, categories, isKeyReulst }: cProps) {
 
   const addKeyResult = () => {
     // axios 요청 후 id 값 받기 -> 애초에 react query 쓸거임..
+    // mutation.mutate({ title: krTitle, objectiveId: })
     setKrList([...krList, { id: krList.length, title: krTitle }]);
     onReset();
   };
@@ -61,35 +67,33 @@ function KeyResult({ title, categoryId, categories, isKeyReulst }: cProps) {
     <div
       className="keyresult-body"
       style={{ paddingBottom: "200px", display: isKeyReulst ? "flex" : "none" }}>
-      <div className="okr-objective-header">
+      <div className="okr-objective-header" style={{ alignItems: "flex-end" }}>
         {/* 이름으로 변경 */}
         <span>
           키미님, <br />
           방금 작성한 Objective를 달성하기 위한 Key result를 만들어볼까요?
         </span>
-        <IconInfo style={{ flexBasis: "24px" }} onClick={() => setShowInfoModal(true)} />
+        <span style={{ flexBasis: "24px" }}>
+          <IconInfo width={24} onClick={() => setShowInfoModal(true)} />
+        </span>
       </div>
-      {categoryId === -1 ? (
-        ""
-      ) : (
-        <BaseBox
-          colorIdx={categories[categoryId].colorIndex}
-          info={[
-            {
-              badgeType: "text",
-              badgeText: categories[categoryId].title,
-              title,
-            },
-          ]}
-          title={"Objective"}
-        />
-      )}
+      <BaseBox
+        colorIdx={nowCategory?.colorIndex}
+        info={[
+          {
+            badgeType: "text",
+            badgeText: nowCategory ? nowCategory.title : "",
+            title,
+          },
+        ]}
+        title={"Objective"}
+      />
 
       {Object.keys(krList).length === 0 ? (
         ""
       ) : (
         <BaseBox
-          colorIdx={categories[categoryId].colorIndex}
+          colorIdx={nowCategory?.colorIndex}
           info={krList.map(({ title }, idx) => {
             return {
               badgeType: "circle",
@@ -101,7 +105,7 @@ function KeyResult({ title, categoryId, categories, isKeyReulst }: cProps) {
         />
       )}
 
-      <OkrModalHeaderText>Key result를 적어주세요</OkrModalHeaderText>
+      <OkrModalHeaderText style={{ marginTop: "1rem" }}>Key result를 적어주세요</OkrModalHeaderText>
       <OkrObjectiveBox>
         <textarea
           name="krTitle"

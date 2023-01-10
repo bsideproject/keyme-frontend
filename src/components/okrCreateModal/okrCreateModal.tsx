@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ReactComponent as IconBack } from "@assets/icons/ico_back.svg";
 import AlarmPopup from "@components/alarmPopup/alarmPopup";
 import OkrCategoryModal from "@components/okrCreateModal/okrCategoryModal/okrCategoryModal";
+import { useCategory } from "@hooks/useCategory";
 import useInput from "@hooks/useInput";
 import { OkrContainer, OkrModal, OkrModalHeader } from "@styles/modal";
 
@@ -27,15 +28,15 @@ function OkrCreateModal({ showModal, setShowModal }: cProps) {
 
   const [showCategoryModal, setShowCategoryModal] = useState<boolean>(false);
 
-  const [showNext, setShowNext] = useState<boolean>(false);
+  const [showNext, setShowNext] = useState<number>(0);
   const [showPopup, setShowPopup] = useState<boolean>(false);
 
   const [isKeyReulst, setIsKeyResult] = useState<boolean>(false);
 
   const closeModal = () => {
+    setShowNext(0);
     setShowPopup(false);
     setModalAnim(false);
-    setShowNext(false);
     setTimeout(() => {
       resetInputs();
       setShowModal(false);
@@ -45,46 +46,15 @@ function OkrCreateModal({ showModal, setShowModal }: cProps) {
   };
 
   useEffect(() => {
-    if (showNext) {
+    if (showNext === 2) {
       setIsKeyResult(true);
       setShowPopup(false);
-    } else {
+    } else if (showNext === 1) {
       closeModal();
     }
   }, [showNext]);
 
-  const categories = [
-    {
-      id: 1,
-      title: "업무",
-      colorIndex: 0,
-    },
-    {
-      id: 2,
-      title: "건강",
-      colorIndex: 1,
-    },
-    {
-      id: 3,
-      title: "관계",
-      colorIndex: 2,
-    },
-    {
-      id: 4,
-      title: "배움",
-      colorIndex: 3,
-    },
-    {
-      id: 5,
-      title: "여가",
-      colorIndex: 4,
-    },
-    {
-      id: 6,
-      title: "기타",
-      colorIndex: 5,
-    },
-  ];
+  const { categories } = useCategory();
 
   return (
     <OkrModal anim={modalAnim} showModal={showModal}>
@@ -109,9 +79,9 @@ function OkrCreateModal({ showModal, setShowModal }: cProps) {
         />
 
         <KeyResult
+          // okrId
           title={title}
-          categoryId={categoryId}
-          categories={categories}
+          nowCategory={categories?.filter(({ id }) => id === categoryId)[0]}
           isKeyReulst={isKeyReulst}
         />
 

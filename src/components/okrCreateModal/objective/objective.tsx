@@ -4,12 +4,12 @@ import { ReactComponent as IconEdit } from "@assets/icons/ico_edit.svg";
 import { ReactComponent as IconInfo } from "@assets/icons/ico_info.svg";
 import BaseButton from "@components/baseButton/baseButton";
 import OkrInfoModal from "@components/okrCreateModal/okfInfoModal/okrInfoModal";
-import useInput from "@hooks/useInput";
 import { useOkr } from "@hooks/useOkr";
+import { useUser } from "@hooks/useUser";
 import {
   OkrCategoryBox,
+  OkrCreateCategory,
   OkrModalBody,
-  OkrModalCategory,
   OkrModalCategoryHeader,
   OkrModalFooter,
   OkrModalHeaderText,
@@ -25,11 +25,13 @@ interface cProps {
   setShowCategoryModal: (param: boolean) => void;
   onTitleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   setCategoryId: (param: number) => void;
-  categories: {
-    id: number;
-    title: string;
-    colorIndex: number;
-  }[];
+  categories:
+    | {
+        id: number;
+        title: string;
+        colorIndex: number;
+      }[]
+    | undefined;
   isKeyReulst: boolean;
 }
 
@@ -46,6 +48,7 @@ function Objective({
   const [btnDisable, setBtnDisable] = useState<boolean>(false);
 
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
+  const { user } = useUser();
   const { mutation } = useOkr();
 
   useEffect(() => {
@@ -62,47 +65,45 @@ function Objective({
       // 입력해주세요 알림 (toast)
       return;
     } else {
-      mutation.mutate({ title, categoryId });
+      // setOkrId -> 위에서 props로 가져오기
+      const okrId = mutation.mutate({ title, categoryId });
+      console.log(okrId);
       setShowPopup(true);
     }
   };
   const infoContent = () => <></>;
 
   return (
-    <div style={{ paddingBottom: "200px", display: isKeyReulst ? "none" : "flex" }}>
+    <div style={{ paddingBottom: "110px", display: isKeyReulst ? "none" : "block" }}>
       <OkrModalBody>
         <div className="okr-objective-header">
-          {/* user name으로 수정 */}
-          <span>키미님 어떤 목표를 가지고 계신가요?</span>
+          <span>{user?.name}님 어떤 목표를 가지고 계신가요?</span>
           <IconInfo onClick={() => setShowInfoModal(true)} />
         </div>
 
         <OkrModalCategoryHeader>
           <OkrModalHeaderText>Objective 카테고리를 선택해주세요</OkrModalHeaderText>
-          <div className="okr-category-setting">
-            <IconEdit onClick={() => setShowCategoryModal(true)} />
-          </div>
+          <IconEdit onClick={() => setShowCategoryModal(true)} />
         </OkrModalCategoryHeader>
         <OkrCategoryBox>
-          {/* category 받아오기 */}
-          {categories.map(({ id, title, colorIndex }) => {
+          {categories?.map(({ id, title, colorIndex }) => {
             return (
-              <OkrModalCategory
+              <OkrCreateCategory
                 isPicked={id === categoryId}
-                colorIndex={colorIndex}
+                colorIdx={colorIndex}
                 key={id}
                 onClick={() => {
                   setCategoryId(id);
                 }}>
                 {title}
-              </OkrModalCategory>
+              </OkrCreateCategory>
             );
           })}
         </OkrCategoryBox>
         <OkrModalHeaderText>Objective를 적어주세요</OkrModalHeaderText>
         <OkrObjectiveBox>
           <textarea
-            // type="text"
+            style={{ fontSize: 16, fontWeight: "medium" }}
             name="title"
             placeholder="100글자 내로 입력해주세요"
             onChange={onTitleChange}
@@ -114,9 +115,9 @@ function Objective({
         </OkrModalFooter>
       </OkrModalBody>
       <OkrInfoModal
-        // 데이터 받아서 처리
         title={"OKR 만들기 예시"}
         Content={infoContent}
+        // 데이터 받아서 처리
         info={{
           category: "배움",
           objective: "안전한 테스트 익히기",
