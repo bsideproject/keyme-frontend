@@ -7,6 +7,7 @@ import KrAddButton from "@components/baseButton/krAddButton";
 import OkrInfoModal from "@components/okrCreateModal/okfInfoModal/okrInfoModal";
 import useInput from "@hooks/useInput";
 import { useOkrDetail } from "@hooks/useOkr";
+import { useUser } from "@hooks/useUser";
 import { OkrModalFooter, OkrModalHeaderText, OkrObjectiveBox } from "@styles/okr";
 
 import "./keyResult.css";
@@ -32,6 +33,8 @@ function KeyResult({ title, nowCategory, isKeyReulst }: cProps) {
   const [krTitle, onKrTitleChange, onReset, setKrTitle] = useInput("");
   const [btnDisable, setBtnDisable] = useState<boolean>(false);
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
+
+  const { user } = useUser();
 
   const [krList, setKrList] = useState<krListType[]>([]);
 
@@ -70,7 +73,7 @@ function KeyResult({ title, nowCategory, isKeyReulst }: cProps) {
       <div className="okr-objective-header" style={{ alignItems: "flex-end" }}>
         {/* 이름으로 변경 */}
         <span>
-          키미님, <br />
+          {user?.name}님, <br />
           방금 작성한 Objective를 달성하기 위한 Key result를 만들어볼까요?
         </span>
         <span style={{ flexBasis: "24px" }}>

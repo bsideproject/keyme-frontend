@@ -37,11 +37,11 @@ export const NavigationLink = styled(NavLink)`
   }
 
   &.active {
-    color: blue;
+    color: #335bf0;
   }
 
   &.active svg {
-    fill: blue;
+    fill: #335bf0;
   }
 `;
 
