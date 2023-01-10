@@ -53,7 +53,7 @@ export const BaseModal = styled.div<{ anim: boolean; showModal: boolean }>`
 `;
 
 // create modal
-export const OkrModal = styled(BaseModal)<{ showModal: boolean }>`
+export const OkrModal = styled(BaseModal)`
   overflow: hidden;
 `;
 
@@ -84,7 +84,7 @@ export const OkrModalHeader = styled.div`
 `;
 
 // category modal
-export const CategoryModal = styled(BaseModal)<{ showModal: boolean }>`
+export const CategoryModal = styled(BaseModal)`
   align-items: flex-end;
   /* 9999만 적용이 되네..? */
   z-index: 9999;
@@ -107,16 +107,13 @@ const rHeightAnim = keyframes`
   }
 `;
 
-// anim 용으로 변수 나눠야할듯? 일단 나올때도 안되는건 좀
-export const CategoryContainer = styled.div<{ showModal: boolean }>`
+export const CategoryContainer = styled.div<{ anim: boolean; showModal: boolean }>`
   flex: 1;
   background-color: white;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  /* anim 이후에 0으로 */
-  height: ${(props) => (props.showModal ? "90%" : "0")};
-  /* height anim */
-  animation: ${(props) => (props.showModal ? heightAnim : rHeightAnim)} 0.5s ease-in-out;
+  height: ${(props) => (props.anim ? "90%" : "0")};
+  animation: ${(props) => (props.anim ? heightAnim : rHeightAnim)} 0.5s ease-in-out;
 `;
 
 export const CategoryHeader = styled.div`
@@ -150,6 +147,20 @@ export const CategoryExplainSub = styled.div`
   font-size: 14px;
   color: #707070;
   margin-top: 0.5rem;
+`;
+
+export const CategoryNameInput = styled.input`
+  margin-top: 1rem;
+  width: 100%;
+  outline: none;
+  height: 60px;
+  border: none;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  padding: 1rem;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-weight: medium;
 `;
 
 export const CategoryColorBox = styled.div`

@@ -4,7 +4,7 @@ import { AlarmContainer, AlarmExplain, AlarmPopupModal, BtnBox, BtnNo, BtnOk } f
 
 interface cProps {
   showModal: boolean;
-  setState: (param: boolean) => void;
+  setState: (param: number) => void;
 }
 
 function AlarmPopup({ showModal, setState }: cProps) {
@@ -14,8 +14,8 @@ function AlarmPopup({ showModal, setState }: cProps) {
       <AlarmContainer>
         <AlarmExplain>Objective가 생성되었습니다. Key result로 바로 연결할까요?</AlarmExplain>
         <BtnBox>
-          <BtnNo onClick={() => setState(false)}>저장</BtnNo>
-          <BtnOk onClick={() => setState(true)}>Key result 만들기</BtnOk>
+          <BtnNo onClick={() => setState(1)}>저장</BtnNo>
+          <BtnOk onClick={() => setState(2)}>Key result 만들기</BtnOk>
         </BtnBox>
       </AlarmContainer>
     </AlarmPopupModal>
