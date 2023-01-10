@@ -1,33 +1,47 @@
 import React, { useEffect, useState } from "react";
+import { CircularProgressbar } from "react-circular-progressbar";
 
+import { Category } from "@api/categories";
 import { ReactComponent as IconDown } from "@assets/icons/ico_down.svg";
-import { ReactComponent as IconKey } from "@assets/icons/ico_key.svg";
 import { ReactComponent as IconPlus } from "@assets/icons/ico_plus.svg";
 import { ReactComponent as IconUp } from "@assets/icons/ico_up.svg";
+import BaseHeader from "@components/baseHeader/baseHeader";
 import OkrCreateModal from "@components/okrCreateModal/okrCreateModal";
 import OkrDetail from "@components/okrDetail/okrDetail";
 import { useOkr } from "@hooks/useOkr";
-import { useUser } from "@hooks/useUser";
 import {
+  HeaderLeftSide,
+  HeaderRightSide,
+  HeaderSummary,
+  NoOkrBox,
   OkrBox,
+  OkrBoxHeader,
   OkrCategory,
   OkrCategoryHeader,
   OkrContainer,
-  OkrContentBox,
   OkrDDay,
   OkrFooter,
-  OkrHeader,
-  OkrStatusBox,
-  OkrStatusFill,
   OkrTitle,
   OktAddBtn,
   OktBtnBox,
 } from "@styles/okr";
+import { BasePage } from "@styles/page";
+import { palette } from "@styles/palette";
 
-import "./okr.css";
+import "./circleProgressbar.css";
+
+interface keyResultType {
+  id: number;
+  title: string;
+  progress: number;
+}
+
+interface todoType {
+  id: number;
+  title: string;
+}
 
 function Okr() {
-  const { user } = useUser();
   // const { okrs } = useOkr();
   // test 용
   const okrs = [
@@ -35,124 +49,161 @@ function Okr() {
       id: 1,
       category: {
         title: "업무",
+        colorIndex: 0,
+      },
+      dDay: 90,
+      title: "업무 제목입니다. asdkfja sdkja sdkfjals dfkjwㅏㅇ 문장무니아",
+      progress: 40,
+    },
+    {
+      id: 2,
+      category: {
+        title: "건강",
         colorIndex: 1,
       },
       dDay: 90,
       title: "업무 제목입니다.",
-      // 이거 빠질듯
-      keyResults: [
-        {
-          id: 1,
-          title: "키 리절트 입니다.",
-          progress: 80,
-        },
-      ],
-      progress: 40,
+      progress: 20,
     },
-    // {
-    //   id: 2,
-    //   category: {
-    //     title: "업무",
-    //     colorIndex: 1,
-    //   },
-    //   dDay: 90,
-    //   title: "업무 제목입니다.",
-    //   // 이거 빠질듯
-    //   keyResults: [
-    //     {
-    //       id: 1,
-    //       title: "키 리절트 입니다.",
-    //       progress: 80,
-    //     },
-    //   ],
-    //   progress: 20,
-    // },
-    // {
-    //   id: 3,
-    //   category: {
-    //     title: "업무",
-    //     colorIndex: 1,
-    //   },
-    //   dDay: 90,
-    //   title: "업무 제목입니다.",
-    //   // 이거 빠질듯
-    //   keyResults: [
-    //     {
-    //       id: 1,
-    //       title: "키 리절트 입니다.",
-    //       progress: 80,
-    //     },
-    //   ],
-    //   progress: 60,
-    // },
-    // {
-    //   id: 4,
-    //   category: {
-    //     title: "업무",
-    //     colorIndex: 1,
-    //   },
-    //   dDay: 90,
-    //   title: "업무 제목입니다.",
-    //   // 이거 빠질듯
-    //   keyResults: [
-    //     {
-    //       id: 1,
-    //       title: "키 리절트 입니다.",
-    //       progress: 80,
-    //     },
-    //   ],
-    //   progress: 90,
-    // },
+    {
+      id: 3,
+      category: {
+        title: "여가",
+        colorIndex: 4,
+      },
+      dDay: 90,
+      title: "업무 제목입니다.",
+      progress: 60,
+    },
+    {
+      id: 4,
+      category: {
+        title: "관계",
+        colorIndex: 2,
+      },
+      dDay: 90,
+      title: "업무 제목입니다.",
+      progress: 90,
+    },
   ];
+
+  // const okrs: { id: number; category: Category; dDay: number; title: string; progress: number }[] =
+  //   [];
 
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div id="okr">
-      <OkrHeader>
-        <div className="logo" role={"logo"}>
-          <IconKey />
-        </div>
-        <div className="header-user">{user?.name}님의 OKR</div>
-      </OkrHeader>
+    <BasePage id="okr">
+      <BaseHeader text={"님의 OKR"} />
+      <HeaderSummary isShow={okrs.length ? true : false}>
+        현재 진행중인 OKR은 {okrs.length}개 입니다.
+      </HeaderSummary>
       {/* OKR 컴포넌트 (목록식) */}
       <OkrContainer>
         {okrs === undefined || okrs.length === 0 ? (
-          // div no data box
-          <div className="no-okr">아직 진행중인 OKR이 없어요.</div>
+          <NoOkrBox>아직 진행중인 OKR이 없어요.</NoOkrBox>
         ) : (
-          okrs?.map(({ id, category, dDay, title, keyResults, progress }) => {
+          okrs?.map(({ id, category, dDay, title, progress }) => {
             const [detailShow, setDetailShow] = useState(false);
-            // 둘다 동작하넹?
-            // useEffect(() => {
-            //   console.log("here");
-            // }, [detailShow]);
+
+            const [keyResults, setKeyResults] = useState<keyResultType[]>([]);
+            const [todos, setTodos] = useState<todoType[]>([]);
+
+            useEffect(() => {
+              if (detailShow) {
+                // 데이터 가져오기
+                setKeyResults([
+                  {
+                    id: 1,
+                    title: "테스트 커버리지 90% 달성",
+                    progress: 0,
+                  },
+                  {
+                    id: 2,
+                    title: "Spring boot 통합 테스트 병렬실행",
+                    progress: 100,
+                  },
+                  {
+                    id: 3,
+                    title: "마지막 키 리절트",
+                    progress: 100,
+                  },
+                ]);
+                setTodos([
+                  {
+                    id: 1,
+                    title: "헬스장 출석",
+                  },
+                  {
+                    id: 2,
+                    title: "헬스장 출석",
+                  },
+                  {
+                    id: 3,
+                    title: "헬스장 출석",
+                  },
+                ]);
+              } else {
+                setTimeout(() => {
+                  setKeyResults([]);
+                  setTodos([]);
+                }, 500);
+              }
+            }, [detailShow]);
+
             return (
               <OkrBox key={`o-${id}`}>
-                <OkrCategoryHeader>
-                  <OkrCategory colorIndex={category.colorIndex}>{category.title}</OkrCategory>
-                  <OkrDDay>{dDay ? `D-${dDay}` : ""}</OkrDDay>
-                </OkrCategoryHeader>
+                <OkrBoxHeader>
+                  <HeaderLeftSide>
+                    <OkrCategoryHeader>
+                      <OkrCategory colorIndex={category.colorIndex}>{category.title}</OkrCategory>
+                      <OkrDDay>{dDay ? `D-${dDay}` : ""}</OkrDDay>
+                    </OkrCategoryHeader>
+                    <OkrTitle colorIndex={category.colorIndex}>
+                      <span>O</span> <span>{title}</span>
+                    </OkrTitle>
+                  </HeaderLeftSide>
+                  <HeaderRightSide>
+                    <CircularProgressbar
+                      // color 받아서 넣기
+                      styles={{ path: { stroke: palette.colors[category.colorIndex].main } }}
+                      strokeWidth={20}
+                      value={progress}
+                      text={`${progress}%`}
+                    />
+                  </HeaderRightSide>
+                </OkrBoxHeader>
 
-                <OkrContentBox>
-                  <OkrTitle>{title}</OkrTitle>
-                  {/* 0.5초 뒤 등장하게 */}
-                  <OkrStatusBox style={{ display: detailShow ? "none" : "block" }}>
-                    <OkrStatusFill
-                      style={{ backgroundColor: "#FF9494", width: `${progress}%` }}></OkrStatusFill>
-                  </OkrStatusBox>
-                </OkrContentBox>
-
-                <OkrDetail okrId={id} detailShow={detailShow} />
+                <OkrDetail
+                  colorIndex={category.colorIndex}
+                  keyResults={keyResults}
+                  todos={todos}
+                  detailShow={detailShow}
+                />
 
                 <OkrFooter>
                   <div
                     className="scroller"
-                    style={{ width: "100%", display: "flex", justifyContent: "center" }}
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      color: "#707070",
+                      fontSize: "14px",
+                    }}
                     onClick={() => setDetailShow(!detailShow)}>
-                    <IconDown width={24} style={{ display: detailShow ? "none" : "block" }} />
+                    {detailShow ? (
+                      <>
+                        접기 <IconUp width={24} />
+                      </>
+                    ) : (
+                      <>
+                        더보기 <IconDown width={24} />
+                      </>
+                    )}
+
                     {/* 올라갈 땐 0.5초 뒤 바뀌게 */}
-                    <IconUp width={24} style={{ display: detailShow ? "block" : "none" }} />
                   </div>
                 </OkrFooter>
               </OkrBox>
@@ -166,12 +217,12 @@ function Okr() {
             setShowModal(true);
           }}>
           {/* display:flex gap: 1rem */}
-          <IconPlus /> &nbsp; OKR 만들기
+          <IconPlus stroke="white" /> &nbsp; OKR 만들기
         </OktAddBtn>
       </OktBtnBox>
 
       <OkrCreateModal showModal={showModal} setShowModal={setShowModal} />
-    </div>
+    </BasePage>
   );
 }
 

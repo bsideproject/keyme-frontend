@@ -6,7 +6,6 @@ interface Okr {
   dDay: number;
   progress: number; // 0~100
   category: Category;
-  keyResults: KeyResult[];
 }
 
 interface KeyResult {
@@ -22,7 +21,6 @@ interface Category {
 
 interface OkrDetail {
   id: number;
-  title: string;
   keyResults: KeyResult[];
   todos: Todo[];
 }
@@ -30,6 +28,7 @@ interface OkrDetail {
 interface Todo {
   id: number;
   title: string;
+  // completedAt: date | undefined
   isCompleted: boolean;
 }
 
@@ -51,7 +50,20 @@ export interface OkrBody {
 interface OkrCreate {
   id: number;
 }
+
 export const createOkr = async (body: OkrBody): Promise<OkrCreate> => {
   const data = axiosClient.post("/objective/write", { data: body }).then((resp) => resp?.data);
+  return data;
+};
+
+export interface KrBody {
+  objectiveId: number;
+  title: string;
+}
+interface KeyResultCreate {
+  id: number;
+}
+export const createKeyResult = async (body: KrBody): Promise<KeyResultCreate> => {
+  const data = axiosClient.post("/key-result/write", { data: body }).then((resp) => resp?.data);
   return data;
 };

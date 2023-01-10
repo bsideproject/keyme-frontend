@@ -1,65 +1,103 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
-// useTheme()으로 가져오는게 맞을듯?
+// dark 모드 시 변경가능하도록 수정필요
 import { light } from "./theme";
 
 export const OkrContainer = styled.div`
   overflow-y: auto;
 `;
 
+export const HeaderSummary = styled.div<{ isShow: boolean }>`
+  font-size: 20px;
+  font-weight: 500;
+  margin: 1rem 0;
+  display: ${({ isShow }) => (isShow ? "block" : "none")};
+`;
+
+export const NoOkrBox = styled.div`
+  height: 226px;
+  padding: 1rem;
+  color: #909090;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  font-size: 18px;
+
+  margin-top: 1rem;
+`;
+
 export const OkrBox = styled.div`
   padding: 0.5rem 0;
-  /* min-height: 120px; */
-  background-color: #f0f0f0;
+  background-color: #f6f8fe;
   border-radius: 20px;
   margin-bottom: 1rem;
   transition: 0.5s;
   overflow: hidden;
 `;
 
-export const OkrHeader = styled.div`
-  margin-bottom: 1rem;
+export const OkrBoxHeader = styled.div`
+  margin: 0 1rem;
   display: flex;
-  justify-content: flex-start;
-  gap: 1rem;
+`;
+
+export const HeaderLeftSide = styled.div`
+  flex: 1;
+`;
+
+export const HeaderRightSide = styled.div`
+  flex-basis: 60px;
+  display: flex;
+  justify-self: center;
   align-items: center;
 `;
 
 export const OkrCategoryHeader = styled.div`
-  margin: 0 1rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 0.75rem;
   align-items: center;
 `;
 
-const categoryBackgroundColor = ["#F2FAFE", "#FEF6F2", "#FDEFF1", "#F1FEF3", "#EDFEFE", "#FEF4FF"];
-const categoryTextColor = ["#4284E8", "#F08538", "#EE4E6E", "#71E07C", "#4CD2D3", "#CA82EC"];
-
+import { palette } from "./palette";
 export const OkrCategory = styled.div<{ colorIndex: number }>`
-  background-color: ${(props) => categoryBackgroundColor[props.colorIndex]};
-  color: ${(props) => categoryTextColor[props.colorIndex]};
-  border-radius: 10px;
-  width: 86px;
-  height: 40px;
+  background-color: ${(props) => palette.colors[props.colorIndex].main};
+  color: white;
+  border-radius: 17px;
+  padding: 0 0.75rem;
+  height: 34px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 700;
-  font-size: 20px;
-  text-align: center;
+  font-weight: bold;
+  font-size: 15px;
 `;
 
 export const OkrDDay = styled.span`
   text-align: center;
+  color: #707070;
+  font-size: 16px;
+  font-weight: bold;
 `;
 
 export const OkrContentBox = styled.div`
   margin: 0 1rem;
 `;
 
-export const OkrTitle = styled.div`
+export const OkrTitle = styled.div<{ colorIndex: number }>`
+  display: flex;
   margin-top: 1rem;
-  font-weight: 700;
+  font-weight: bold;
+  font-size: 16px;
+  gap: 0.5rem;
+
+  & :first-child {
+    flex-basis: 14px;
+    color: ${(props) => palette.colors[props.colorIndex].main};
+  }
+
+  & :last-child {
+    width: 100%;
+    font-weight: 600;
+  }
 `;
 
 export const OkrKrs = styled.div``;
@@ -67,9 +105,9 @@ export const OkrKrs = styled.div``;
 export const KrsBox = styled.div`
   margin-top: 0.5rem;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
 `;
 
 export const KrsCircle = styled.div`
@@ -79,7 +117,11 @@ export const KrsCircle = styled.div`
   background-color: #d9d9d9;
 `;
 
-export const KrsTitle = styled.span``;
+export const KrsTitle = styled(OkrTitle)`
+  & :last-child {
+    font-weight: 400;
+  }
+`;
 
 export const OkrFooter = styled.div`
   margin-top: 1rem;
@@ -98,15 +140,18 @@ export const OkrStatusBox = styled.div`
 export const OkrDetailStatusBox = styled(OkrStatusBox)`
   margin-top: 0;
 `;
-export const OkrStatusFill = styled.div`
+export const OkrStatusFill = styled.div<{ colorIndex: number }>`
   border-radius: 10px;
   height: 18px;
+  background-color: ${(props) => palette.colors[props.colorIndex].main};
 `;
 
 export const OkrDetailBtn = styled.div``;
 
 export const OktBtnBox = styled.div`
   /* margin: 1rem auto 0; */
+  position: sticky;
+  bottom: 110px;
 `;
 
 export const OktAddBtn = styled.button`
@@ -127,86 +172,6 @@ export const OktAddBtn = styled.button`
 ////////////////////////////////////
 // Okr Modal
 
-const ltranimation = keyframes`
-  0% {
-    right: 100%;
-  }
-  100% {
-    right: 0;
-  }
-`;
-const rtlanimation = keyframes`
-  0% {
-    right: 0;
-  }
-  100% {
-    right: 100%;
-  }
-`;
-
-export const bganim = keyframes`
-  0% {
-    background-color: rgba(0, 0, 0, 0);
-  }
-  100% {
-    background-color: rgba(0, 0, 0, 0.25);
-  }
-`;
-export const revbganim = keyframes`
-  0% {
-    background-color: rgba(0, 0, 0, 0.25);
-  }
-  100% {
-    background-color: rgba(0, 0, 0, 0);
-  }
-`;
-
-export const OkrCreationBg = styled.div<{ anim: boolean; display: string }>`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: ${(props) => props.display};
-  animation: ${(props) => (props.anim ? bganim : revbganim)} 0.5s ease-in-out;
-  z-index: 500;
-`;
-
-export const OkrAnimContainer = styled.div`
-  position: relative;
-  max-width: 393px;
-  height: 100%;
-  overflow: hidden;
-  z-index: 9999;
-  margin: 0 auto;
-`;
-
-export const OkrModal = styled.div<{ anim: boolean }>`
-  position: absolute;
-  background-color: white;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  animation: ${(props) => (props.anim ? ltranimation : rtlanimation)} 0.5s ease-in-out;
-`;
-
-export const OkrModalHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  border-bottom: 1px solid #efefef;
-  & > * {
-    flex: 1;
-  }
-  & span {
-    text-align: center;
-    font-weight: 700;
-    font-size: 24px;
-  }
-`;
-
 export const OkrModalBody = styled.div`
   margin-top: 1rem;
   display: flex;
@@ -219,6 +184,7 @@ export const OkrModalCategoryHeader = styled.div`
   margin-top: 1rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const OkrModalHeaderText = styled.div`
@@ -236,20 +202,29 @@ export const OkrCategoryBox = styled.div`
   justify-content: space-between;
 `;
 
-export const OkrModalCategory = styled.div<{ colorIndex: number; isPicked: boolean }>`
+const ModalCategory = styled.div<{ colorIdx: number; isPicked: boolean }>`
   flex: 0 0 30%;
   height: 64px;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid gray; */
   border-radius: 10px;
   margin-bottom: 0.5rem;
   box-sizing: border-box;
   font-weight: bold;
-  background-color: ${(props) =>
-    props.isPicked ? categoryBackgroundColor[props.colorIndex] : "#F8F8F8"};
-  color: ${(props) => (props.isPicked ? categoryTextColor[props.colorIndex] : "#909090")};
+`;
+
+// Objective 생성
+export const OkrCreateCategory = styled(ModalCategory)`
+  background-color: ${(props) => (props.isPicked ? palette.colors[props.colorIdx].sub : "#F8F8F8")};
+  color: ${(props) => (props.isPicked ? palette.colors[props.colorIdx].main : "#909090")};
+`;
+
+// 카테고리 수정
+export const ChangeCategory = styled(ModalCategory)`
+  border: ${(props) => (props.isPicked ? "2px solid #707070" : "none")};
+  background-color: ${(props) => palette.colors[props.colorIdx].sub};
+  color: ${(props) => palette.colors[props.colorIdx].main};
 `;
 
 export const OkrObjectiveBox = styled.div`
@@ -267,38 +242,5 @@ export const OkrObjectiveBox = styled.div`
 `;
 
 export const OkrModalFooter = styled.div`
-  position: absolute;
-  width: 100%;
-  left: 0;
-  right: 0;
-  bottom: 100px;
-  padding: 1rem;
-  box-sizing: border-box;
-`;
-
-const opacity = {
-  background: "rgba(51, 91, 240, 0.2)",
-};
-
-export const OkrBtnCreate = styled.button<{ isAble: boolean }>`
-  /* basebtn으로 분리하고 상속 */
-  border-radius: 10px;
-  margin: 0 auto;
-  border: none;
-  width: 100%;
-  height: 56px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background-color: ${(props) => (props.isAble ? "#335bf0" : opacity.background)};
-  font-size: 18px;
-  color: white;
-  font-weight: bold;
-`;
-
-export const OkrBtnSkip = styled.div`
-  color: #707070;
-  text-align: center;
   margin-top: 1rem;
 `;

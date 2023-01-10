@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { subColor } from "./color";
+import { palette } from "./palette";
 const categoryBackgroundColor = ["#F2FAFE", "#FEF6F2", "#FDEFF1", "#F1FEF3", "#EDFEFE", "#FEF4FF"];
 
 const opacity = {
@@ -30,9 +30,9 @@ export const KrAddBtn = styled(BaseBtn)`
   background-color: #f8f8f8;
 `;
 
-export const BaseBoxContainer = styled.div<{ colorIdx: number }>`
+export const BaseBoxContainer = styled.div<{ colorIdx: number | undefined }>`
   border-radius: 10px;
-  background-color: ${(props) => categoryBackgroundColor[props.colorIdx]};
+  background-color: ${({ colorIdx }) => (colorIdx ? categoryBackgroundColor[colorIdx] : "")};
   padding: 1rem;
   margin-top: 1rem;
 `;
@@ -54,11 +54,11 @@ export const BaseBoxItem = styled.div`
   gap: 1rem;
 `;
 
-export const ItemBadge = styled.div<{ colorIdx: number }>`
+export const ItemBadge = styled.div<{ colorIdx: number | undefined }>`
   border-radius: 17px;
   height: 30px;
   font-weight: bold;
-  background-color: ${({ colorIdx }) => subColor[colorIdx]};
+  background-color: ${({ colorIdx }) => (colorIdx ? palette.colors[colorIdx].main : "")};
   color: white;
   display: flex;
   justify-content: center;

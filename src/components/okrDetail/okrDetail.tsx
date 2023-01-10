@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 
 import { ReactComponent as IconPlus } from "@assets/icons/ico_plus.svg";
 import useInput from "@hooks/useInput";
-import { KrsBox, KrsCircle, KrsTitle, OkrKrs, OkrStatusFill } from "@styles/okr";
+import {
+  KrsBox,
+  KrsCircle,
+  KrsTitle,
+  OkrDetailStatusBox,
+  OkrKrs,
+  OkrStatusFill,
+} from "@styles/okr";
 
 import "./okrDetail.css";
-
-interface cprops {
-  okrId: number;
-  detailShow: boolean;
-}
 
 interface keyResultType {
   id: number;
@@ -22,61 +24,18 @@ interface todoType {
   title: string;
 }
 
-function OkrDetail({ okrId, detailShow }: cprops) {
-  // detailShow가 눌렸을 때 데이터를 받아와야함
+interface cprops {
+  keyResults: keyResultType[];
+  todos: todoType[];
+  detailShow: boolean;
+  colorIndex: number;
+}
+
+function OkrDetail({ colorIndex, keyResults, todos, detailShow }: cprops) {
+  const [detailAnim, setDetailAnim] = useState(false);
+  // detailShow가 눌렸을 때 데이터를 받아와야함 -> react query
   // to do list는 key result에 종속 -> key result 가져오고 to do list 가져오기
   const [keyResult, onChange, onReset, setInput] = useInput("");
-  const [keyResults, setKeyResults] = useState<keyResultType[]>([]);
-  const [todos, setTodos] = useState<todoType[]>([]);
-
-  useEffect(() => {
-    if (detailShow) {
-      setKeyResults([
-        {
-          id: 1,
-          title: "테스트 커버리지 90% 달성",
-          progress: 0,
-        },
-        {
-          id: 2,
-          title: "Spring boot 통합 테스트 병렬실행",
-          progress: 100,
-        },
-        {
-          id: 3,
-          title: "마지막 키 리절트",
-          progress: 100,
-        },
-      ]);
-      setTodos([
-        {
-          id: 1,
-          title: "헬스장 출석",
-        },
-        {
-          id: 2,
-          title: "헬스장 출석",
-        },
-        {
-          id: 3,
-          title: "헬스장 출석",
-        },
-        {
-          id: 4,
-          title: "헬스장 출석",
-        },
-        {
-          id: 5,
-          title: "헬스장 출석",
-        },
-      ]);
-    } else {
-      setTimeout(() => {
-        setKeyResults([]);
-        setTodos([]);
-      }, 500);
-    }
-  }, [detailShow]);
 
   return (
     <div
@@ -92,13 +51,18 @@ function OkrDetail({ okrId, detailShow }: cprops) {
           ? keyResults.map(({ id, title, progress }) => {
               return (
                 <KrsBox key={`kr-${id}`}>
-                  <KrsTitle>{title}</KrsTitle>
-                  <OkrStatusFill
-                    style={{
-                      backgroundColor: "#FF9494",
-                      width: progress,
-                    }}
-                  />
+                  <KrsTitle colorIndex={colorIndex}>
+                    <span>K</span> <span>{title}</span>
+                  </KrsTitle>
+                  {/* 프로그레스 바 밑으로 이동 */}
+                  <OkrDetailStatusBox>
+                    <OkrStatusFill
+                      colorIndex={colorIndex}
+                      style={{
+                        width: progress,
+                      }}
+                    />
+                  </OkrDetailStatusBox>
                 </KrsBox>
               );
             })
