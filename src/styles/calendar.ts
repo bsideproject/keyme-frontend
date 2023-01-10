@@ -88,7 +88,7 @@ export const DaysTodoBox = styled.div`
   margin-bottom: 0.5rem;
 `;
 
-import { subColor } from "./color";
+import { palette } from "./palette";
 
 export const GrassBox = styled.div`
   width: 20px;
@@ -103,7 +103,7 @@ export const GrassBall = styled.div<{ colorIdx: number }>`
   height: 5px;
   border-radius: 20px;
   margin-bottom: 1px;
-  background-color: ${(props) => subColor[props.colorIdx]};
+  background-color: ${(props) => palette.colors[props.colorIdx].main};
 `;
 
 // calendarTodos
@@ -152,7 +152,7 @@ export const CompleteHeader = styled.div<{ colorIdx: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => subColor[props.colorIdx]};
+  background-color: ${(props) => palette.colors[props.colorIdx].main};
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   color: white;
@@ -178,7 +178,7 @@ export const TodoSymbol = styled.div<{ colorIdx: number }>`
   width: 7px;
   height: 7px;
   border-radius: 20px;
-  background-color: ${(props) => subColor[props.colorIdx]};
+  background-color: ${(props) => palette.colors[props.colorIdx].main};
 `;
 
 export const TodoText = styled.div`

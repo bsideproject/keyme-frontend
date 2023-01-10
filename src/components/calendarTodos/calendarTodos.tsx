@@ -43,8 +43,10 @@ function CalendarTodos({ completedTodos, selectedDay }: cProps) {
           <DateDay>{selectedDay.getDate()}</DateDay>
           <DateWeek>{WEEKS[dayWeek]}요일</DateWeek>
         </HeaderDatePart>
-        <HeaderSummaryPart style={{ display: completedTodos.length ? "block" : "none" }}>
-          {completedTodos.length}개의 카테고리, {todoLength}개의 To Do
+        <HeaderSummaryPart>
+          {completedTodos.length
+            ? `${completedTodos.length}개의 카테고리, ${todoLength}개의 To Do`
+            : "이 날 설정한 플랜이 없습니다."}
         </HeaderSummaryPart>
       </CalendarTodoHeader>
       {completedTodos.map(({ category, todos }, idx) => {
