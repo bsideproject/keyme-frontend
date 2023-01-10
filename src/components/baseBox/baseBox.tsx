@@ -10,7 +10,7 @@ import {
 } from "@styles/base";
 
 interface cProps {
-  colorIdx: number;
+  colorIdx: number | undefined;
   info: {
     badgeType: string;
     badgeText: string | number;
