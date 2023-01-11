@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { ThemeProvider } from "styled-components";
 
-import BottomNav from "@components/bottomNav/bottomNav";
+import BottomNav from "@components/BottomNav/BottomNav";
 import ApiErrorBoundary from "@components/ErrorBoundary/ApiErrorBoundary";
 import BaseErrorBoundary from "@components/ErrorBoundary/BaseErrorBoundary";
 import BaseFallback from "@components/ErrorBoundary/BaseFallback";

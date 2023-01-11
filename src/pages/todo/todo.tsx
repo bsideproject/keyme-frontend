@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
-import BaseHeader from "@components/baseHeader/baseHeader";
+import BaseHeader from "@components/BaseHeader/BaseHeader";
 import AllTab from "@pages/todo/all";
 import CompletedTab from "@pages/todo/complete";
 import InProgressTab from "@pages/todo/inProgress";

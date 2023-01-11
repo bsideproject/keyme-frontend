@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { isSameDay } from "date-fns";
 
-import { GrassCalendar } from "@components/calendar/calendar";
-import CalendarTodos from "@components/calendarTodos/calendarTodos";
-import { CalendarPage } from "@styles/calendar";
+import { GrassCalendar } from "@components/Calendar/Calendar";
+import CalendarTodos from "@components/CalendarTodos/CalendarTodos";
+
+import { CalendarPage } from "./calendar.styles";
 
 // 데이터 타입 관리...
 interface category {

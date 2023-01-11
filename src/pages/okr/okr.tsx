@@ -5,10 +5,13 @@ import { Category } from "@api/categories";
 import { ReactComponent as IconDown } from "@assets/icons/ico_down.svg";
 import { ReactComponent as IconPlus } from "@assets/icons/ico_plus.svg";
 import { ReactComponent as IconUp } from "@assets/icons/ico_up.svg";
-import BaseHeader from "@components/baseHeader/baseHeader";
-import OkrCreateModal from "@components/okrCreateModal/okrCreateModal";
-import OkrDetail from "@components/okrDetail/okrDetail";
+import BaseHeader from "@components/BaseHeader/BaseHeader";
+import OkrCreate from "@components/Modal/OkrCreate/OkrCreate";
 import { useOkr } from "@hooks/useOkr";
+import { BasePage } from "@styles/page";
+import { palette } from "@styles/palette";
+
+import OkrDetail from "./okrDetail/okrDetail";
 import {
   HeaderLeftSide,
   HeaderRightSide,
@@ -24,9 +27,7 @@ import {
   OkrTitle,
   OktAddBtn,
   OktBtnBox,
-} from "@styles/okr";
-import { BasePage } from "@styles/page";
-import { palette } from "@styles/palette";
+} from "./okr.styles";
 
 import "./circleProgressbar.css";
 
@@ -221,7 +222,7 @@ function Okr() {
         </OktAddBtn>
       </OktBtnBox>
 
-      <OkrCreateModal showModal={showModal} setShowModal={setShowModal} />
+      <OkrCreate showModal={showModal} setShowModal={setShowModal} />
     </BasePage>
   );
 }
