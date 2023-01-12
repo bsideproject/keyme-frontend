@@ -1,8 +1,8 @@
 import React, { MouseEventHandler } from "react";
 import { format } from "date-fns";
 
-import { ReactComponent as IconPrev } from "@assets/icons/ico_arrow_left.svg";
-import { ReactComponent as IconNext } from "@assets/icons/ico_arrow_right.svg";
+import { ReactComponent as IconPrev } from "~assets/icons/ico_arrow_left.svg";
+import { ReactComponent as IconNext } from "~assets/icons/ico_arrow_right.svg";
 
 import { PickerCalendarHeader, PickerCalendarMonth } from "./Header.styles";
 interface headerProps {

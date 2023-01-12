@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
 
-import { ReactComponent as IconPlus } from "@assets/icons/ico_plus.svg";
-
+import { ReactComponent as IconPlus } from "~assets/icons/ico_plus.svg";
 import useInput from "~hooks/useInput";
+import { useOkrDetail } from "~hooks/useOkr";
 import { KeyResultType } from "~types/okr";
 import { TodoType } from "~types/todo";
 
-import {
-  KrsBox,
-  KrsCircle,
-  KrsTitle,
-  OkrDetailStatusBox,
-  OkrKrs,
-  OkrStatusFill,
-} from "../okr.styles";
+import { OkrDetailStatusBox, OkrStatusFill } from "../okr.styles";
 
-import "./okrDetail.css";
+import {
+  KrInputContainer,
+  KrsBox,
+  KrsTitle,
+  OkrDetailBox,
+  OkrKrs,
+  OkrTodos,
+  TodoBall,
+  TodoBox,
+} from "./okrDetail.styles";
 
 interface cprops {
   okrId: number;
@@ -27,44 +29,51 @@ interface cprops {
 
 function OkrDetail({ okrId, colorIndex, keyResults, todos, detailShow }: cprops) {
   const [detailAnim, setDetailAnim] = useState(false);
+  const { okrDetail } = useOkrDetail(okrId);
   // detailShow가 눌렸을 때 데이터를 받아와야함 -> react query
   // to do list는 key result에 종속 -> key result 가져오고 to do list 가져오기
   const [keyResult, onChange, onReset, setInput] = useInput("");
   // okrId로 한번에 가져오기 가능 - react-query key:`okr-id`
 
+  // height 계산식을 넣어서 동적으로 max-height animation 관리하면 좋을것같긴한데..
+
   return (
-    <div
-      id="okr-detail"
-      style={{
-        maxHeight: detailShow ? "5000px" : 0,
-        transition: "max-height 0.5s ease-in-out",
-        overflow: "hidden",
-      }}>
+    <OkrDetailBox detailShow={detailShow}>
       <OkrKrs>
         {/* key results 목록 */}
-        {keyResults
-          ? keyResults.map(({ id, title, progress }) => {
-              return (
-                <KrsBox key={`kr-${id}`}>
-                  <KrsTitle colorIndex={colorIndex}>
-                    <span>K</span> <span>{title}</span>
-                  </KrsTitle>
-                  {/* 프로그레스 바 밑으로 이동 */}
-                  <OkrDetailStatusBox>
-                    <OkrStatusFill
-                      colorIndex={colorIndex}
-                      style={{
-                        width: progress,
-                      }}
-                    />
-                  </OkrDetailStatusBox>
-                </KrsBox>
-              );
-            })
-          : ""}
-        <div className="okr-input-container">
+        {okrDetail?.keyResults.map(({ id, title, progress }) => {
+          const [value, setValue] = useState(progress);
+          // const handleDrag = () => {
+          //   setValue();
+          // };
+
+          return (
+            <KrsBox key={`kr-${id}`}>
+              <KrsTitle colorIndex={colorIndex}>
+                <span>K</span> <span>{title}</span>
+              </KrsTitle>
+              <OkrDetailStatusBox>
+                {/* 빈 곳을 클릭하든 이미 채워진 곳을 클릭하든, 위치정보 확인해서 상대적인 값으로 progress 변경해줘야함 */}
+                {/* 보이지 않는 구슬을 넣어두고 클릭 시 drag 시작 */}
+                {/* width를 계산하여 이동시킬때마다 데리고다님 */}
+                {/* dragball element */}
+                {/* 어딜 클릭하면 drag start 하고 놓으면 drag end, 살짝 누르면 바로 end 호출 */}
+                <OkrStatusFill
+                  // 드래그 시작 시 확대
+                  // onDragStart={}
+                  // 드래그 끝날 시 handleDrag
+                  // onDragEnd={handleDrag}
+                  colorIndex={colorIndex}
+                  style={{
+                    width: progress,
+                  }}
+                />
+              </OkrDetailStatusBox>
+            </KrsBox>
+          );
+        })}
+        <KrInputContainer>
           <input
-            className="okr-detail-input"
             type="text"
             name="keyResult"
             onChange={onChange}
@@ -73,29 +82,23 @@ function OkrDetail({ okrId, colorIndex, keyResults, todos, detailShow }: cprops)
           />
           {/* onClick={} */}
           <IconPlus width={16} fill={"#D9D9D9"} />
-        </div>
+        </KrInputContainer>
       </OkrKrs>
 
-      <div className="okrTodos" style={{ display: todos.length === 0 ? "none" : "block" }}>
-        <hr style={{ margin: "1rem 0" }} />
-        {todos.map(({ id, title }) => {
+      <OkrTodos todoExists={todos.length === 0}>
+        <hr />
+        {okrDetail?.todos.map(({ id, title, isCompleted }) => {
           return (
-            <div
-              key={`todo-${id}`}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: "0.5rem",
-              }}>
-              <div style={{ display: "flex", gap: "1rem" }}>
-                <KrsCircle style={{ backgroundColor: "#ff9494" }} />
+            <TodoBox key={`todo-${id}`}>
+              <div>
+                <TodoBall isCompleted={isCompleted} />
                 <div>{title}</div>
               </div>
-            </div>
+            </TodoBox>
           );
         })}
-      </div>
-    </div>
+      </OkrTodos>
+    </OkrDetailBox>
   );
 }
 

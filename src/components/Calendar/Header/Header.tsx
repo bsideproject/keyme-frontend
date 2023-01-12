@@ -1,8 +1,8 @@
 import React, { MouseEventHandler } from "react";
 import { format } from "date-fns";
 
-import { ReactComponent as IconNext } from "@assets/icons/ico_next.svg";
-import { ReactComponent as IconPrev } from "@assets/icons/ico_prev.svg";
+import { ReactComponent as IconNext } from "~assets/icons/ico_next.svg";
+import { ReactComponent as IconPrev } from "~assets/icons/ico_prev.svg";
 
 import { CalendarHeader, CalendarMonth } from "./Header.styles";
 interface headerProps {

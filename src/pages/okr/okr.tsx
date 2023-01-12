@@ -28,15 +28,13 @@ import {
   OkrTitle,
   OktAddBtn,
   OktBtnBox,
+  Scoller,
 } from "./okr.styles";
 
 import "./circleProgressbar.css";
 
 function Okr() {
   const { okrs } = useOkr();
-
-  // const okrs: { id: number; category: Category; dDay: number; title: string; progress: number }[] =
-  //   [];
 
   const [showModal, setShowModal] = useState(false);
 
@@ -127,23 +125,14 @@ function Okr() {
                 <OkrDetail
                   okrId={id}
                   colorIndex={category.colorIndex}
+                  // okrDetail에서 받기
                   keyResults={keyResults}
                   todos={todos}
                   detailShow={detailShow}
                 />
 
                 <OkrFooter>
-                  <div
-                    className="scroller"
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      color: "#707070",
-                      fontSize: "14px",
-                    }}
-                    onClick={() => setDetailShow(!detailShow)}>
+                  <Scoller onClick={() => setDetailShow(!detailShow)}>
                     {detailShow ? (
                       <>
                         접기 <IconUp width={24} />
@@ -153,9 +142,7 @@ function Okr() {
                         더보기 <IconDown width={24} />
                       </>
                     )}
-
-                    {/* 올라갈 땐 0.5초 뒤 바뀌게 */}
-                  </div>
+                  </Scoller>
                 </OkrFooter>
               </OkrBox>
             );

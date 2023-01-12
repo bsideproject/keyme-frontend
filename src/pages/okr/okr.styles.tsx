@@ -98,29 +98,6 @@ export const OkrTitle = styled.div<{ colorIndex: number }>`
   }
 `;
 
-export const OkrKrs = styled.div``;
-
-export const KrsBox = styled.div`
-  margin-top: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.5rem;
-`;
-
-export const KrsCircle = styled.div`
-  border-radius: 50px;
-  width: 16px;
-  height: 16px;
-  background-color: #d9d9d9;
-`;
-
-export const KrsTitle = styled(OkrTitle)`
-  & :last-child {
-    font-weight: 400;
-  }
-`;
-
 export const OkrFooter = styled.div`
   margin-top: 1rem;
   justify-content: center;
@@ -165,4 +142,13 @@ export const OktAddBtn = styled.button`
   font-size: 18px;
   color: white;
   background-color: ${palette.primary};
+`;
+
+export const Scoller = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #707070;
+  font-size: 14px;
 `;
