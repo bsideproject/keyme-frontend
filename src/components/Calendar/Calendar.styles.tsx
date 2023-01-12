@@ -8,6 +8,14 @@ export const CalendarBox = styled.div<{ weekCount: number }>`
   border-bottom-right-radius: 20px;
 `;
 
+export const PickerCalendarBox = styled(CalendarBox)`
+  height: ${(props) => (props.weekCount == 6 ? "236px" : "213px")};
+  background-color: #f8f8f8;
+  margin-top: 0.5rem;
+  border-radius: 10px;
+  padding: 1rem;
+`;
+
 export const CalendarRow = styled.div`
   display: flex;
   justify-content: space-between;

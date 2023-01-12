@@ -3,7 +3,7 @@ import axios from "axios";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
 
-import { palette } from "@styles/palette";
+import { palette } from "~styles/palette";
 
 // const timeout = (ms: number) => {
 //   return new Promise((resolve) => setTimeout(resolve, ms));

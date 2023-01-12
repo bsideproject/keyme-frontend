@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "react-query";
 
-import { getUser } from "@api/users";
-import { queryKeys } from "@utils/react-query/constant";
+import { getUser } from "~api/users";
+import { queryKeys } from "~utils/react-query/constant";
 
 export const useUser = () => {
   const queryClient = useQueryClient();

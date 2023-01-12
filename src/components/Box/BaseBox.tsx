@@ -7,7 +7,7 @@ import {
   BaseBoxItem,
   ItemBadge,
   ItemText,
-} from "@styles/base";
+} from "~styles/base";
 
 interface cProps {
   colorIdx: number | undefined;

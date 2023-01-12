@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import { ReactComponent as IconPlus } from "@assets/icons/ico_plus.svg";
-import useInput from "@hooks/useInput";
+
+import useInput from "~hooks/useInput";
+import { KeyResultType } from "~types/okr";
+import { TodoType } from "~types/todo";
 
 import {
   KrsBox,
@@ -14,29 +17,20 @@ import {
 
 import "./okrDetail.css";
 
-interface keyResultType {
-  id: number;
-  title: string;
-  progress: number;
-}
-
-interface todoType {
-  id: number;
-  title: string;
-}
-
 interface cprops {
-  keyResults: keyResultType[];
-  todos: todoType[];
+  okrId: number;
+  keyResults: KeyResultType[];
+  todos: TodoType[];
   detailShow: boolean;
   colorIndex: number;
 }
 
-function OkrDetail({ colorIndex, keyResults, todos, detailShow }: cprops) {
+function OkrDetail({ okrId, colorIndex, keyResults, todos, detailShow }: cprops) {
   const [detailAnim, setDetailAnim] = useState(false);
   // detailShow가 눌렸을 때 데이터를 받아와야함 -> react query
   // to do list는 key result에 종속 -> key result 가져오고 to do list 가져오기
   const [keyResult, onChange, onReset, setInput] = useInput("");
+  // okrId로 한번에 가져오기 가능 - react-query key:`okr-id`
 
   return (
     <div

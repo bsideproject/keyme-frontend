@@ -4,16 +4,16 @@ import { useLocation } from "react-router-dom";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { ThemeProvider } from "styled-components";
 
-import BottomNav from "@components/BottomNav/BottomNav";
-import ApiErrorBoundary from "@components/ErrorBoundary/ApiErrorBoundary";
-import BaseErrorBoundary from "@components/ErrorBoundary/BaseErrorBoundary";
-import BaseFallback from "@components/ErrorBoundary/BaseFallback";
-import AxiosInterceptor from "@hooks/axiosInterceptor";
-import useThemes from "@hooks/useTheme";
-import AllRoutes from "@routes/index";
-import { AppContainer } from "@styles/app";
-import GlobalStyle from "@styles/globalStyle";
-import THEME from "@styles/theme";
+import BottomNav from "~components/BottomNav/BottomNav";
+import ApiErrorBoundary from "~components/ErrorBoundary/ApiErrorBoundary";
+import BaseErrorBoundary from "~components/ErrorBoundary/BaseErrorBoundary";
+import BaseFallback from "~components/ErrorBoundary/BaseFallback";
+import AxiosInterceptor from "~hooks/axiosInterceptor";
+import useThemes from "~hooks/useTheme";
+import AllRoutes from "~routes/index";
+import { AppContainer } from "~styles/app";
+import GlobalStyle from "~styles/globalStyle";
+import THEME from "~styles/theme";
 
 function App() {
   const [theme, onToggleTheme] = useThemes();

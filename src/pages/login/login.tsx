@@ -2,12 +2,12 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 import styled from "styled-components";
 
-import IMG_ICON_KAKAO_IMG from "@assets/icons/ico_kakao.svg";
-import IMG_ICON_KEY from "@assets/icons/ico_key.svg";
-import IMG_BG_LOGIN from "@assets/images/img_bg.png";
-import useRedirectUrl from "@hooks/useRedirectUrl";
-import { useUser } from "@hooks/useUser";
-import { isProduction, serverEndPoint } from "@utils/axios";
+import IMG_ICON_KAKAO_IMG from "~assets/icons/ico_kakao.svg";
+import IMG_ICON_KEY from "~assets/icons/ico_key.svg";
+import IMG_BG_LOGIN from "~assets/images/img_bg.png";
+import useRedirectUrl from "~hooks/useRedirectUrl";
+import { useUser } from "~hooks/useUser";
+import { isProduction, serverEndPoint } from "~utils/axios";
 
 const kakaoUrlPath = isProduction ? "kakao" : "kakao-by-local-dev";
 

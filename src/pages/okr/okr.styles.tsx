@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { palette } from "@styles/palette";
+import { palette } from "~styles/palette";
 
 export const OkrContainer = styled.div`
   overflow-y: auto;
@@ -161,7 +161,7 @@ export const OktAddBtn = styled.button`
   justify-content: center;
   align-items: center;
   border: 0;
-  font-weight: 700;
+  font-weight: bold;
   font-size: 18px;
   color: white;
   background-color: ${palette.primary};

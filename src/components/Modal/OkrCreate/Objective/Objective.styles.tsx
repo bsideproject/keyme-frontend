@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import { ModalCategory } from "@components/Modal/Modal.styles";
-import { palette } from "@styles/palette";
+import { ModalCategory } from "~components/Modal/Modal.styles";
+import { palette } from "~styles/palette";
 
 export const OkrModalBody = styled.div`
   margin-top: 1rem;
@@ -9,6 +9,17 @@ export const OkrModalBody = styled.div`
   flex-direction: column;
   justify-content: space-around;
   padding: 0 1rem;
+`;
+
+export const ObjectiveHeader = styled.div`
+  display: flex;
+  gap: 0.25rem;
+
+  align-items: center;
+
+  & span {
+    font-size: 20px;
+  }
 `;
 
 export const OkrModalCategoryHeader = styled.div`

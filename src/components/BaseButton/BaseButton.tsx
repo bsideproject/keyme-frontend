@@ -1,6 +1,6 @@
 import React from "react";
 
-import { BaseBtn } from "@styles/base";
+import { BaseBtn } from "~styles/base";
 
 interface cProps {
   isAble: boolean;

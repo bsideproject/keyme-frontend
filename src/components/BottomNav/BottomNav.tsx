@@ -1,10 +1,10 @@
 import React from "react";
 
-import { ReactComponent as IconCalendar } from "@assets/icons/ico_calendar.svg";
-import { ReactComponent as IconHome } from "@assets/icons/ico_home.svg";
-import { ReactComponent as IconMykeyme } from "@assets/icons/ico_mykeyme.svg";
-import { ReactComponent as IconTodo } from "@assets/icons/ico_todo.svg";
-import { routePath } from "@routes/index";
+import { ReactComponent as IconCalendar } from "~assets/icons/ico_calendar.svg";
+import { ReactComponent as IconHome } from "~assets/icons/ico_home.svg";
+import { ReactComponent as IconMykeyme } from "~assets/icons/ico_mykeyme.svg";
+import { ReactComponent as IconTodo } from "~assets/icons/ico_todo.svg";
+import { routePath } from "~routes/index";
 
 import { BottomNavigation, NavigationLink, NavigationText } from "./BottomNav.styles";
 

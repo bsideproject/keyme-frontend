@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { isSameDay } from "date-fns";
 
-import { GrassCalendar } from "@components/Calendar/Calendar";
-import CalendarTodos from "@components/CalendarTodos/CalendarTodos";
+import { GrassCalendar } from "~components/Calendar/Calendar";
+import CalendarTodos from "~components/CalendarTodos/CalendarTodos";
+import { Category } from "~types/category";
 
 import { CalendarPage } from "./calendar.styles";
-
-// 데이터 타입 관리...
-interface category {
-  id: number;
-  title: string;
-  colorIdx: number;
-}
 
 interface todo {
   id: number;
   // categoryIdx or categoryId -> user category로 체크
-  category: category;
+  category: Category;
   title: string;
 }
 
@@ -26,7 +20,7 @@ interface calendarTodos {
 }
 
 interface categoryTodos {
-  category: category;
+  category: Category;
   todos: { id: number; title: string }[];
 }
 
@@ -84,7 +78,7 @@ function Calendar() {
           category: {
             id: 333,
             title: "갓생살기",
-            colorIdx: 3,
+            colorIndex: 3,
           },
           title: "7:00 AM 기상, 새벽 운동 가기",
         },
@@ -93,7 +87,7 @@ function Calendar() {
           category: {
             id: 344,
             title: "관계",
-            colorIdx: 4,
+            colorIndex: 4,
           },
           title: "친구 생일 선물 주문, 레스토랑 예약하기",
         },
@@ -102,7 +96,7 @@ function Calendar() {
           category: {
             id: 365,
             title: "배움",
-            colorIdx: 2,
+            colorIndex: 2,
           },
 
           title: "뉴진스 - hype boy 원데이 클레스 참여하기",
@@ -112,7 +106,7 @@ function Calendar() {
           category: {
             id: 333,
             title: "갓생살기",
-            colorIdx: 3,
+            colorIndex: 3,
           },
           title: "블로그 주간 일기 챌린지 작성하기",
         },
@@ -121,7 +115,7 @@ function Calendar() {
           category: {
             id: 344,
             title: "관계",
-            colorIdx: 4,
+            colorIndex: 4,
           },
           title: "가족들에게 전화하기",
         },
@@ -135,7 +129,7 @@ function Calendar() {
           category: {
             id: 333,
             title: "갓생살기",
-            colorIdx: 3,
+            colorIndex: 3,
           },
           title: "7:00 AM 기상, 새벽 운동 가기",
         },
@@ -144,7 +138,7 @@ function Calendar() {
           category: {
             id: 344,
             title: "관계",
-            colorIdx: 4,
+            colorIndex: 4,
           },
           title: "친구 생일 선물 주문, 레스토랑 예약하기",
         },
@@ -153,7 +147,7 @@ function Calendar() {
           category: {
             id: 365,
             title: "배움",
-            colorIdx: 2,
+            colorIndex: 2,
           },
 
           title: "뉴진스 - hype boy 원데이 클레스 참여하기",
@@ -163,7 +157,7 @@ function Calendar() {
           category: {
             id: 333,
             title: "갓생살기",
-            colorIdx: 3,
+            colorIndex: 3,
           },
           title: "블로그 주간 일기 챌린지 작성하기",
         },
@@ -172,7 +166,7 @@ function Calendar() {
           category: {
             id: 344,
             title: "관계",
-            colorIdx: 4,
+            colorIndex: 4,
           },
           title: "가족들에게 전화하기",
         },

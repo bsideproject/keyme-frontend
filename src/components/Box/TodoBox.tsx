@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 
-import { palette } from "@styles/palette";
-import { ellipsis } from "@styles/utils";
+import { palette } from "~styles/palette";
+import { ellipsis } from "~styles/utils";
 
 const Container = styled.div`
   width: 353px;

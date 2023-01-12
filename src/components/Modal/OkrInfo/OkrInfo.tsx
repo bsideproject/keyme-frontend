@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import { ReactComponent as IconClose } from "@assets/icons/ico_close.svg";
-import BaseBox from "@components/Box/BaseBox";
+import { ReactComponent as IconClose } from "~assets/icons/ico_close.svg";
+import BaseBox from "~components/Box/BaseBox";
 
 import { InfoContainer, InfoHeader, InfoHeaderTitle, InfoModal } from "./OkrInfo.styles";
 
@@ -51,7 +51,7 @@ function OkrInfoModal({ title, Content, info, showModal, setShowModal }: cProps)
           info={info.keyResults.map(({ title }, idx) => {
             return {
               badgeType: "circle",
-              badgeText: idx.toString(),
+              badgeText: (idx + 1).toString(),
               title,
             };
           })}

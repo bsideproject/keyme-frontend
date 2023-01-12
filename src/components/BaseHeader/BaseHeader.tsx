@@ -1,8 +1,8 @@
 import React from "react";
 
-import { ReactComponent as IconKey } from "@assets/icons/ico_key.svg";
-import { useUser } from "@hooks/useUser";
-import { HeaderBox, HeaderUser } from "@styles/base";
+import { ReactComponent as IconKey } from "~assets/icons/ico_key.svg";
+import { useUser } from "~hooks/useUser";
+import { HeaderBox, HeaderUser } from "~styles/base";
 
 interface cProps {
   text: string;

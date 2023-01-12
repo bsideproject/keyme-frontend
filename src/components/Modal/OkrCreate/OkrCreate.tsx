@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { ReactComponent as IconBack } from "@assets/icons/ico_back.svg";
-import AlarmPopup from "@components/AlarmPopup/AlarmPopup";
-import OkrCategoryModal from "@components/Modal/OkrCategory/OkrCategory";
-import { useCategory } from "@hooks/useCategory";
-import useInput from "@hooks/useInput";
+import { ReactComponent as IconBack } from "~assets/icons/ico_back.svg";
+import AlarmPopup from "~components/AlarmPopup/AlarmPopup";
+import OkrCategoryModal from "~components/Modal/OkrCategory/OkrCategory";
+import { useCategory } from "~hooks/useCategory";
+import useInput from "~hooks/useInput";
 
 import KeyResult from "./KeyResult/KeyResult";
 import Objective from "./Objective/Objective";
@@ -14,6 +14,8 @@ interface cProps {
   showModal: boolean;
   setShowModal: (param: boolean) => void;
 }
+
+// onModalClose로 계속 전달?
 
 function OkrCreateModal({ showModal, setShowModal }: cProps) {
   const [modalAnim, setModalAnim] = useState<boolean>(true);
@@ -31,7 +33,7 @@ function OkrCreateModal({ showModal, setShowModal }: cProps) {
   const [showNext, setShowNext] = useState<number>(0);
   const [showPopup, setShowPopup] = useState<boolean>(false);
 
-  const [isKeyReulst, setIsKeyResult] = useState<boolean>(false);
+  const [isKeyResult, setIsKeyResult] = useState<boolean>(false);
 
   const closeModal = () => {
     setShowNext(0);
@@ -72,7 +74,7 @@ function OkrCreateModal({ showModal, setShowModal }: cProps) {
           onTitleChange={onTitleChange}
           categoryId={categoryId}
           setCategoryId={setCategoryId}
-          isKeyReulst={isKeyReulst}
+          isKeyResult={isKeyResult}
           setShowPopup={setShowPopup}
           setShowCategoryModal={setShowCategoryModal}
           categories={categories}
@@ -82,7 +84,7 @@ function OkrCreateModal({ showModal, setShowModal }: cProps) {
           // okrId
           title={title}
           nowCategory={categories?.filter(({ id }) => id === categoryId)[0]}
-          isKeyReulst={isKeyReulst}
+          isKeyResult={isKeyResult}
         />
 
         <OkrCategoryModal

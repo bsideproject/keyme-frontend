@@ -1,10 +1,5 @@
-import { axiosClient } from "@utils/axios";
-
-export interface Category {
-  id: number;
-  title: string;
-  colorIndex: number;
-}
+import { Category } from "~types/category";
+import { axiosClient } from "~utils/axios";
 
 export const getCategoryList = async (): Promise<Category[]> => {
   const data = axiosClient.get("/categories").then((resp) => resp?.data?.data.categories);

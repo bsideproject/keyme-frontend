@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Category } from "~types/category";
+
 import {
   CompleteBody,
   CompleteBox,
@@ -10,11 +12,7 @@ import {
 } from "./Complete.styles";
 
 interface cProps {
-  category: {
-    id: number;
-    colorIdx: number;
-    title: string;
-  };
+  category: Category;
   todos: {
     id: number;
     title: string;
@@ -24,12 +22,12 @@ interface cProps {
 function Complete({ category, todos }: cProps) {
   return (
     <CompleteBox>
-      <CompleteHeader colorIdx={category.colorIdx}>{category.title}</CompleteHeader>
+      <CompleteHeader colorIdx={category.colorIndex}>{category.title}</CompleteHeader>
       <CompleteBody>
         {todos.map(({ id, title }) => {
           return (
             <CompleteList key={id}>
-              <TodoSymbol colorIdx={category.colorIdx} />
+              <TodoSymbol colorIdx={category.colorIndex} />
               <TodoText>{title}</TodoText>
             </CompleteList>
           );

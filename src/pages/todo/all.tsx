@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-import IMG_PLUS_BTN from "@assets/images/img_plus_btn.png";
-import TodoBox from "@components/Box/TodoBox";
-import TodoLabel from "@components/Label/TodoLabel";
-import useGetTodos from "@pages/todo/hooks";
-import { palette } from "@styles/palette";
+import IMG_PLUS_BTN from "~assets/images/img_plus_btn.png";
+import TodoBox from "~components/Box/TodoBox";
+import TodoLabel from "~components/Label/TodoLabel";
+import useGetTodos from "~pages/todo/hooks";
+import { palette } from "~styles/palette";
 
 const AddButton = styled.button<{ isVisible: boolean }>`
   cursor: pointer;

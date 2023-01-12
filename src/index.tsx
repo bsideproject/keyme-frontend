@@ -6,7 +6,8 @@ import { RecoilRoot } from "recoil";
 
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
-import { queryClient } from "@utils/react-query/queryClient";
+
+import { queryClient } from "~utils/react-query/queryClient";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";

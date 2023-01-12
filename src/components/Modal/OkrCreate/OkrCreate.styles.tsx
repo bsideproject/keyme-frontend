@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { ltranimation, rtlanimation } from "@styles/anim";
+import { ltranimation, rtlanimation } from "~styles/anim";
 
 import { BaseModal } from "../Modal.styles";
 

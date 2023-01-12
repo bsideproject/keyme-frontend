@@ -3,29 +3,17 @@ import { format } from "date-fns";
 import { endOfMonth, endOfWeek, startOfMonth, startOfWeek } from "date-fns";
 import { addDays, isSameDay, isSameMonth } from "date-fns";
 
-import { dateFormatter } from "~utils/datetime";
-
 import { CalendarRow } from "../Calendar.styles";
 
-import Grass from "./Grass/Grass";
-import { CalendarDays, DaysCell, DaysDay, DaysTodoBox } from "./Days.styles";
+import { CalendarDays, DaysCell, DaysDay } from "./Days.styles";
 
-interface tempType {
-  [key: string]: Set<number>;
-}
 interface daysProps {
   currentDay: Date;
-  selectedDate: Date;
-  completeStatus: tempType;
+  pickedDate?: Date;
   onDateClick: (day: Date) => void;
 }
 
-export const RenderDays = ({
-  currentDay,
-  selectedDate,
-  completeStatus,
-  onDateClick,
-}: daysProps) => {
+export const PickerDays = ({ currentDay, pickedDate, onDateClick }: daysProps) => {
   const monthStart = startOfMonth(currentDay);
   const monthEnd = endOfMonth(monthStart);
   const startDate = startOfWeek(monthStart);
@@ -40,7 +28,6 @@ export const RenderDays = ({
     for (let i = 0; i < 7; i++) {
       formattedDate = format(day, "d");
       const cloneDay = day;
-      const dayText = dateFormatter(day);
       days.push(
         <DaysCell
           key={day.toString()}
@@ -50,19 +37,10 @@ export const RenderDays = ({
             }
           }}>
           <DaysDay
-            isSameDay={isSameDay(day, selectedDate)}
+            isSameDay={pickedDate ? isSameDay(day, pickedDate) : false}
             isSameMonth={isSameMonth(day, currentDay)}>
             {formattedDate}
           </DaysDay>
-          <DaysTodoBox>
-            {/* 어차피 2월 데이터 받을 경우 빠져도 될 듯 */}
-            {dayText in completeStatus && isSameMonth(day, currentDay) ? (
-              // color idx
-              <Grass category={completeStatus[dayText]} />
-            ) : (
-              ""
-            )}
-          </DaysTodoBox>
         </DaysCell>
       );
       day = addDays(day, 1);

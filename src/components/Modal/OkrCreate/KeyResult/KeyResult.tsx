@@ -1,29 +1,24 @@
 import React, { useEffect, useState } from "react";
 
-import { ReactComponent as IconInfo } from "@assets/icons/ico_info.svg";
-import BaseButton from "@components/BaseButton/BaseButton";
-import KrAddButton from "@components/BaseButton/KrAddButton";
-import BaseBox from "@components/Box/BaseBox";
-// import { useOkrDetail } from "@hooks/useOkr";
-import { OkrModalFooter } from "@components/Modal/Modal.styles";
-import OkrInfoModal from "@components/Modal/OkrInfo/OkrInfo";
-import useInput from "@hooks/useInput";
-import { useUser } from "@hooks/useUser";
+import { ReactComponent as IconInfo } from "~assets/icons/ico_info.svg";
+import BaseButton from "~components/BaseButton/BaseButton";
+import KrAddButton from "~components/BaseButton/KrAddButton";
+import BaseBox from "~components/Box/BaseBox";
+// import { useOkrDetail } from "~hooks/useOkr";
+import { OkrModalFooter } from "~components/Modal/Modal.styles";
+import OkrInfoModal from "~components/Modal/OkrInfo/OkrInfo";
+import useInput from "~hooks/useInput";
+import { useUser } from "~hooks/useUser";
+import { Category } from "~types/category";
 
 import { OkrModalHeaderText, OkrObjectiveBox } from "../OkrCreate.styles";
 
-import "./keyResult.css";
+import { KeyResultBody, KeyResultHeader } from "./KeyResult.styles";
 
 interface cProps {
   title: string;
-  nowCategory:
-    | {
-        id: number;
-        title: string;
-        colorIndex: number;
-      }
-    | undefined;
-  isKeyReulst: boolean;
+  nowCategory?: Category;
+  isKeyResult: boolean;
 }
 
 interface krListType {
@@ -31,7 +26,7 @@ interface krListType {
   title: string;
 }
 
-function KeyResult({ title, nowCategory, isKeyReulst }: cProps) {
+function KeyResult({ title, nowCategory, isKeyResult }: cProps) {
   const [krTitle, onKrTitleChange, onReset, setKrTitle] = useInput("");
   const [btnDisable, setBtnDisable] = useState<boolean>(false);
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
@@ -42,6 +37,10 @@ function KeyResult({ title, nowCategory, isKeyReulst }: cProps) {
 
   // okrId 필요
   // const {mutation} = useOkrDetail()
+
+  const handleClick = () => {
+    console.log("here");
+  };
 
   useEffect(() => {
     if (Object.keys(krList).length === 0) {
@@ -69,11 +68,8 @@ function KeyResult({ title, nowCategory, isKeyReulst }: cProps) {
   );
 
   return (
-    <div
-      className="keyresult-body"
-      style={{ paddingBottom: "200px", display: isKeyReulst ? "flex" : "none" }}>
-      <div className="okr-objective-header" style={{ alignItems: "flex-end" }}>
-        {/* 이름으로 변경 */}
+    <KeyResultBody isKeyResult={isKeyResult}>
+      <KeyResultHeader>
         <span>
           {user?.name}님, <br />
           방금 작성한 Objective를 달성하기 위한 Key result를 만들어볼까요?
@@ -81,7 +77,7 @@ function KeyResult({ title, nowCategory, isKeyReulst }: cProps) {
         <span style={{ flexBasis: "24px" }}>
           <IconInfo width={24} onClick={() => setShowInfoModal(true)} />
         </span>
-      </div>
+      </KeyResultHeader>
       <BaseBox
         colorIdx={nowCategory?.colorIndex}
         info={[
@@ -122,7 +118,7 @@ function KeyResult({ title, nowCategory, isKeyReulst }: cProps) {
 
       <OkrModalFooter>
         <KrAddButton isAble={krTitle !== ""} handleClick={addKeyResult} text={"Key result 추가"} />
-        {/* <BaseButton isAble={btnDisable} handleClick={} text={"완료"} /> */}
+        <BaseButton isAble={btnDisable} handleClick={handleClick} text={"완료"} />
       </OkrModalFooter>
       <OkrInfoModal
         title={"Key result 예시"}
@@ -145,7 +141,7 @@ function KeyResult({ title, nowCategory, isKeyReulst }: cProps) {
         showModal={showInfoModal}
         setShowModal={setShowInfoModal}
       />
-    </div>
+    </KeyResultBody>
   );
 }
 

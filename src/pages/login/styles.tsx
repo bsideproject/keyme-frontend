@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { breakPoints } from "@styles/responsive";
+import { breakPoints } from "~styles/responsive";
 
 export const LoginContainer = styled.div`
   width: 100%;

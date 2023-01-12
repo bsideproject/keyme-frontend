@@ -1,7 +1,7 @@
 import React from "react";
 
-import { ReactComponent as IconPlus } from "@assets/icons/ico_plus.svg";
-import { KrAddBtn } from "@styles/base";
+import { ReactComponent as IconPlus } from "~assets/icons/ico_plus.svg";
+import { KrAddBtn } from "~styles/base";
 
 interface cProps {
   isAble: boolean;

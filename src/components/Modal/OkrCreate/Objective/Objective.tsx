@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
 
-import { ReactComponent as IconEdit } from "@assets/icons/ico_edit.svg";
-import { ReactComponent as IconInfo } from "@assets/icons/ico_info.svg";
-import BaseButton from "@components/BaseButton/BaseButton";
-import { ModalCategoryBox, OkrModalFooter } from "@components/Modal/Modal.styles";
-import OkrInfoModal from "@components/Modal/OkrInfo/OkrInfo";
-import { useOkr } from "@hooks/useOkr";
-import { useUser } from "@hooks/useUser";
+import { ReactComponent as IconEdit } from "~assets/icons/ico_edit.svg";
+import { ReactComponent as IconInfo } from "~assets/icons/ico_info.svg";
+import BaseButton from "~components/BaseButton/BaseButton";
+import DatePicker from "~components/DatePicker/DatePicker";
+import { ModalCategoryBox, OkrModalFooter } from "~components/Modal/Modal.styles";
+import OkrInfoModal from "~components/Modal/OkrInfo/OkrInfo";
+import { useOkr } from "~hooks/useOkr";
+import { useUser } from "~hooks/useUser";
+import { Category } from "~types/category";
 
 import { OkrModalHeaderText, OkrObjectiveBox } from "../OkrCreate.styles";
 
-import { OkrCreateCategory, OkrModalBody, OkrModalCategoryHeader } from "./Objective.styles";
-
-import "./objective.css";
+import {
+  ObjectiveHeader,
+  OkrCreateCategory,
+  OkrModalBody,
+  OkrModalCategoryHeader,
+} from "./Objective.styles";
 
 interface cProps {
   title: string;
@@ -21,14 +26,8 @@ interface cProps {
   setShowCategoryModal: (param: boolean) => void;
   onTitleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   setCategoryId: (param: number) => void;
-  categories:
-    | {
-        id: number;
-        title: string;
-        colorIndex: number;
-      }[]
-    | undefined;
-  isKeyReulst: boolean;
+  categories?: Category[];
+  isKeyResult: boolean;
 }
 
 function Objective({
@@ -39,9 +38,10 @@ function Objective({
   setShowPopup,
   setShowCategoryModal,
   categories,
-  isKeyReulst,
+  isKeyResult,
 }: cProps) {
   const [btnDisable, setBtnDisable] = useState<boolean>(false);
+  const [date, setDate] = useState<Date | undefined>(undefined);
 
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
   const { user } = useUser();
@@ -62,6 +62,8 @@ function Objective({
       return;
     } else {
       // setOkrId -> 위에서 props로 가져오기
+      // endedAt
+      // date
       const okrId = mutation.mutate({ title, categoryId });
       console.log(okrId);
       setShowPopup(true);
@@ -70,12 +72,13 @@ function Objective({
   const infoContent = () => <></>;
 
   return (
-    <div style={{ paddingBottom: "110px", display: isKeyReulst ? "none" : "block" }}>
+    <div style={{ display: isKeyResult ? "none" : "block" }}>
       <OkrModalBody>
-        <div className="okr-objective-header">
+        {/* header sticky? */}
+        <ObjectiveHeader>
           <span>{user?.name}님 어떤 목표를 가지고 계신가요?</span>
           <IconInfo onClick={() => setShowInfoModal(true)} />
-        </div>
+        </ObjectiveHeader>
 
         <OkrModalCategoryHeader>
           <OkrModalHeaderText>Objective 카테고리를 선택해주세요</OkrModalHeaderText>
@@ -106,6 +109,9 @@ function Objective({
             value={title}
           />
         </OkrObjectiveBox>
+
+        <DatePicker setDate={setDate} />
+
         <OkrModalFooter>
           <BaseButton isAble={btnDisable} handleClick={addOkr} text={"다음"} />
         </OkrModalFooter>

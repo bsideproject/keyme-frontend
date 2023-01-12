@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-import { CategoryBody, getCategoryList, updateCategory } from "@api/categories";
-import { queryKeys } from "@utils/react-query/constant";
+import { CategoryBody, getCategoryList, updateCategory } from "~api/categories";
+import { queryKeys } from "~utils/react-query/constant";
 
 interface Category {
   id: number;

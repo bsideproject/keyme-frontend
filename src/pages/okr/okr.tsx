@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 
-import { Category } from "@api/categories";
-import { ReactComponent as IconDown } from "@assets/icons/ico_down.svg";
-import { ReactComponent as IconPlus } from "@assets/icons/ico_plus.svg";
-import { ReactComponent as IconUp } from "@assets/icons/ico_up.svg";
-import BaseHeader from "@components/BaseHeader/BaseHeader";
-import OkrCreate from "@components/Modal/OkrCreate/OkrCreate";
-import { useOkr } from "@hooks/useOkr";
-import { BasePage } from "@styles/page";
-import { palette } from "@styles/palette";
+import { ReactComponent as IconDown } from "~assets/icons/ico_down.svg";
+import { ReactComponent as IconPlus } from "~assets/icons/ico_plus.svg";
+import { ReactComponent as IconUp } from "~assets/icons/ico_up.svg";
+import BaseHeader from "~components/BaseHeader/BaseHeader";
+import OkrCreate from "~components/Modal/OkrCreate/OkrCreate";
+import { useOkr } from "~hooks/useOkr";
+import { BasePage } from "~styles/page";
+import { palette } from "~styles/palette";
+import { KeyResultType } from "~types/okr";
+import { TodoType } from "~types/todo";
 
 import OkrDetail from "./okrDetail/okrDetail";
 import {
@@ -31,62 +32,8 @@ import {
 
 import "./circleProgressbar.css";
 
-interface keyResultType {
-  id: number;
-  title: string;
-  progress: number;
-}
-
-interface todoType {
-  id: number;
-  title: string;
-}
-
 function Okr() {
-  // const { okrs } = useOkr();
-  // test 용
-  const okrs = [
-    {
-      id: 1,
-      category: {
-        title: "업무",
-        colorIndex: 0,
-      },
-      dDay: 90,
-      title: "업무 제목입니다. asdkfja sdkja sdkfjals dfkjwㅏㅇ 문장무니아",
-      progress: 40,
-    },
-    {
-      id: 2,
-      category: {
-        title: "건강",
-        colorIndex: 1,
-      },
-      dDay: 90,
-      title: "업무 제목입니다.",
-      progress: 20,
-    },
-    {
-      id: 3,
-      category: {
-        title: "여가",
-        colorIndex: 4,
-      },
-      dDay: 90,
-      title: "업무 제목입니다.",
-      progress: 60,
-    },
-    {
-      id: 4,
-      category: {
-        title: "관계",
-        colorIndex: 2,
-      },
-      dDay: 90,
-      title: "업무 제목입니다.",
-      progress: 90,
-    },
-  ];
+  const { okrs } = useOkr();
 
   // const okrs: { id: number; category: Category; dDay: number; title: string; progress: number }[] =
   //   [];
@@ -96,8 +43,8 @@ function Okr() {
   return (
     <BasePage id="okr">
       <BaseHeader text={"님의 OKR"} />
-      <HeaderSummary isShow={okrs.length ? true : false}>
-        현재 진행중인 OKR은 {okrs.length}개 입니다.
+      <HeaderSummary isShow={okrs?.length ? true : false}>
+        현재 진행중인 OKR은 {okrs?.length}개 입니다.
       </HeaderSummary>
       {/* OKR 컴포넌트 (목록식) */}
       <OkrContainer>
@@ -107,8 +54,8 @@ function Okr() {
           okrs?.map(({ id, category, dDay, title, progress }) => {
             const [detailShow, setDetailShow] = useState(false);
 
-            const [keyResults, setKeyResults] = useState<keyResultType[]>([]);
-            const [todos, setTodos] = useState<todoType[]>([]);
+            const [keyResults, setKeyResults] = useState<KeyResultType[]>([]);
+            const [todos, setTodos] = useState<TodoType[]>([]);
 
             useEffect(() => {
               if (detailShow) {
@@ -134,14 +81,17 @@ function Okr() {
                   {
                     id: 1,
                     title: "헬스장 출석",
+                    isCompleted: false,
                   },
                   {
                     id: 2,
                     title: "헬스장 출석",
+                    isCompleted: false,
                   },
                   {
                     id: 3,
                     title: "헬스장 출석",
+                    isCompleted: false,
                   },
                 ]);
               } else {
@@ -166,7 +116,6 @@ function Okr() {
                   </HeaderLeftSide>
                   <HeaderRightSide>
                     <CircularProgressbar
-                      // color 받아서 넣기
                       styles={{ path: { stroke: palette.colors[category.colorIndex].main } }}
                       strokeWidth={20}
                       value={progress}
@@ -176,6 +125,7 @@ function Okr() {
                 </OkrBoxHeader>
 
                 <OkrDetail
+                  okrId={id}
                   colorIndex={category.colorIndex}
                   keyResults={keyResults}
                   todos={todos}
@@ -217,7 +167,6 @@ function Okr() {
           onClick={() => {
             setShowModal(true);
           }}>
-          {/* display:flex gap: 1rem */}
           <IconPlus stroke="white" /> &nbsp; OKR 만들기
         </OktAddBtn>
       </OktBtnBox>

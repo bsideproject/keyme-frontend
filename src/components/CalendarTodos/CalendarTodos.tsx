@@ -1,6 +1,8 @@
 import React from "react";
 import { startOfWeek } from "date-fns";
 
+import { Category } from "~types/category";
+
 import Complete from "./Complete/Complete";
 import {
   CalendarTodoBox,
@@ -11,14 +13,8 @@ import {
   HeaderSummaryPart,
 } from "./CalendarTodos.styles";
 
-interface category {
-  id: number;
-  title: string;
-  colorIdx: number;
-}
-
 interface categoryTodos {
-  category: category;
+  category: Category;
   todos: { id: number; title: string }[];
 }
 

@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import { keyframes } from "styled-components";
 
 export const heightAnim = keyframes`
   0% {
@@ -15,6 +15,23 @@ export const rHeightAnim = keyframes`
   }
   100% {
     height: 0;
+  }
+`;
+
+export const pickerHeight = keyframes`
+  0% { 
+    max-height: 0
+  }
+  100% {
+    max-height: 291px
+  }
+`;
+export const rPickerHeight = keyframes`
+  0% { 
+    max-height: 236px
+  }
+  100% {
+    max-height: 0
   }
 `;
 

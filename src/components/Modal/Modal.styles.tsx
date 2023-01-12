@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { bganim, revbganim } from "@styles/anim";
+import { bganim, revbganim } from "~styles/anim";
 
 // 한번 더 분리
 export const BaseModal = styled.div<{ anim: boolean; showModal: boolean }>`

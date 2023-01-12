@@ -2,7 +2,7 @@ import { FC, ReactElement, useEffect } from "react";
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 
-import { axiosClient } from "@utils/axios";
+import { axiosClient } from "~utils/axios";
 
 interface Props {
   children: ReactElement;

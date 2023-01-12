@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import { heightAnim, rHeightAnim } from "@styles/anim";
-import { palette } from "@styles/palette";
+import { heightAnim, rHeightAnim } from "~styles/anim";
+import { palette } from "~styles/palette";
 
 import { BaseModal, ModalCategory } from "../Modal.styles";
 

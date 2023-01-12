@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { palette } from "@styles/palette";
+import { palette } from "~styles/palette";
 
 export const CompleteBox = styled.div`
   display: flex;

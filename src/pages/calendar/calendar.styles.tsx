@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { BasePage } from "@styles/page";
+import { BasePage } from "~styles/page";
 
 export const CalendarPage = styled(BasePage)`
   padding: 0 0 90px;

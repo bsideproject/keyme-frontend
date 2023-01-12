@@ -1,15 +1,15 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import PrivateRoute from "@routes/PrivateRoute";
+import PrivateRoute from "~routes/PrivateRoute";
 
-const Login = React.lazy(() => import("@pages/login/login"));
-const Okr = React.lazy(() => import("@pages/okr/okr"));
-const Todo = React.lazy(() => import("@pages/todo/todo"));
-const Calendar = React.lazy(() => import("@pages/calendar/calendar"));
-const MyPage = React.lazy(() => import("@pages/mypage/mypage"));
-const KaKaoCallback = React.lazy(() => import("@pages/kakao/kakaoCallback"));
-const NotFound = React.lazy(() => import("@pages/404/notfound"));
+const Login = React.lazy(() => import("~pages/login/login"));
+const Okr = React.lazy(() => import("~pages/okr/okr"));
+const Todo = React.lazy(() => import("~pages/todo/todo"));
+const Calendar = React.lazy(() => import("~pages/calendar/calendar"));
+const MyPage = React.lazy(() => import("~pages/mypage/mypage"));
+const KaKaoCallback = React.lazy(() => import("~pages/kakao/kakaoCallback"));
+const NotFound = React.lazy(() => import("~pages/404/notfound"));
 export const routePath = {
   LOGIN: "/login",
   OKR: "/",

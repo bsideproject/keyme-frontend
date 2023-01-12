@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-import { useUser } from "@hooks/useUser";
+import { useUser } from "~hooks/useUser";
 
 const PrivateRoute = () => {
   const location = useLocation();

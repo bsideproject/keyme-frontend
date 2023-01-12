@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import { ReactComponent as IconClose } from "@assets/icons/ico_close2.svg";
-import { ReactComponent as IconFin } from "@assets/icons/ico_fin.svg";
-import { useCategory } from "@hooks/useCategory";
-import useInput from "@hooks/useInput";
-import { palette } from "@styles/palette";
+import { ReactComponent as IconClose } from "~assets/icons/ico_close2.svg";
+import { ReactComponent as IconFin } from "~assets/icons/ico_fin.svg";
+import { useCategory } from "~hooks/useCategory";
+import useInput from "~hooks/useInput";
+import { palette } from "~styles/palette";
+import { Category } from "~types/category";
 
 import { ModalCategoryBox } from "../Modal.styles";
 
@@ -25,13 +26,7 @@ import {
 interface cProps {
   showModal: boolean;
   setShowModal: (param: boolean) => void;
-  categories:
-    | {
-        id: number;
-        title: string;
-        colorIndex: number;
-      }[]
-    | undefined;
+  categories?: Category[];
 }
 
 function OkrCategoryModal({ showModal, setShowModal, categories }: cProps) {

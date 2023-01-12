@@ -3,8 +3,9 @@ import axios from "axios";
 import { FallbackProps } from "react-error-boundary";
 import { useQueryErrorResetBoundary } from "react-query";
 
-import BaseErrorBoundary from "@components/ErrorBoundary/BaseErrorBoundary";
 import * as Sentry from "@sentry/react";
+
+import BaseErrorBoundary from "~components/ErrorBoundary/BaseErrorBoundary";
 
 interface Props {
   children: React.ReactElement;
