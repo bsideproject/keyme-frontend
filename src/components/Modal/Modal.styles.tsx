@@ -18,7 +18,7 @@ export const BaseModal = styled.div<{ anim: boolean; showModal: boolean }>`
   background-color: rgba(0, 0, 0, 0.75);
 
   animation: ${(props) => (props.anim ? bganim : revbganim)} 0.5s ease-in-out;
-  display: ${(props) => (props.showModal ? "flex" : "none")};
+  display: ${(props) => (props.showModal ? "flex" : "flex")};
 `;
 
 export const OkrModalFooter = styled.div`

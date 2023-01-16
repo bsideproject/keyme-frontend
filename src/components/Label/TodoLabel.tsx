@@ -1,6 +1,8 @@
 import { FC } from "react";
 import styled from "styled-components";
 
+import ICON_LINK from "~assets/icons/ico_link.svg";
+
 const Container = styled.div<{ bgColor: string }>`
   width: 50px;
   height: 34px;
@@ -14,15 +16,29 @@ const Container = styled.div<{ bgColor: string }>`
   line-height: 18px;
   letter-spacing: -0.005rem;
   color: #fff;
+  position: relative;
+  > img {
+    position: absolute;
+    left: 11px;
+    top: -10px;
+    cursor: pointer;
+    //transform: translate(4px, -5px);
+  }
 `;
 
 interface Props {
   text: string;
   bgColor: string;
+  isCompleted: boolean;
 }
 
-const TodoLabel: FC<Props> = ({ text, bgColor }) => {
-  return <Container bgColor={bgColor}>{text}</Container>;
+const TodoLabel: FC<Props> = ({ text, bgColor, isCompleted }) => {
+  return (
+    <Container bgColor={isCompleted ? "#DADADA" : bgColor}>
+      {" "}
+      {text ? text : <img src={ICON_LINK} />}
+    </Container>
+  );
 };
 
 export default TodoLabel;

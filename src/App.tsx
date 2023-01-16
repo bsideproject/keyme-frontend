@@ -36,6 +36,8 @@ function App() {
                 {/*  size={30}*/}
                 {/*/>*/}
                 <AllRoutes />
+                <div id="modal" />
+
                 {!excludesBottomNavRoutes.includes(location.pathname) ? <BottomNav /> : null}
               </AppContainer>
             </ThemeProvider>

@@ -6,3 +6,8 @@ export interface TodoType {
   isCompleted: boolean;
   category?: Category;
 }
+
+export interface TodoReqBody {
+  title: string;
+  keyResultId?: number;
+}

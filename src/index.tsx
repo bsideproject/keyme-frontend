@@ -25,17 +25,15 @@ Sentry.init({
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RecoilRoot>
-        <BrowserRouter>
-          <Suspense fallback={<div>Loading...</div>}>
-            <App />
-          </Suspense>
-        </BrowserRouter>
-      </RecoilRoot>
-    </QueryClientProvider>
-  </React.StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <RecoilRoot>
+      <BrowserRouter>
+        <Suspense fallback={<div>Loading...</div>}>
+          <App />
+        </Suspense>
+      </BrowserRouter>
+    </RecoilRoot>
+  </QueryClientProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
