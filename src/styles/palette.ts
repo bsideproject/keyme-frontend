@@ -1,8 +1,3 @@
-interface Color {
-  main: string;
-  sub: string;
-}
-
 const colorsMains = [
   "#4284E8",
   "#EE8235",
@@ -10,24 +5,22 @@ const colorsMains = [
   "#51E660",
   "#36E2E3",
   "#BE67E6",
-  "#F5AA11",
-  "#E81C93",
-  "#4D36EA",
-  "#F3F5FB",
+  "#F4B026",
+  "#DE2F95",
+  "#604EDB",
+  "#707070",
 ];
 const colorSubs = [
   "#F2FAFE",
   "#FEF6F2",
-  "#FDEFF1",
+  "#FFF0F2",
   "#F1FEF3",
   "#EDFEFE",
   "#FEF4FF",
-  "#F2FAFE",
-  "#FEF6F2",
-  "#FDEFF1",
-  "#F1FEF3",
-  "#EDFEFE",
-  "#FEF4FF",
+  "#FEF9F1",
+  "#FEF2FD",
+  "#F6F3FF",
+  "#F0F0F0",
 ];
 
 export const basicColor = ["#222222", "#707070", "#DADADA", "#C2C202", "#FFFFFF"];
@@ -58,7 +51,3 @@ export const palette = {
     };
   }),
 };
-
-// 기존 컬러
-const categoryBackgroundColor = ["#F2FAFE", "#FEF6F2", "#FDEFF1", "#F1FEF3", "#EDFEFE", "#FEF4FF"];
-const categoryTextColor = ["#4284E8", "#F08538", "#EE4E6E", "#71E07C", "#4CD2D3", "#CA82EC"];

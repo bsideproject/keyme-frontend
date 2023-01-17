@@ -30,7 +30,7 @@ export const AlarmContainer = styled.div`
 /* 이건 공통적으로 사용할 수 있을 것 같음 마진이나 폰트사이즈 등은 세부 조정하는 식으로.. */
 export const AlarmExplain = styled.div`
   font-weight: bold;
-  font-size: 24px;
+  font-size: 20px;
   text-align: center;
   line-height: 36px;
 `;
