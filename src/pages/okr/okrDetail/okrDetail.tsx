@@ -19,7 +19,6 @@ function OkrDetail({ okrId, colorIndex, keyResults, detailShow }: cprops) {
   const [detailAnim, setDetailAnim] = useState(false);
   // const { okrDetail } = useOkrDetail(okrId);
   // detailShow가 눌렸을 때 데이터를 받아와야함 -> react query
-  // to do list는 key result에 종속 -> key result 가져오고 to do list 가져오기
   const [keyResult, onChange, onReset, setInput] = useInput("");
   // okrId로 한번에 가져오기 가능 - react-query key:`okr-id`
 
@@ -39,7 +38,11 @@ function OkrDetail({ okrId, colorIndex, keyResults, detailShow }: cprops) {
                 <IconK fill={palette.colors[colorIndex].main} /> <span>{title}</span>
               </KrsTitle>
 
-              <ProgressSlider progress={progress} setProgress={setProgress} />
+              <ProgressSlider
+                progress={progress}
+                setProgress={setProgress}
+                colorIndex={colorIndex}
+              />
             </KrsBox>
           );
         })}
