@@ -11,7 +11,7 @@ export const dateFormatter = (day: Date): string => {
 export const pickerFormmater = (day: Date | undefined): string => {
   if (!day) {
     // 기본값 수정
-    return "yyyy.mm.dd";
+    return "";
   }
   return (
     day.getFullYear().toString() +

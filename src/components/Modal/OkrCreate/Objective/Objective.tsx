@@ -128,8 +128,7 @@ function Objective({
               title: "테스트 커버리지 90% 달성",
             },
             {
-              title:
-                "Spring boot 통합 테스트 병렬실행아아머ㅣㄴ아러민아럼ㄴ이라ㅓㅁㄴㅇㄹ긴문장긴문장",
+              title: "Spring boot 통합 테스트 병렬실행",
             },
           ],
         }}

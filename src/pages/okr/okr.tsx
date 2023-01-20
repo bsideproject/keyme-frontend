@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 
 import { ReactComponent as IconDown } from "~assets/icons/ico_down.svg";
+import { ReactComponent as IconO } from "~assets/icons/ico_O.svg";
 import { ReactComponent as IconPlus } from "~assets/icons/ico_plus.svg";
 import { ReactComponent as IconUp } from "~assets/icons/ico_up.svg";
 import BaseHeader from "~components/BaseHeader/BaseHeader";
@@ -10,7 +11,6 @@ import { useOkr } from "~hooks/useOkr";
 import { BasePage } from "~styles/page";
 import { palette } from "~styles/palette";
 import { KeyResultType } from "~types/okr";
-import { TodoType } from "~types/todo";
 
 import OkrDetail from "./okrDetail/okrDetail";
 import {
@@ -34,8 +34,50 @@ import {
 import "./circleProgressbar.css";
 
 function Okr() {
-  const { okrs } = useOkr();
+  // const { okrs } = useOkr();
 
+  const okrs = [
+    {
+      id: 1,
+      category: {
+        title: "업무",
+        colorIndex: 0,
+      },
+      dDay: 90,
+      title: "업무 제목입니다. asdkfja sdkja sdkfjals dfkjwㅏㅇ 문장무니아",
+      progress: 40,
+    },
+    {
+      id: 2,
+      category: {
+        title: "건강",
+        colorIndex: 1,
+      },
+      dDay: 90,
+      title: "업무 제목입니다.",
+      progress: 20,
+    },
+    {
+      id: 3,
+      category: {
+        title: "여가",
+        colorIndex: 4,
+      },
+      dDay: 90,
+      title: "업무 제목입니다.",
+      progress: 60,
+    },
+    {
+      id: 4,
+      category: {
+        title: "관계",
+        colorIndex: 2,
+      },
+      dDay: 90,
+      title: "업무 제목입니다.",
+      progress: 90,
+    },
+  ];
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -51,9 +93,7 @@ function Okr() {
         ) : (
           okrs?.map(({ id, category, dDay, title, progress }) => {
             const [detailShow, setDetailShow] = useState(false);
-
             const [keyResults, setKeyResults] = useState<KeyResultType[]>([]);
-            const [todos, setTodos] = useState<TodoType[]>([]);
 
             useEffect(() => {
               if (detailShow) {
@@ -67,7 +107,7 @@ function Okr() {
                   {
                     id: 2,
                     title: "Spring boot 통합 테스트 병렬실행",
-                    progress: 100,
+                    progress: 44,
                   },
                   {
                     id: 3,
@@ -75,27 +115,9 @@ function Okr() {
                     progress: 100,
                   },
                 ]);
-                setTodos([
-                  {
-                    id: 1,
-                    title: "헬스장 출석",
-                    isCompleted: false,
-                  },
-                  {
-                    id: 2,
-                    title: "헬스장 출석",
-                    isCompleted: false,
-                  },
-                  {
-                    id: 3,
-                    title: "헬스장 출석",
-                    isCompleted: false,
-                  },
-                ]);
               } else {
                 setTimeout(() => {
                   setKeyResults([]);
-                  setTodos([]);
                 }, 500);
               }
             }, [detailShow]);
@@ -108,8 +130,8 @@ function Okr() {
                       <OkrCategory colorIndex={category.colorIndex}>{category.title}</OkrCategory>
                       <OkrDDay>{dDay ? `D-${dDay}` : ""}</OkrDDay>
                     </OkrCategoryHeader>
-                    <OkrTitle colorIndex={category.colorIndex}>
-                      <span>O</span> <span>{title}</span>
+                    <OkrTitle>
+                      <IconO fill={palette.colors[category.colorIndex].main} /> <span>{title}</span>
                     </OkrTitle>
                   </HeaderLeftSide>
                   <HeaderRightSide>
@@ -127,7 +149,6 @@ function Okr() {
                   colorIndex={category.colorIndex}
                   // okrDetail에서 받기
                   keyResults={keyResults}
-                  todos={todos}
                   detailShow={detailShow}
                 />
 

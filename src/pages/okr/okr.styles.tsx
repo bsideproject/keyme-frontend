@@ -80,16 +80,16 @@ export const OkrContentBox = styled.div`
   margin: 0 1rem;
 `;
 
-export const OkrTitle = styled.div<{ colorIndex: number }>`
+export const OkrTitle = styled.div`
   display: flex;
+  align-items: center;
   margin-top: 1rem;
   font-weight: bold;
   font-size: 16px;
-  gap: 0.5rem;
+  gap: 0.75rem;
 
   & :first-child {
-    flex-basis: 14px;
-    color: ${(props) => palette.colors[props.colorIndex].main};
+    flex-basis: 20px;
   }
 
   & :last-child {
@@ -103,22 +103,6 @@ export const OkrFooter = styled.div`
   justify-content: center;
   display: flex;
   gap: 1rem;
-`;
-
-export const OkrStatusBox = styled.div`
-  margin-top: 1rem;
-  height: 18px;
-  border-radius: 10px;
-  background-color: #d9d9d9;
-`;
-
-export const OkrDetailStatusBox = styled(OkrStatusBox)`
-  margin-top: 0;
-`;
-export const OkrStatusFill = styled.div<{ colorIndex: number }>`
-  border-radius: 10px;
-  height: 18px;
-  background-color: ${(props) => palette.colors[props.colorIndex].main};
 `;
 
 export const OkrDetailBtn = styled.div``;
