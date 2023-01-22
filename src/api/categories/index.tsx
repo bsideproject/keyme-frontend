@@ -12,8 +12,6 @@ export interface CategoryBody {
 }
 
 export const updateCategory = async (id: number, body: CategoryBody): Promise<Category> => {
-  const data = axiosClient
-    .patch(`/categories/${id}/edit`, { data: body })
-    .then((resp) => resp?.data);
+  const data = axiosClient.patch(`/categories/${id}/edit`, body).then((resp) => resp?.data);
   return data;
 };

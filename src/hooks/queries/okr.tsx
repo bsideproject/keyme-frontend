@@ -23,7 +23,6 @@ export const useOkr = () => {
   return { okrs, isLoading, mutation };
 };
 
-// keyresult, todo 분리하여 관리?
 export const useOkrDetail = (id: number) => {
   const queryClient = useQueryClient();
   const { data: okrDetail, isLoading } = useQuery(
@@ -40,7 +39,7 @@ export const useOkrDetail = (id: number) => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries([queryKeys.okrDetail]);
+        queryClient.invalidateQueries([queryKeys.okrDetail, id]);
       },
     }
   );

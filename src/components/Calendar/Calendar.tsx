@@ -4,6 +4,7 @@ import { endOfWeek, startOfWeek } from "date-fns";
 import { endOfMonth } from "date-fns/esm";
 
 import { Category } from "~types/category";
+import { TodoType } from "~types/todo";
 import { dateFormatter } from "~utils/datetime";
 
 import { RenderDays } from "./Days/Days";
@@ -11,16 +12,9 @@ import { RenderHeader } from "./Header/Header";
 import { RenderWeeks } from "./Weeks/Weeks";
 import { CalendarBox } from "./Calendar.styles";
 
-interface todo {
-  id: number;
-  // categoryIdx or categoryId -> user category로 체크
-  category: Category;
-  title: string;
-}
-
 interface calendarTodos {
   date: Date;
-  todos: todo[];
+  todos: TodoType[];
 }
 
 interface cProps {
@@ -54,8 +48,10 @@ export const GrassCalendar = ({ calendarTodos, selectedDay, setSelectedDay }: cP
     for (let i = 0; i < calendarTodos.length; i++) {
       const uniqueColors = new Set<number>();
 
-      calendarTodos[i].todos.map(({ category: { colorIndex } }) => {
-        uniqueColors.add(colorIndex);
+      calendarTodos[i].todos.map(({ category }) => {
+        if (category?.colorIndex) {
+          uniqueColors.add(category.colorIndex);
+        }
       });
       const dateStr: string = dateFormatter(calendarTodos[i].date);
       temp[dateStr] = uniqueColors;

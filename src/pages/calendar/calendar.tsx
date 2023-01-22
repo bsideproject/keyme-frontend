@@ -3,36 +3,21 @@ import { isSameDay } from "date-fns";
 
 import { GrassCalendar } from "~components/Calendar/Calendar";
 import CalendarTodos from "~components/CalendarTodos/CalendarTodos";
-import { Category } from "~types/category";
+import { useCalendar } from "~hooks/queries/calendar";
+import { CalendarTodo, CategoryTodos } from "~types/calendar";
+import { TodoType } from "~types/todo";
 
 import { CalendarPage } from "./calendar.styles";
 
-interface todo {
-  id: number;
-  // categoryIdx or categoryId -> user category로 체크
-  category: Category;
-  title: string;
-}
-
-interface calendarTodos {
-  date: Date;
-  todos: todo[];
-}
-
-interface categoryTodos {
-  category: Category;
-  todos: { id: number; title: string }[];
-}
-
-const groupBy = (result: todo[]) => {
-  const categoryTodos: categoryTodos[] = [];
+const groupBy = (result: TodoType[]) => {
+  const categoryTodos: CategoryTodos[] = [];
   if (result) {
     for (let i = 0; i < result.length; i++) {
       const key = result[i].category;
 
       // category 겹치는게 있는지 체크 (idx로)
       const idx_list = categoryTodos.map((v) => {
-        if (v.category.id === key.id) {
+        if (v.category?.id === key?.id) {
           return 1;
         }
         return 0;
@@ -67,8 +52,19 @@ const groupBy = (result: todo[]) => {
 
 function Calendar() {
   const [selectedDay, setSelectedDay] = useState(new Date());
+  const { calendars } = useCalendar(selectedDay.getMonth() + 1, selectedDay.getFullYear());
+  console.log(calendars);
+  // id: number;
+  // title: string;
+  // 2022-10-11 23:20:01
+  // completedAt?: Date;
+  // category?: Category;
 
-  const [calendarTodos, setCalendarTodos] = useState<calendarTodos[]>([
+  // useEffect(() => {
+  //   setCalendarTodos();
+  // }, [selectedDay]);
+
+  const [calendarTodos, setCalendarTodos] = useState<CalendarTodo[]>([
     {
       // string으로 넘어올 예정
       date: new Date(),
@@ -173,7 +169,7 @@ function Calendar() {
       ],
     },
   ]);
-  const [completedTodos, setCompletedTodos] = useState<categoryTodos[]>([]);
+  const [completedTodos, setCompletedTodos] = useState<CategoryTodos[]>([]);
 
   useEffect(() => {
     const result = calendarTodos.filter(({ date }) => {

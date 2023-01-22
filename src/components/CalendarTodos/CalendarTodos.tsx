@@ -1,7 +1,7 @@
 import React from "react";
 import { startOfWeek } from "date-fns";
 
-import { Category } from "~types/category";
+import { CategoryTodos } from "~types/calendar";
 
 import Complete from "./Complete/Complete";
 import {
@@ -13,13 +13,8 @@ import {
   HeaderSummaryPart,
 } from "./CalendarTodos.styles";
 
-interface categoryTodos {
-  category: Category;
-  todos: { id: number; title: string }[];
-}
-
 interface cProps {
-  completedTodos: categoryTodos[];
+  completedTodos: CategoryTodos[];
   selectedDay: Date;
 }
 
@@ -45,7 +40,13 @@ function CalendarTodos({ completedTodos, selectedDay }: cProps) {
         </HeaderSummaryPart>
       </CalendarTodoHeader>
       {completedTodos.map(({ category, todos }, idx) => {
-        return <Complete key={idx} category={category} todos={todos} />;
+        return (
+          <Complete
+            key={idx}
+            category={category ? category : { id: 0, title: "", colorIndex: 0 }}
+            todos={todos}
+          />
+        );
       })}
     </CalendarTodoBox>
   );

@@ -4,7 +4,7 @@ import { CategoryBody, getCategoryList, updateCategory } from "~api/categories";
 import { queryKeys } from "~utils/react-query/constant";
 
 interface Category {
-  id: number;
+  id?: number;
   body: CategoryBody;
 }
 
@@ -16,7 +16,7 @@ export const useCategory = () => {
 
   const mutation = useMutation(
     async (newCategory: Category) => {
-      await updateCategory(newCategory.id, newCategory.body);
+      await updateCategory(newCategory.id ? 0 : 0, newCategory.body);
     },
     {
       onSuccess: () => {

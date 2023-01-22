@@ -6,4 +6,5 @@ export const queryKeys = {
   okrDetail: "okrDetail",
   keyResults: "keyResults",
   categories: "categories",
+  calendars: "calendars",
 };

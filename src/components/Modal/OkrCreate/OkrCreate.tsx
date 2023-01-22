@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ReactComponent as IconBack } from "~assets/icons/ico_back.svg";
 import AlarmPopup from "~components/AlarmPopup/AlarmPopup";
 import OkrCategoryModal from "~components/Modal/OkrCategory/OkrCategory";
-import { useCategory } from "~hooks/useCategory";
+import { useCategory } from "~hooks/queries/category";
 import useInput from "~hooks/useInput";
 
 import KeyResult from "./KeyResult/KeyResult";
@@ -15,13 +15,13 @@ interface cProps {
   setShowModal: (param: boolean) => void;
 }
 
-// onModalClose로 계속 전달?
-
 function OkrCreateModal({ showModal, setShowModal }: cProps) {
   const [modalAnim, setModalAnim] = useState<boolean>(true);
 
   const [title, onTitleChange, onReset] = useInput("");
+  const [okrId, setOkrId] = useState(-1);
   const [categoryId, setCategoryId] = useState<number>(-1);
+  const [date, setDate] = useState<Date | undefined>(undefined);
 
   const resetInputs = () => {
     onReset();
@@ -78,13 +78,17 @@ function OkrCreateModal({ showModal, setShowModal }: cProps) {
           setShowPopup={setShowPopup}
           setShowCategoryModal={setShowCategoryModal}
           categories={categories}
+          setOkrId={setOkrId}
+          setDate={setDate}
         />
 
         <KeyResult
-          // okrId
+          okrId={okrId}
           title={title}
+          date={date}
           nowCategory={categories?.filter(({ id }) => id === categoryId)[0]}
           isKeyResult={isKeyResult}
+          closeModal={closeModal}
         />
 
         <OkrCategoryModal

@@ -6,8 +6,8 @@ import BaseButton from "~components/BaseButton/BaseButton";
 import DatePicker from "~components/DatePicker/DatePicker";
 import { ModalCategoryBox, OkrModalFooter } from "~components/Modal/Modal.styles";
 import OkrInfoModal from "~components/Modal/OkrInfo/OkrInfo";
-import { useOkr } from "~hooks/useOkr";
-import { useUser } from "~hooks/useUser";
+import { useOkr } from "~hooks/queries/okr";
+import { useUser } from "~hooks/queries/user";
 import { Category } from "~types/category";
 
 import { OkrModalHeaderText, OkrObjectiveBox } from "../OkrCreate.styles";
@@ -26,6 +26,8 @@ interface cProps {
   setShowCategoryModal: (param: boolean) => void;
   onTitleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   setCategoryId: (param: number) => void;
+  setOkrId: (param: number) => void;
+  setDate: (param: Date | undefined) => void;
   categories?: Category[];
   isKeyResult: boolean;
 }
@@ -33,15 +35,16 @@ interface cProps {
 function Objective({
   title,
   onTitleChange,
+  setDate,
   categoryId,
   setCategoryId,
   setShowPopup,
   setShowCategoryModal,
+  setOkrId,
   categories,
   isKeyResult,
 }: cProps) {
   const [btnDisable, setBtnDisable] = useState<boolean>(false);
-  const [date, setDate] = useState<Date | undefined>(undefined);
 
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
   const { user } = useUser();
@@ -61,11 +64,14 @@ function Objective({
       // 입력해주세요 알림 (toast)
       return;
     } else {
-      // setOkrId -> 위에서 props로 가져오기
-      // endedAt
-      // date
-      const okrId = mutation.mutate({ title, categoryId });
-      console.log(okrId);
+      mutation.mutate(
+        { title, categoryId },
+        {
+          onSuccess: (data) => {
+            setOkrId(data.data.id);
+          },
+        }
+      );
       setShowPopup(true);
     }
   };
@@ -92,7 +98,7 @@ function Objective({
                 colorIdx={colorIndex}
                 key={id}
                 onClick={() => {
-                  setCategoryId(id);
+                  setCategoryId(id ? id : 0);
                 }}>
                 {title}
               </OkrCreateCategory>

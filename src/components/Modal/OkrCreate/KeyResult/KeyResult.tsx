@@ -4,11 +4,11 @@ import { ReactComponent as IconInfo } from "~assets/icons/ico_info.svg";
 import BaseButton from "~components/BaseButton/BaseButton";
 import KrAddButton from "~components/BaseButton/KrAddButton";
 import BaseBox from "~components/Box/BaseBox";
-// import { useOkrDetail } from "~hooks/useOkr";
 import { OkrModalFooter } from "~components/Modal/Modal.styles";
 import OkrInfoModal from "~components/Modal/OkrInfo/OkrInfo";
+import { useOkrDetail } from "~hooks/queries/okr";
+import { useUser } from "~hooks/queries/user";
 import useInput from "~hooks/useInput";
-import { useUser } from "~hooks/useUser";
 import { Category } from "~types/category";
 
 import { OkrModalHeaderText, OkrObjectiveBox } from "../OkrCreate.styles";
@@ -16,9 +16,12 @@ import { OkrModalHeaderText, OkrObjectiveBox } from "../OkrCreate.styles";
 import { KeyResultBody, KeyResultHeader } from "./KeyResult.styles";
 
 interface cProps {
+  okrId: number;
   title: string;
   nowCategory?: Category;
+  date?: Date;
   isKeyResult: boolean;
+  closeModal: () => void;
 }
 
 interface krListType {
@@ -26,36 +29,38 @@ interface krListType {
   title: string;
 }
 
-function KeyResult({ title, nowCategory, isKeyResult }: cProps) {
+function KeyResult({ okrId, title, date, nowCategory, isKeyResult, closeModal }: cProps) {
   const [krTitle, onKrTitleChange, onReset, setKrTitle] = useInput("");
   const [btnDisable, setBtnDisable] = useState<boolean>(false);
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
 
   const { user } = useUser();
+  const { okrDetail, mutation } = useOkrDetail(okrId);
 
-  const [krList, setKrList] = useState<krListType[]>([]);
-
-  // okrId 필요
-  // const {mutation} = useOkrDetail()
+  const [krList, setKrList] = useState<krListType[] | undefined>(okrDetail?.keyResults);
 
   const handleClick = () => {
-    console.log("here");
+    closeModal();
   };
 
   useEffect(() => {
-    if (Object.keys(krList).length === 0) {
+    if (krList && Object.keys(krList).length === 0) {
       setBtnDisable(false);
-      return;
     } else {
       setBtnDisable(true);
     }
   }, [krList]);
 
   const addKeyResult = () => {
-    // axios 요청 후 id 값 받기 -> 애초에 react query 쓸거임..
-    // mutation.mutate({ title: krTitle, objectiveId: })
-    setKrList([...krList, { id: krList.length, title: krTitle }]);
-    onReset();
+    mutation.mutate(
+      { objectiveId: okrId, title: krTitle },
+      {
+        onSuccess: (data) => {
+          setKrList(okrDetail?.keyResults);
+          onReset();
+        },
+      }
+    );
   };
 
   const infoContent = () => (
@@ -85,25 +90,30 @@ function KeyResult({ title, nowCategory, isKeyResult }: cProps) {
             badgeType: "text",
             badgeText: nowCategory ? nowCategory.title : "",
             title,
+            // 날짜 넣기
           },
         ]}
         title={"Objective"}
       />
 
-      {Object.keys(krList).length === 0 ? (
-        ""
+      {krList ? (
+        Object.keys(krList).length === 0 ? (
+          ""
+        ) : (
+          <BaseBox
+            colorIdx={nowCategory?.colorIndex}
+            info={krList.map(({ title }, idx) => {
+              return {
+                badgeType: "circle",
+                badgeText: idx + 1,
+                title,
+              };
+            })}
+            title={"Key result"}
+          />
+        )
       ) : (
-        <BaseBox
-          colorIdx={nowCategory?.colorIndex}
-          info={krList.map(({ title }, idx) => {
-            return {
-              badgeType: "circle",
-              badgeText: idx + 1,
-              title,
-            };
-          })}
-          title={"Key result"}
-        />
+        ""
       )}
 
       <OkrModalHeaderText style={{ marginTop: "1rem" }}>Key result를 적어주세요</OkrModalHeaderText>

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 import { palette } from "./palette";
-const categoryBackgroundColor = ["#F2FAFE", "#FEF6F2", "#FDEFF1", "#F1FEF3", "#EDFEFE", "#FEF4FF"];
 
 const opacity = {
   background: "rgba(51, 91, 240, 0.2)",
@@ -32,7 +31,7 @@ export const KrAddBtn = styled(BaseBtn)`
 
 export const BaseBoxContainer = styled.div<{ colorIdx: number | undefined }>`
   border-radius: 10px;
-  background-color: ${({ colorIdx }) => (colorIdx ? categoryBackgroundColor[colorIdx] : "")};
+  background-color: ${({ colorIdx }) => (colorIdx ? palette.colors[colorIdx].sub : "")};
   padding: 1rem;
   margin-top: 1rem;
 `;

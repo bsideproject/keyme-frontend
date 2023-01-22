@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { ReactComponent as IconClose } from "~assets/icons/ico_close2.svg";
 import { ReactComponent as IconFin } from "~assets/icons/ico_fin.svg";
-import { useCategory } from "~hooks/useCategory";
+import { useCategory } from "~hooks/queries/category";
 import useInput from "~hooks/useInput";
 import { palette } from "~styles/palette";
 import { Category } from "~types/category";

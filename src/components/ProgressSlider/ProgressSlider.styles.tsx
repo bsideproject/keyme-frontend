@@ -7,11 +7,7 @@ export const SliderText = styled.div<{ activeDrag: boolean; value: number; color
   font-size: 16px;
 
   display: ${({ activeDrag }) => (activeDrag ? "block" : "none")};
-  margin-left: ${({ value }) => {
-    // 처음에는 적게 상승하다가 마지막에 급상승하기 (sin -> 생각보다 별로임)
-    // return (Math.sin((Math.PI * (value / 100)) / 2) * 87).toString() + "%";
-    return ((value / 100) * 87).toString() + "%";
-  }};
+  margin-left: ${({ value }) => ((value / 100) * 87).toString() + "%"};
   color: ${({ colorIndex }) => palette.colors[colorIndex].main};
 `;
 
@@ -38,7 +34,6 @@ export const Slider = styled.div<{ activeDrag: boolean }>`
       }
     }
   }
-
   /* 확장 anim 추가 */
   height: ${({ activeDrag }) => (activeDrag ? "12px" : "8px")};
 `;
