@@ -1,8 +1,10 @@
 import { OkrDetail, OKRType } from "~types/okr";
 import { axiosClient } from "~utils/axios";
 
-export const getOkrList = async (): Promise<OKRType[]> => {
-  const data = axiosClient.get("/okrs").then((resp) => resp?.data?.data.okrs);
+export const getOkrList = async (page: number): Promise<OKRType[]> => {
+  const data = axiosClient
+    .get("/okrs", { params: { pageNumber: page } })
+    .then((resp) => resp?.data?.data.okrs);
   return data;
 };
 

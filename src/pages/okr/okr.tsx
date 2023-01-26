@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 
+import { ReactComponent as IconDown } from "~assets/icons/ico_down.svg";
 import { ReactComponent as IconO } from "~assets/icons/ico_O.svg";
 import { ReactComponent as IconPlus } from "~assets/icons/ico_plus.svg";
+import { ReactComponent as IconUp } from "~assets/icons/ico_up.svg";
 import BaseHeader from "~components/BaseHeader/BaseHeader";
 import OkrCreate from "~components/Modal/OkrCreate/OkrCreate";
 import { useOkr } from "~hooks/queries/okr";
 import { BasePage } from "~styles/page";
 import { palette } from "~styles/palette";
-import { KeyResultType } from "~types/okr";
+import { OKRType } from "~types/okr";
 
 import OkrDetail from "./okrDetail/okrDetail";
 import {
@@ -32,8 +34,21 @@ import {
 import "./circleProgressbar.css";
 
 function Okr() {
-  const { okrs } = useOkr();
+  const [currentPage, setCurrentPage] = useState(1);
+  const { okrs } = useOkr(currentPage);
+  const [myOkrs, setMyOkrs] = useState<OKRType[] | undefined>([]);
   const [showModal, setShowModal] = useState(false);
+
+  const [detailShows, setDetailShows] = useState<boolean[]>([]);
+
+  useEffect(() => {
+    if (myOkrs && okrs) {
+      setMyOkrs([...myOkrs, ...okrs]);
+    }
+    if (detailShows && okrs) {
+      setDetailShows([...detailShows, ...okrs.map((v) => false)]);
+    }
+  }, [okrs]);
 
   return (
     <BasePage id="okr">
@@ -43,42 +58,12 @@ function Okr() {
       </HeaderSummary>
       {/* OKR 컴포넌트 (목록식) */}
       <OkrContainer>
-        {okrs === undefined || okrs.length === 0 ? (
+        {myOkrs === undefined || myOkrs.length === 0 ? (
           <NoOkrBox>아직 진행중인 OKR이 없어요.</NoOkrBox>
         ) : (
-          okrs?.map(({ id, category, dday, title, progress, keyResults }) => {
-            // const [detailShow, setDetailShow] = useState(false);
-            // const [keyResults, setKeyResults] = useState<KeyResultType[]>([]);
-
-            // useEffect(() => {
-            //   if (detailShow) {
-            //     // 데이터 가져오기
-            //     setKeyResults([
-            //       {
-            //         id: 1,
-            //         title: "테스트 커버리지 90% 달성",
-            //         progress: 0,
-            //       },
-            //       {
-            //         id: 2,
-            //         title: "Spring boot 통합 테스트 병렬실행",
-            //         progress: 44,
-            //       },
-            //       {
-            //         id: 3,
-            //         title: "마지막 키 리절트",
-            //         progress: 100,
-            //       },
-            //     ]);
-            //   } else {
-            //     setTimeout(() => {
-            //       setKeyResults([]);
-            //     }, 500);
-            //   }
-            // }, [detailShow]);
-
+          myOkrs?.map(({ id, category, dday, title, progress }, idx) => {
             return (
-              <OkrBox key={`o-${id}`}>
+              <OkrBox key={`o-${id}-${idx}`}>
                 <OkrBoxHeader>
                   <HeaderLeftSide>
                     <OkrCategoryHeader>
@@ -98,18 +83,46 @@ function Okr() {
                     />
                   </HeaderRightSide>
                 </OkrBoxHeader>
+                {detailShows ? (
+                  detailShows[idx] ? (
+                    <OkrDetail okrId={id} colorIndex={0} detailShow={detailShows[idx]} />
+                  ) : (
+                    ""
+                  )
+                ) : (
+                  ""
+                )}
 
-                <OkrDetail
-                  okrId={id}
-                  colorIndex={0}
-                  // okrDetail에서 받기
-                  keyResults={keyResults}
-                />
+                <OkrFooter>
+                  <Scoller
+                    onClick={() =>
+                      setDetailShows(
+                        detailShows?.map((v, jdx) => {
+                          return idx === jdx ? !v : v;
+                        })
+                      )
+                    }>
+                    {detailShows ? (
+                      detailShows[idx] ? (
+                        <>
+                          접기 <IconUp width={24} />
+                        </>
+                      ) : (
+                        <>
+                          더보기 <IconDown width={24} />
+                        </>
+                      )
+                    ) : (
+                      ""
+                    )}
+                  </Scoller>
+                </OkrFooter>
               </OkrBox>
             );
           })
         )}
       </OkrContainer>
+      <OktAddBtn onClick={() => setCurrentPage(currentPage + 1)}>+ 더보기</OktAddBtn>
       <OktBtnBox>
         <OktAddBtn
           onClick={() => {
