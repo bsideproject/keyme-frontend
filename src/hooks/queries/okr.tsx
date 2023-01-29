@@ -3,9 +3,10 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { createKeyResult, createOkr, getOkrDetail, getOkrList, KrBody, OkrBody } from "~api/okrs";
 import { queryKeys } from "~utils/react-query/constant";
 
-export const useOkr = () => {
+export const useOkr = (page: number) => {
   const queryClient = useQueryClient();
-  const { data: okrs, isLoading } = useQuery([queryKeys.okrs], getOkrList, {
+
+  const { data: okrs, isLoading } = useQuery([queryKeys.okrs, page], () => getOkrList(page), {
     retry: 0,
   });
 

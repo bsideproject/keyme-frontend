@@ -20,6 +20,7 @@ import {
 } from "./Objective.styles";
 
 interface cProps {
+  date?: Date;
   title: string;
   categoryId: number;
   setShowPopup: (param: boolean) => void;
@@ -30,9 +31,12 @@ interface cProps {
   setDate: (param: Date | undefined) => void;
   categories?: Category[];
   isKeyResult: boolean;
+  pickerShow: boolean;
+  setPickerShow: (param: boolean) => void;
 }
 
 function Objective({
+  date,
   title,
   onTitleChange,
   setDate,
@@ -43,12 +47,14 @@ function Objective({
   setOkrId,
   categories,
   isKeyResult,
+  pickerShow,
+  setPickerShow,
 }: cProps) {
   const [btnDisable, setBtnDisable] = useState<boolean>(false);
 
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
   const { user } = useUser();
-  const { mutation } = useOkr();
+  const { mutation } = useOkr(1);
 
   useEffect(() => {
     if (!title || categoryId === -1) {
@@ -80,7 +86,6 @@ function Objective({
   return (
     <div style={{ display: isKeyResult ? "none" : "block" }}>
       <OkrModalBody>
-        {/* header sticky? */}
         <ObjectiveHeader>
           <span>{user?.name}님 어떤 목표를 가지고 계신가요?</span>
           <IconInfo onClick={() => setShowInfoModal(true)} />
@@ -116,7 +121,12 @@ function Objective({
           />
         </OkrObjectiveBox>
 
-        <DatePicker setDate={setDate} />
+        <DatePicker
+          date={date}
+          setDate={setDate}
+          pickerShow={pickerShow}
+          setPickerShow={setPickerShow}
+        />
 
         <OkrModalFooter>
           <BaseButton isAble={btnDisable} handleClick={addOkr} text={"다음"} />

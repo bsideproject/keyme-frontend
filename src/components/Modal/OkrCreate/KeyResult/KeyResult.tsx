@@ -37,7 +37,9 @@ function KeyResult({ okrId, title, date, nowCategory, isKeyResult, closeModal }:
   const { user } = useUser();
   const { okrDetail, mutation } = useOkrDetail(okrId);
 
-  const [krList, setKrList] = useState<krListType[] | undefined>(okrDetail?.keyResults);
+  const [krList, setKrList] = useState<krListType[]>(
+    okrDetail?.keyResults ? okrDetail?.keyResults : []
+  );
 
   const handleClick = () => {
     closeModal();
@@ -56,7 +58,7 @@ function KeyResult({ okrId, title, date, nowCategory, isKeyResult, closeModal }:
       { objectiveId: okrId, title: krTitle },
       {
         onSuccess: (data) => {
-          setKrList(okrDetail?.keyResults);
+          setKrList([...krList, { id: krList?.length, title: krTitle }]);
           onReset();
         },
       }

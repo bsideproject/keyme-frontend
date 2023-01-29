@@ -3,34 +3,37 @@ import { addMonths, startOfMonth, subMonths } from "date-fns";
 import { endOfWeek, startOfWeek } from "date-fns";
 import { endOfMonth } from "date-fns/esm";
 
-import { Category } from "~types/category";
-import { TodoType } from "~types/todo";
-import { dateFormatter } from "~utils/datetime";
+import { useCalendar } from "~hooks/queries/calendar";
+import { CalendarTodo } from "~types/calendar";
+import { dateFormatter, groupByDate } from "~utils/datetime";
 
 import { RenderDays } from "./Days/Days";
 import { RenderHeader } from "./Header/Header";
 import { RenderWeeks } from "./Weeks/Weeks";
 import { CalendarBox } from "./Calendar.styles";
 
-interface calendarTodos {
-  date: Date;
-  todos: TodoType[];
-}
-
 interface cProps {
-  calendarTodos: calendarTodos[];
+  calendarTodos: CalendarTodo[];
   selectedDay: Date;
   setSelectedDay: (params: Date) => void;
+  setCalendarTodos: React.Dispatch<React.SetStateAction<CalendarTodo[]>>;
 }
 
 interface tempType {
   [key: string]: Set<number>;
 }
 
-export const GrassCalendar = ({ calendarTodos, selectedDay, setSelectedDay }: cProps) => {
+export const GrassCalendar = ({
+  calendarTodos,
+  selectedDay,
+  setSelectedDay,
+  setCalendarTodos,
+}: cProps) => {
   const [currentDay, setCurrentDay] = useState(new Date());
   const [completeStatus, setCompleteStatus] = useState<tempType>({});
   const [weekCount, setWeekCount] = useState<number>(5);
+  // parameter 변경될 때 수정되도록
+  const { calendars } = useCalendar(currentDay.getMonth() + 1, currentDay.getFullYear());
 
   const prevMonth = () => {
     setCurrentDay(startOfMonth(subMonths(currentDay, 1)));
@@ -42,6 +45,22 @@ export const GrassCalendar = ({ calendarTodos, selectedDay, setSelectedDay }: cP
   const onDateClick = (day: Date) => {
     setSelectedDay(day);
   };
+
+  useEffect(() => {
+    setWeekCount(
+      Math.ceil(
+        (+endOfWeek(endOfMonth(currentDay)) - +startOfWeek(startOfMonth(currentDay))) /
+          3600 /
+          24 /
+          7 /
+          1000
+      )
+    );
+
+    setSelectedDay(currentDay);
+
+    if (calendars) setCalendarTodos(groupByDate(calendars));
+  }, [currentDay]);
 
   useEffect(() => {
     const temp: tempType = {};
@@ -58,19 +77,7 @@ export const GrassCalendar = ({ calendarTodos, selectedDay, setSelectedDay }: cP
     }
 
     setCompleteStatus(temp);
-
-    setWeekCount(
-      Math.ceil(
-        (+endOfWeek(endOfMonth(currentDay)) - +startOfWeek(startOfMonth(currentDay))) /
-          3600 /
-          24 /
-          7 /
-          1000
-      )
-    );
-
-    setSelectedDay(currentDay);
-  }, [currentDay]);
+  }, [calendarTodos]);
 
   return (
     <CalendarBox weekCount={weekCount}>

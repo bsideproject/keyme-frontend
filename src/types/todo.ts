@@ -18,7 +18,7 @@ export interface TodoListsResBody {
 export interface TodoType {
   id: number;
   title: string;
-  isCompleted: boolean;
+  completedAt?: Date;
   category?: Category;
 }
 

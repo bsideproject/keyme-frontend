@@ -22,10 +22,12 @@ function OkrCreateModal({ showModal, setShowModal }: cProps) {
   const [okrId, setOkrId] = useState(-1);
   const [categoryId, setCategoryId] = useState<number>(-1);
   const [date, setDate] = useState<Date | undefined>(undefined);
+  const [pickerShow, setPickerShow] = useState(false);
 
   const resetInputs = () => {
     onReset();
     setCategoryId(-1);
+    setDate(undefined);
   };
 
   const [showCategoryModal, setShowCategoryModal] = useState<boolean>(false);
@@ -43,6 +45,7 @@ function OkrCreateModal({ showModal, setShowModal }: cProps) {
       resetInputs();
       setShowModal(false);
       setModalAnim(true);
+      setPickerShow(false);
       setIsKeyResult(false);
     }, 500);
   };
@@ -79,7 +82,10 @@ function OkrCreateModal({ showModal, setShowModal }: cProps) {
           setShowCategoryModal={setShowCategoryModal}
           categories={categories}
           setOkrId={setOkrId}
+          date={date}
           setDate={setDate}
+          pickerShow={pickerShow}
+          setPickerShow={setPickerShow}
         />
 
         <KeyResult

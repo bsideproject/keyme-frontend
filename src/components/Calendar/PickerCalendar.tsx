@@ -24,9 +24,6 @@ export const PickerCalendar = ({ pickedDate, setPickerDate }: cProps) => {
     setCurrentDay(startOfMonth(addMonths(currentDay, 1)));
   };
 
-  // 월 이동이랑 날짜 클릭하는것 분리
-  // currentday 변경 X
-
   const onDateClick = (day: Date) => {
     setPickerDate(day);
   };

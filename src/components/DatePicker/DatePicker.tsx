@@ -10,20 +10,13 @@ import { pickerFormmater } from "~utils/datetime";
 import { DatePickerTarget, PickerContainer } from "./DatePicker.styles";
 
 interface Props {
+  date?: Date;
   setDate: (params?: Date) => void;
+  pickerShow: boolean;
+  setPickerShow: (param: boolean) => void;
 }
 
-// setDate는 받을거임 뒤에서
-function DatePicker({ setDate }: Props) {
-  const [pickerShow, setPickerShow] = useState(false);
-  const [pickerDate, setPickerDate] = useState<Date | undefined>(undefined);
-
-  // smooth scroll
-
-  useEffect(() => {
-    setDate(pickerDate);
-  }, [pickerDate]);
-
+function DatePicker({ date, setDate, pickerShow, setPickerShow }: Props) {
   return (
     <>
       <div style={{ fontSize: 18, marginTop: "2rem" }}>
@@ -44,13 +37,13 @@ function DatePicker({ setDate }: Props) {
           <div style={{ color: pickerShow ? palette.primary : "#909090", fontWeight: 500 }}>
             날짜를 선택하세요
           </div>
-          <div style={{ fontSize: 18, fontWeight: 700 }}>{pickerFormmater(pickerDate)}</div>
+          <div style={{ fontSize: 18, fontWeight: 700 }}>{pickerFormmater(date)}</div>
         </div>
         {pickerShow ? <IconUp width={36} /> : <IconDown width={36} />}
       </DatePickerTarget>
 
       <PickerContainer pickerShow={pickerShow}>
-        <PickerCalendar pickedDate={pickerDate} setPickerDate={setPickerDate} />
+        <PickerCalendar pickedDate={date} setPickerDate={setDate} />
       </PickerContainer>
     </>
   );
