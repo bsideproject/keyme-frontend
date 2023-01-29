@@ -2,13 +2,17 @@ import { KeyResultResBody, TodoReqBody } from "~types/todo";
 import { axiosClient } from "~utils/axios";
 
 const baseUrl = "/todos";
-export type TodoStatus = "IN_PROGRESS" | "COMPLETED" | "";
+export type TodoStatus = "IN_PROGRESS" | "COMPLETED" | "ALL";
 
 export const createTodo = async (body: TodoReqBody) => {
   return axiosClient.post(`${baseUrl}/write`, body).then((resp) => resp?.data);
 };
 
-export const getTodoLists = async (status: TodoStatus, pageNumber: number, limit: number) => {
+export const getTodoLists = async (
+  status: "IN_PROGRESS" | "COMPLETED" | "",
+  pageNumber: number,
+  limit: number
+) => {
   const url = status
     ? `${baseUrl}?limit=${limit}&pageNumber=${pageNumber}&status=${status}`
     : `${baseUrl}?limit=${limit}&pageNumber=${pageNumber}`;

@@ -1,11 +1,9 @@
 import React from "react";
-import { useRecoilState } from "recoil";
+import { AnimatePresence, motion } from "framer-motion";
 
 import TodoItems from "~components/Todo/TodoItems";
 import useGetTodos from "~pages/todo/hooks";
 import { Container } from "~pages/todo/InProgress/index.styles";
-
-import { todoModalAtom } from "../../../recoil/atoms";
 
 const InProgressTab = () => {
   const { data, ref, isFetching, isLoading, refetch } = useGetTodos("IN_PROGRESS");
@@ -13,11 +11,18 @@ const InProgressTab = () => {
   return (
     <Container>
       {data?.pages.map((page, i) => (
-        <React.Fragment key={i}>
-          {page.todos.map((todo, idx) => (
-            <TodoItems {...todo} key={idx} />
-          ))}
-        </React.Fragment>
+        <AnimatePresence key={i}>
+          <React.Fragment>
+            <motion.div
+              initial={{ y: "50%", opacity: 0, scale: "0.5" }}
+              exit={{ y: "50%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}>
+              {page.todos.map((todo, idx) => (
+                <TodoItems {...todo} key={idx} />
+              ))}
+            </motion.div>
+          </React.Fragment>
+        </AnimatePresence>
       ))}
 
       <div ref={ref} />

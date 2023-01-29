@@ -29,7 +29,8 @@ const useGetTodos = (status: TodoStatus) => {
     [`todo-${status}-${currentPage}`],
     async ({ pageParam = 1 }) => {
       setCurrentPage(pageParam);
-      return await getTodoLists(status, pageParam, LIMIT);
+      const todoStatus = status === "ALL" ? "" : status;
+      return await getTodoLists(todoStatus, pageParam, LIMIT);
     },
     {
       getNextPageParam: (lastPage, allPages) => {

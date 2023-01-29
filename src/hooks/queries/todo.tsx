@@ -48,6 +48,7 @@ export const useRollbackTodo = (status: TodoStatus, page: number) => {
     },
     {
       onSuccess: () => {
+        console.log(status, page, "onSucces");
         queryClient.invalidateQueries([`todo-${status}-${page}`]);
       },
     }

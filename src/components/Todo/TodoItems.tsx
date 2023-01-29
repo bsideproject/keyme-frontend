@@ -22,7 +22,7 @@ export const changeQueryParameter = (query: string | null) => {
     case "completed":
       return "COMPLETED";
     case "all":
-      return "";
+      return "ALL";
 
     default:
       return "IN_PROGRESS";
@@ -34,7 +34,7 @@ const TodoItems = (todo: Todo) => {
   const [search] = useSearchParams();
 
   const queryTab = search.get("tab");
-  const { currentPage } = useGetTodos("IN_PROGRESS");
+  const { currentPage } = useGetTodos(changeQueryParameter(queryTab));
 
   const { completeTodoMutate } = useCompleteTodo(changeQueryParameter(queryTab), currentPage);
   const { rollbackTodoMutate } = useRollbackTodo(changeQueryParameter(queryTab), currentPage);
@@ -44,12 +44,9 @@ const TodoItems = (todo: Todo) => {
   const setEditMode = useSetRecoilState(editModeAtom);
   const setSelectedTodo = useSetRecoilState(selectTodoAtom);
 
-  const queryClient = useQueryClient();
   useEffect(() => {
     setIsCompleted(todo.isCompleted);
-  }, []);
-
-  console.log(todo && todo?.category ? todo?.category?.colorInt : "#222");
+  }, [JSON.stringify(todo)]);
 
   return (
     <TodoBox>

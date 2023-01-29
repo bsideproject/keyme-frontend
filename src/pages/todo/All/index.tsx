@@ -12,7 +12,9 @@ import useGetTodos from "~pages/todo/hooks";
 import { palette } from "~styles/palette";
 
 const AllTab = () => {
-  const { data, ref, isFetching, isLoading, refetch } = useGetTodos("");
+  const { data, ref, isFetching } = useGetTodos("ALL");
+
+  console.log(data?.pages[0].todos, "data");
 
   return (
     <Container>

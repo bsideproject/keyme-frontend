@@ -1,5 +1,6 @@
 import React from "react";
 import { useQueryErrorResetBoundary } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { useLocation } from "react-router-dom";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { ThemeProvider } from "styled-components";
@@ -23,6 +24,7 @@ function App() {
 
   return (
     <>
+      <ReactQueryDevtools />
       <BaseErrorBoundary fallbackRender={BaseFallback} onReset={reset}>
         <ApiErrorBoundary>
           <AxiosInterceptor>
