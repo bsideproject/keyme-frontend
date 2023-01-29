@@ -1,48 +1,101 @@
 import React, { useEffect, useState } from "react";
+import { useQueryClient } from "react-query";
+import { useSearchParams } from "react-router-dom";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import ICON_EDIT from "~assets/icons/ico_edit.svg";
 import ICON_DELETE from "~assets/icons/icon_delete.svg";
 import TodoBox from "~components/Box/TodoBox";
 import TodoLabel from "~components/Label/TodoLabel";
-import { TodoItem } from "~pages/todo/hooks";
+import { useCompleteTodo, useDeleteTodo, useRollbackTodo } from "~hooks/queries/todo";
+import useGetTodos from "~pages/todo/hooks";
 import { CheckBoxInput, CheckBoxLabel } from "~pages/todo/InProgress/index.styles";
+import { colorsMains } from "~styles/palette";
+import { Todo, TodoType } from "~types/todo";
 
-const TodoItems = (todo: TodoItem) => {
+import { editModeAtom, selectTodoAtom, todoModalAtom } from "../../recoil/atoms";
+
+export const changeQueryParameter = (query: string | null) => {
+  switch (query) {
+    case "in-progress":
+      return "IN_PROGRESS";
+    case "completed":
+      return "COMPLETED";
+    case "all":
+      return "";
+
+    default:
+      return "IN_PROGRESS";
+  }
+};
+
+const TodoItems = (todo: Todo) => {
   const [isCompleted, setIsCompleted] = useState(false);
+  const [search] = useSearchParams();
 
+  const queryTab = search.get("tab");
+  const { currentPage } = useGetTodos("IN_PROGRESS");
+
+  const { completeTodoMutate } = useCompleteTodo(changeQueryParameter(queryTab), currentPage);
+  const { rollbackTodoMutate } = useRollbackTodo(changeQueryParameter(queryTab), currentPage);
+  const { deleteTodoMutate } = useDeleteTodo(changeQueryParameter(queryTab), currentPage);
+  const setTodoModal = useSetRecoilState(todoModalAtom);
+
+  const setEditMode = useSetRecoilState(editModeAtom);
+  const setSelectedTodo = useSetRecoilState(selectTodoAtom);
+
+  const queryClient = useQueryClient();
   useEffect(() => {
     setIsCompleted(todo.isCompleted);
   }, []);
 
+  console.log(todo && todo?.category ? todo?.category?.colorInt : "#222");
+
   return (
     <TodoBox>
       <div className="todo-inner">
-        <CheckBoxLabel htmlFor={todo.labelText}>
+        <CheckBoxLabel htmlFor={todo.category?.title || ""}>
           <CheckBoxInput
             type="checkbox"
-            id={todo.labelText}
-            name={todo.labelText}
+            id={todo.category?.title || ""}
+            name={todo.category?.title || ""}
             checked={isCompleted}
             onChange={(e) => {
-              setIsCompleted(!isCompleted);
+              if (!todo.isCompleted) {
+                completeTodoMutate(todo.id);
+              } else {
+                rollbackTodoMutate(todo.id);
+              }
             }}
           />
         </CheckBoxLabel>
-        <TodoLabel text={todo.labelText} bgColor={todo.labelColor} isCompleted={isCompleted} />
+        <TodoLabel
+          text={todo?.category?.title || ""}
+          bgColor={todo && todo?.category ? colorsMains[todo?.category?.colorInt] : "#222"}
+          isCompleted={isCompleted}
+        />
       </div>
       <div className="todo-text">
         <p>{todo.title}</p>
       </div>
 
       <div className="bottom-tools">
-        <span>
+        <span
+          onClick={() => {
+            setTodoModal(true);
+            setEditMode(true);
+            setSelectedTodo(todo);
+          }}>
           <img src={ICON_EDIT} alt="" />
           수정
         </span>
         <span>
           <div className="line" />
         </span>
-        <span>
+        <span
+          onClick={() => {
+            deleteTodoMutate(todo.id);
+          }}>
           <img src={ICON_DELETE} alt="" />
           삭제
         </span>

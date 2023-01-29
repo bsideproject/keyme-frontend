@@ -68,3 +68,20 @@ export const rtlanimation = keyframes`
     right: 100%;
   }
 `;
+
+export const bttanimation = keyframes`
+  0% {
+    top: 100%;
+  }
+  100% {
+    top: 0;
+  }
+`;
+export const ttbanimation = keyframes`
+  0% {
+    top: 0;
+  }
+  100% {
+    top: 100%;
+  }
+`;

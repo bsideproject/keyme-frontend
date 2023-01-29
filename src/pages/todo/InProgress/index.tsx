@@ -1,17 +1,20 @@
 import React from "react";
+import { useRecoilState } from "recoil";
 
 import TodoItems from "~components/Todo/TodoItems";
 import useGetTodos from "~pages/todo/hooks";
 import { Container } from "~pages/todo/InProgress/index.styles";
 
+import { todoModalAtom } from "../../../recoil/atoms";
+
 const InProgressTab = () => {
-  const { data, ref, isFetching, isLoading } = useGetTodos("IN-PROGRESS");
+  const { data, ref, isFetching, isLoading, refetch } = useGetTodos("IN_PROGRESS");
 
   return (
     <Container>
       {data?.pages.map((page, i) => (
         <React.Fragment key={i}>
-          {page.items.map((todo, idx) => (
+          {page.todos.map((todo, idx) => (
             <TodoItems {...todo} key={idx} />
           ))}
         </React.Fragment>

@@ -2,6 +2,7 @@ import { FC } from "react";
 import styled from "styled-components";
 
 import ICON_LINK from "~assets/icons/ico_link.svg";
+import { colorsMains } from "~styles/palette";
 
 const Container = styled.div<{ bgColor: string }>`
   width: 50px;

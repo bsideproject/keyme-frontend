@@ -1,7 +1,7 @@
 import { FC } from "react";
 import styled from "styled-components";
 
-import { VoidFn } from "~components/Modal/AddTodoModal";
+import { VoidFn } from "~components/Modal/TodoModal";
 
 interface ButtonProps {
   text: string;

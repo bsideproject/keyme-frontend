@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import classNames from "classnames";
-import { useIsFetching, useIsMutating } from "react-query";
+import { useIsFetching, useIsMutating, useQueryClient } from "react-query";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 import IMG_PLUS_BTN from "~assets/images/img_plus_btn.png";
-import BaseHeader from "~components/BaseHeader/BaseHeader";
-import AddTodoModal from "~components/Modal/AddTodoModal";
+import TodoModal from "~components/Modal/TodoModal";
 import useModal from "~hooks/useModal";
 import AllTab from "~pages/todo/All";
 import { AddButton } from "~pages/todo/All/index.styles";
@@ -14,6 +14,8 @@ import CompletedTab from "~pages/todo/Completed";
 import InProgressTab from "~pages/todo/InProgress";
 import { routePath } from "~routes/index";
 import { palette } from "~styles/palette";
+
+import { todoModalAtom } from "../../recoil/atoms";
 
 const Container = styled.div`
   width: 100%;
@@ -63,10 +65,20 @@ const todoListsTab = [
 
 function TodoLists() {
   const { ModalPortal, openModal, closeModal } = useModal();
+  const [todoModal, setTodoModal] = useRecoilState(todoModalAtom);
 
   const [search] = useSearchParams();
   const queryTab = search.get("tab");
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (todoModal) {
+      openModal();
+    } else {
+      closeModal();
+    }
+  }, [todoModal]);
 
   useEffect(() => {
     if (!queryTab) {
@@ -76,10 +88,14 @@ function TodoLists() {
 
   return (
     <Container>
-      <BaseHeader text="님의 TO DO" />
       <ul className="tab">
         {todoListsTab.map((item, i) => (
-          <li key={i} className={classNames({ on: queryTab === item.value })}>
+          <li
+            key={i}
+            className={classNames({ on: queryTab === item.value })}
+            onClick={() => {
+              queryClient.resetQueries();
+            }}>
             <Link className={classNames({ on: queryTab === item.value })} to={item.pathname}>
               {item.text}
             </Link>
@@ -97,13 +113,17 @@ function TodoLists() {
       <AddButton
         isVisible={true}
         onClick={() => {
-          openModal();
+          setTodoModal(true);
         }}>
         <img src={IMG_PLUS_BTN} />
       </AddButton>
 
       <ModalPortal>
-        <AddTodoModal closeModal={closeModal} />
+        <TodoModal
+          closeModal={() => {
+            setTodoModal(false);
+          }}
+        />
       </ModalPortal>
     </Container>
   );

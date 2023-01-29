@@ -12,13 +12,13 @@ import useGetTodos from "~pages/todo/hooks";
 import { palette } from "~styles/palette";
 
 const AllTab = () => {
-  const { data, ref, isFetching, isLoading } = useGetTodos("ALL");
+  const { data, ref, isFetching, isLoading, refetch } = useGetTodos("");
 
   return (
     <Container>
       {data?.pages.map((page, i) => (
         <React.Fragment key={i}>
-          {page.items.map((todo, idx) => (
+          {page.todos.map((todo, idx) => (
             <TodoItems {...todo} key={idx} />
           ))}
         </React.Fragment>
