@@ -31,11 +31,18 @@ interface Props {
   text: string;
   bgColor: string;
   isCompleted: boolean;
+  onClick?: () => void;
 }
 
-const TodoLabel: FC<Props> = ({ text, bgColor, isCompleted }) => {
+const TodoLabel: FC<Props> = ({ text, bgColor, isCompleted, onClick }) => {
   return (
-    <Container bgColor={isCompleted ? "#DADADA" : bgColor}>
+    <Container
+      bgColor={isCompleted ? "#DADADA" : bgColor}
+      onClick={() => {
+        if (onClick) {
+          onClick();
+        }
+      }}>
       {" "}
       {text ? text : <img src={ICON_LINK} />}
     </Container>

@@ -94,6 +94,10 @@ function TodoLists() {
             key={i}
             className={classNames({ on: queryTab === item.value })}
             onClick={() => {
+              if (queryTab === item.value) {
+                return;
+              }
+              navigate(item.pathname);
               queryClient.resetQueries();
             }}>
             <Link className={classNames({ on: queryTab === item.value })} to={item.pathname}>

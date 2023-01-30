@@ -6,24 +6,25 @@ import useGetTodos from "~pages/todo/hooks";
 import { Container } from "~pages/todo/InProgress/index.styles";
 
 const InProgressTab = () => {
-  const { data, ref, isFetching, isLoading, refetch } = useGetTodos("IN_PROGRESS");
+  const { data, ref, isFetching } = useGetTodos("IN_PROGRESS");
 
   return (
     <Container>
-      {data?.pages.map((page, i) => (
-        <AnimatePresence key={i}>
-          <React.Fragment>
-            <motion.div
-              initial={{ y: "50%", opacity: 0, scale: "0.5" }}
-              exit={{ y: "50%", opacity: 0 }}
-              animate={{ y: 0, opacity: 1, scale: 1 }}>
+      <AnimatePresence>
+        {data?.pages.map((page, i) => (
+          <motion.div
+            key={i}
+            initial={{ x: 300, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -300, opacity: 0 }}>
+            <React.Fragment key={i}>
               {page.todos.map((todo, idx) => (
                 <TodoItems {...todo} key={idx} />
               ))}
-            </motion.div>
-          </React.Fragment>
-        </AnimatePresence>
-      ))}
+            </React.Fragment>
+          </motion.div>
+        ))}
+      </AnimatePresence>
 
       <div ref={ref} />
       {isFetching && <h1>Loading....</h1>}
