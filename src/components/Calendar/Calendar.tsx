@@ -3,9 +3,7 @@ import { addMonths, startOfMonth, subMonths } from "date-fns";
 import { endOfWeek, startOfWeek } from "date-fns";
 import { endOfMonth } from "date-fns/esm";
 
-import { useCalendar } from "~hooks/queries/calendar";
 import { CalendarTodo } from "~types/calendar";
-import { dateFormatter, groupByDate } from "~utils/datetime";
 
 import { RenderDays } from "./Days/Days";
 import { RenderHeader } from "./Header/Header";
@@ -16,7 +14,8 @@ interface cProps {
   calendarTodos: CalendarTodo[];
   selectedDay: Date;
   setSelectedDay: (params: Date) => void;
-  setCalendarTodos: React.Dispatch<React.SetStateAction<CalendarTodo[]>>;
+  currentDay: Date;
+  setCurrentDay: (params: Date) => void;
 }
 
 interface tempType {
@@ -27,13 +26,11 @@ export const GrassCalendar = ({
   calendarTodos,
   selectedDay,
   setSelectedDay,
-  setCalendarTodos,
+  currentDay,
+  setCurrentDay,
 }: cProps) => {
-  const [currentDay, setCurrentDay] = useState(new Date());
   const [completeStatus, setCompleteStatus] = useState<tempType>({});
   const [weekCount, setWeekCount] = useState<number>(5);
-  // parameter 변경될 때 수정되도록
-  const { calendars } = useCalendar(currentDay.getMonth() + 1, currentDay.getFullYear());
 
   const prevMonth = () => {
     setCurrentDay(startOfMonth(subMonths(currentDay, 1)));
@@ -58,8 +55,6 @@ export const GrassCalendar = ({
     );
 
     setSelectedDay(currentDay);
-
-    if (calendars) setCalendarTodos(groupByDate(calendars));
   }, [currentDay]);
 
   useEffect(() => {
@@ -68,14 +63,11 @@ export const GrassCalendar = ({
       const uniqueColors = new Set<number>();
 
       calendarTodos[i].todos.map(({ category }) => {
-        if (category?.colorIndex) {
-          uniqueColors.add(category.colorIndex);
-        }
+        if (category) uniqueColors.add(category.colorIndex);
       });
-      const dateStr: string = dateFormatter(calendarTodos[i].date);
+      const dateStr: string = calendarTodos[i].date.split(" ")[0];
       temp[dateStr] = uniqueColors;
     }
-
     setCompleteStatus(temp);
   }, [calendarTodos]);
 

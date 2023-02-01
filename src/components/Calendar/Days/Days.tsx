@@ -55,9 +55,7 @@ export const RenderDays = ({
             {formattedDate}
           </DaysDay>
           <DaysTodoBox>
-            {/* 어차피 2월 데이터 받을 경우 빠져도 될 듯 */}
             {dayText in completeStatus && isSameMonth(day, currentDay) ? (
-              // color idx
               <Grass category={completeStatus[dayText]} />
             ) : (
               ""
