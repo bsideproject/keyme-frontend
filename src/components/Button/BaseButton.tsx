@@ -40,6 +40,7 @@ const ButtonContainer = styled.button<{
   border-radius: ${(props) => props.borderRadius};
   margin: ${(props) => props.margin};
   font-size: ${(props) => props.fontSize};
+  cursor: pointer;
 `;
 
 const BaseButton: FC<ButtonProps> = ({

@@ -18,7 +18,6 @@ export const AddButton = styled.button<{ isVisible: boolean }>`
   justify-content: center;
   position: sticky;
   bottom: 100px;
-  right: 100px;
 `;
 
 export const Container = styled.div`

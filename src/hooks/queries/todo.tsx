@@ -95,7 +95,7 @@ export const useUpdateTodo = (status: TodoStatus, page: number) => {
 };
 
 export const useGetKeyResults = () => {
-  const { data: keyResultLists, isLoading } = useQuery([queryKeys.keyResults], getKeyResults);
+  const { data: keyResultLists, isLoading } = useQuery([queryKeys.keyResults], getKeyResults, {});
 
   return { keyResultLists, isLoading };
 };

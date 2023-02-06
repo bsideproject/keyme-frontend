@@ -212,10 +212,16 @@ const TodoModal: FC<ModalProps> = ({ closeModal }) => {
                 onChange={(e) => {
                   setSelectKeyResult(e);
                 }}>
-                {keyResultLists &&
-                  keyResultLists?.map((item) => {
-                    console.log(item.category ? colorsMains[item?.category?.colorInt] : "#222");
+                {keyResultLists?.length && (
+                  <div className="radio-group">
+                    <Radio value={null} style={{ transform: "scale(1.5)" }} />
 
+                    <p className="desc">선택안함</p>
+                  </div>
+                )}
+
+                {keyResultLists?.length &&
+                  keyResultLists?.map((item) => {
                     return (
                       <div className="radio-group" key={item.id}>
                         <Radio value={item?.id} style={{ transform: "scale(1.5)" }} />

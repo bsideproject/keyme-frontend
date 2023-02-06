@@ -10,21 +10,13 @@ const InProgressTab = () => {
 
   return (
     <Container>
-      <AnimatePresence>
-        {data?.pages.map((page, i) => (
-          <motion.div
-            key={i}
-            initial={{ x: 300, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: -300, opacity: 0 }}>
-            <React.Fragment key={i}>
-              {page.todos.map((todo, idx) => (
-                <TodoItems {...todo} key={idx} />
-              ))}
-            </React.Fragment>
-          </motion.div>
-        ))}
-      </AnimatePresence>
+      {data?.pages.map((page, i) => (
+        <React.Fragment key={i}>
+          {page.todos.map((todo, idx) => (
+            <TodoItems {...todo} key={idx} />
+          ))}
+        </React.Fragment>
+      ))}
 
       <div ref={ref} />
       {isFetching && <h1>Loading....</h1>}
