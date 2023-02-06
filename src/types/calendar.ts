@@ -2,7 +2,7 @@ import { Category } from "./category";
 import { TodoType } from "./todo";
 
 export interface CalendarTodo {
-  date: Date;
+  date: string;
   todos: TodoType[];
 }
 

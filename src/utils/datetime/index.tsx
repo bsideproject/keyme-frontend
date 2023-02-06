@@ -31,7 +31,7 @@ export const groupByCategory = (result: TodoType[]) => {
     for (let i = 0; i < result.length; i++) {
       const key = result[i].category;
       const idx_list = categoryTodos.map((v) => {
-        if (v.category?.id === key?.id) {
+        if (v.category === key) {
           return 1;
         }
         return 0;
@@ -64,11 +64,11 @@ export const groupByCategory = (result: TodoType[]) => {
   return categoryTodos;
 };
 
-export const groupByDate = (result: TodoType[]) => {
+export const groupByDate = (result: TodoType[] | undefined) => {
   const calendarTodos: CalendarTodo[] = [];
   if (result) {
     for (let i = 0; i < result.length; i++) {
-      const key = result[i].completedAt;
+      const key = result[i].completedAt?.split(" ")[0];
       if (key) {
         const idx_list = calendarTodos.map((v) => {
           if (v.date === key) {
@@ -90,6 +90,7 @@ export const groupByDate = (result: TodoType[]) => {
               {
                 id: result[i].id,
                 title: result[i].title,
+                category: result[i].category,
               },
             ],
           });
@@ -97,6 +98,7 @@ export const groupByDate = (result: TodoType[]) => {
           calendarTodos[idx].todos.push({
             id: result[i].id,
             title: result[i].title,
+            category: result[i].category,
           });
         }
       }
