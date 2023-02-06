@@ -12,6 +12,7 @@ import { queryClient } from "~utils/react-query/queryClient";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+import "react-toggle/style.css";
 import "./index.css";
 
 Sentry.init({
