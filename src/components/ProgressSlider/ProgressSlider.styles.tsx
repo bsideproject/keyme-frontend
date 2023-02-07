@@ -6,7 +6,7 @@ export const SliderText = styled.div<{ activeDrag: boolean; value: number; color
   font-weight: bold;
   font-size: 16px;
 
-  display: ${({ activeDrag }) => (activeDrag ? "block" : "none")};
+  visibility: ${({ activeDrag }) => (activeDrag ? "visible" : "hidden")};
   margin-left: ${({ value }) => ((value / 100) * 87).toString() + "%"};
   color: ${({ colorIndex }) => palette.colors[colorIndex].main};
 `;

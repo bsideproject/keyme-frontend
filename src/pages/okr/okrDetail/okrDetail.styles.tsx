@@ -15,6 +15,7 @@ export const KrsBox = styled.div`
 `;
 
 export const KrsTitle = styled(OkrTitle)`
+  line-height: 20px;
   & :last-child {
     font-weight: 400;
   }
@@ -22,7 +23,7 @@ export const KrsTitle = styled(OkrTitle)`
 
 // 애니메이션 height는 다듬기
 export const OkrDetailBox = styled.div<{ detailShow: boolean }>`
-  margin: 1rem 1rem 0;
+  margin: 0 1rem;
   overflow: hidden;
   max-height: ${({ detailShow }) => (detailShow ? "1000px" : "0")};
   animation: ${({ detailShow }) => (detailShow ? pickerHeight : rPickerHeight)} 0.25s ease-in-out;

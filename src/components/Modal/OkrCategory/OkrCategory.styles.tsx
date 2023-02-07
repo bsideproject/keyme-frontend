@@ -83,7 +83,9 @@ export const CategoryColorItem = styled.div<{ isChecked: boolean; bgColor: strin
   height: 45px;
   border-radius: 12px;
   box-sizing: border-box;
-  border: ${(props) => (props.isChecked ? "2px solid #222222;" : "none")};
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: ${(props) => props.bgColor};
 `;
 

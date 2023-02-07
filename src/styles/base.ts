@@ -17,9 +17,14 @@ export const BaseBtn = styled.button<{ isAble: boolean }>`
   align-items: center;
 
   background-color: ${(props) => (props.isAble ? "#335bf0" : opacity.background)};
-  font-size: 18px;
+  font-size: 16px;
   color: white;
   font-weight: bold;
+`;
+
+export const CancleBtn = styled(BaseBtn)`
+  background-color: ${(props) => (props.isAble ? "#F8F8F8" : opacity.background)};
+  color: #707070;
 `;
 
 export const KrAddBtn = styled(BaseBtn)`
@@ -77,6 +82,7 @@ export const ItemBadge = styled.div<{ colorIdx: number | undefined }>`
 export const ItemText = styled.div`
   flex: 1;
   font-size: 15px;
+  line-height: 20px;
   color: #222;
 `;
 

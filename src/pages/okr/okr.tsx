@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 
-import { ReactComponent as IconDown } from "~assets/icons/ico_down.svg";
+import { ReactComponent as IconEdit } from "~assets/icons/ico_edit.svg";
 import { ReactComponent as IconO } from "~assets/icons/ico_O.svg";
 import { ReactComponent as IconPlus } from "~assets/icons/ico_plus.svg";
 import { ReactComponent as IconUp } from "~assets/icons/ico_up.svg";
+import { ReactComponent as IconDelete } from "~assets/icons/icon_delete.svg";
 import BaseHeader from "~components/BaseHeader/BaseHeader";
+import DoubleCheck from "~components/Modal/DoubleCheck/DoubleCheck";
 import OkrCreate from "~components/Modal/OkrCreate/OkrCreate";
+import OkrUpdateModal from "~components/Modal/OkrUpdate/OkrUpdate";
 import { useOkr } from "~hooks/queries/okr";
 import { BasePage } from "~styles/page";
 import { palette } from "~styles/palette";
@@ -40,13 +43,16 @@ function Okr() {
   const [showModal, setShowModal] = useState(false);
 
   const [detailShows, setDetailShows] = useState<boolean[]>([]);
+  const [showDoubleCheck, setShowDoubleCheck] = useState<boolean>(false);
+  const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
+  const [okrId, setOkrID] = useState(-1);
 
   useEffect(() => {
     if (myOkrs && okrs) {
       setMyOkrs([...myOkrs, ...okrs]);
     }
     if (detailShows && okrs) {
-      setDetailShows([...detailShows, ...okrs.map((v) => false)]);
+      setDetailShows([...detailShows, ...okrs.map(() => false)]);
     }
   }, [okrs]);
 
@@ -64,65 +70,84 @@ function Okr() {
           myOkrs?.map(({ id, category, dday, title, progress }, idx) => {
             return (
               <OkrBox key={`o-${id}-${idx}`}>
-                <OkrBoxHeader>
+                <OkrBoxHeader
+                  onClick={() => {
+                    setDetailShows(
+                      detailShows?.map((v, jdx) => {
+                        return idx === jdx && !v ? !v : v;
+                      })
+                    );
+                  }}>
                   <HeaderLeftSide>
                     <OkrCategoryHeader>
-                      <OkrCategory colorIndex={0}>{category.title}</OkrCategory>
+                      <OkrCategory colorIndex={category.colorInt}>{category.title}</OkrCategory>
                       <OkrDDay>{dday ? `D-${dday}` : ""}</OkrDDay>
                     </OkrCategoryHeader>
                     <OkrTitle>
-                      <IconO fill={palette.colors[0].main} /> <span>{title}</span>
+                      <IconO fill={palette.colors[category.colorInt].main} /> <span>{title}</span>
                     </OkrTitle>
                   </HeaderLeftSide>
                   <HeaderRightSide>
                     <CircularProgressbar
-                      styles={{ path: { stroke: palette.colors[0].main } }}
+                      styles={{ path: { stroke: palette.colors[category.colorInt].main } }}
                       strokeWidth={20}
                       value={progress}
-                      text={`${progress}%`}
+                      text={""}
                     />
                   </HeaderRightSide>
                 </OkrBoxHeader>
                 {detailShows ? (
                   detailShows[idx] ? (
-                    <OkrDetail okrId={id} colorIndex={0} detailShow={detailShows[idx]} />
+                    <>
+                      <OkrDetail
+                        okrId={id}
+                        colorIndex={category.colorInt}
+                        detailShow={detailShows[idx]}
+                      />
+                      <OkrFooter>
+                        <Scoller
+                          onClick={() =>
+                            setDetailShows(
+                              detailShows?.map((v, jdx) => {
+                                return idx === jdx ? false : v;
+                              })
+                            )
+                          }>
+                          간략히 보기 <IconUp width={24} />
+                        </Scoller>
+                        <Scoller
+                          onClick={() => {
+                            setOkrID(id);
+                            setShowUpdateModal(true);
+                          }}>
+                          수정하기 &nbsp; <IconEdit width={20} />
+                        </Scoller>
+
+                        <Scoller
+                          onClick={() => {
+                            setShowDoubleCheck(true);
+                          }}>
+                          삭제하기 &nbsp; <IconDelete width={20} />
+                        </Scoller>
+                      </OkrFooter>
+                    </>
                   ) : (
                     ""
                   )
                 ) : (
                   ""
                 )}
-
-                <OkrFooter>
-                  <Scoller
-                    onClick={() =>
-                      setDetailShows(
-                        detailShows?.map((v, jdx) => {
-                          return idx === jdx ? !v : v;
-                        })
-                      )
-                    }>
-                    {detailShows ? (
-                      detailShows[idx] ? (
-                        <>
-                          접기 <IconUp width={24} />
-                        </>
-                      ) : (
-                        <>
-                          더보기 <IconDown width={24} />
-                        </>
-                      )
-                    ) : (
-                      ""
-                    )}
-                  </Scoller>
-                </OkrFooter>
               </OkrBox>
             );
           })
         )}
       </OkrContainer>
-      <OktAddBtn onClick={() => setCurrentPage(currentPage + 1)}>+ 더보기</OktAddBtn>
+      {okrs?.length !== 0 ? (
+        <OktAddBtn onClick={() => setCurrentPage(currentPage + 1)}>+ 더보기</OktAddBtn>
+      ) : (
+        ""
+      )}
+
       <OktBtnBox>
         <OktAddBtn
           onClick={() => {
@@ -132,7 +157,17 @@ function Okr() {
         </OktAddBtn>
       </OktBtnBox>
 
-      <OkrCreate showModal={showModal} setShowModal={setShowModal} />
+      {showModal ? <OkrCreate showModal={showModal} setShowModal={setShowModal} /> : ""}
+      {showDoubleCheck ? <DoubleCheck setShowModal={setShowDoubleCheck} /> : ""}
+      {showUpdateModal ? (
+        <OkrUpdateModal
+          okrId={okrId}
+          showModal={showUpdateModal}
+          setShowModal={setShowUpdateModal}
+        />
+      ) : (
+        ""
+      )}
     </BasePage>
   );
 }

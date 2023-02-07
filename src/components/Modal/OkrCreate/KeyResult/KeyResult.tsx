@@ -70,6 +70,7 @@ function KeyResult({ okrId, title, date, nowCategory, isKeyResult, closeModal }:
       <div>
         Key result는 <strong style={{ fontWeight: "bold" }}>핵심결과 지표</strong>입니다.
       </div>
+      <div style={{ height: "4px" }} />
       <div>구체적인 수치로 작성해주세요!</div>
     </div>
   );
@@ -85,6 +86,7 @@ function KeyResult({ okrId, title, date, nowCategory, isKeyResult, closeModal }:
           <IconInfo width={24} onClick={() => setShowInfoModal(true)} />
         </span>
       </KeyResultHeader>
+
       <BaseBox
         colorIdx={nowCategory?.colorIndex}
         info={[

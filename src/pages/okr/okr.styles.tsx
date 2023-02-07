@@ -7,7 +7,7 @@ export const OkrContainer = styled.div`
 `;
 
 export const HeaderSummary = styled.div<{ isShow: boolean }>`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   margin: 1rem 0;
   display: ${({ isShow }) => (isShow ? "block" : "none")};
@@ -25,9 +25,9 @@ export const NoOkrBox = styled.div`
 `;
 
 export const OkrBox = styled.div`
-  padding: 0.5rem 0;
+  padding: 1rem 0;
   background-color: #f6f8fe;
-  border-radius: 20px;
+  border-radius: 10px;
   margin-bottom: 1rem;
   transition: 0.5s;
   overflow: hidden;
@@ -40,10 +40,12 @@ export const OkrBoxHeader = styled.div`
 
 export const HeaderLeftSide = styled.div`
   flex: 1;
+  margin-bottom: 1rem;
 `;
 
 export const HeaderRightSide = styled.div`
-  flex-basis: 60px;
+  flex-basis: 45px;
+  height: fit-content;
   display: flex;
   justify-self: center;
   align-items: center;
@@ -102,7 +104,6 @@ export const OkrFooter = styled.div`
   margin-top: 1rem;
   justify-content: center;
   display: flex;
-  gap: 1rem;
 `;
 
 export const OkrDetailBtn = styled.div``;
@@ -129,10 +130,12 @@ export const OktAddBtn = styled.button`
 `;
 
 export const Scoller = styled.div`
-  width: 100%;
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #707070;
   font-size: 14px;
+
+  cursor: pointer;
 `;

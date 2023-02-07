@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { ReactComponent as IconClose } from "~assets/icons/ico_close2.svg";
 import { ReactComponent as IconFin } from "~assets/icons/ico_fin.svg";
+import { ReactComponent as IconSelect } from "~assets/icons/ico_select.svg";
 import { useCategory } from "~hooks/queries/category";
 import useInput from "~hooks/useInput";
 import { palette } from "~styles/palette";
@@ -150,7 +151,7 @@ function OkrCategoryModal({ showModal, setShowModal, categories }: cProps) {
                   isChecked={idx === cateogryColor}
                   bgColor={main}
                   onClick={() => setCategoryColor(idx)}>
-                  &nbsp;
+                  {idx === cateogryColor ? <IconSelect /> : ""}
                 </CategoryColorItem>
               );
             })}

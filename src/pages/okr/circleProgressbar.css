@@ -16,13 +16,6 @@
   stroke: #dcdcdc;
 }
 
-.CircularProgressbar .CircularProgressbar-text {
-  font-size: 24px;
-  dominant-baseline: middle;
-  text-anchor: middle;
-  background-color: white;
-}
-
 .CircularProgressbar .CircularProgressbar-background {
   fill: #d6d6d6;
 }

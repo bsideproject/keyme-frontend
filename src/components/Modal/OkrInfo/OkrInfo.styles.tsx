@@ -25,6 +25,6 @@ export const InfoHeader = styled.div`
 
 export const InfoHeaderTitle = styled.div`
   font-weight: bold;
-  font-size: 24px;
+  font-size: 20px;
   text-align: center;
 `;

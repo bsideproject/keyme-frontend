@@ -42,6 +42,9 @@ function ProgressSlider({ progress, colorIndex, setProgress }: cProps) {
 
   return (
     <SliderContainer>
+      <SliderText activeDrag={activeDrag} value={value} colorIndex={colorIndex}>
+        {value}%
+      </SliderText>
       <Slider
         activeDrag={activeDrag}
         onMouseDown={(e) => handleMouseDown(e)}
@@ -50,10 +53,6 @@ function ProgressSlider({ progress, colorIndex, setProgress }: cProps) {
         ref={myRef}>
         <SliderFill activeDrag={activeDrag} value={value} colorIndex={colorIndex} />
       </Slider>
-      {/* touchUp 되었을 때 알아서 숨겨지게 해야함 */}
-      <SliderText activeDrag={activeDrag} value={value} colorIndex={colorIndex}>
-        {value}%
-      </SliderText>
     </SliderContainer>
   );
 }

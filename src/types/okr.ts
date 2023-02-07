@@ -5,7 +5,11 @@ export interface OKRType {
   title: string;
   dday?: number;
   progress: number;
-  category: Category;
+  category: {
+    id: number;
+    title: string;
+    colorInt: number;
+  };
   keyResults?: KeyResultType[];
 }
 
@@ -19,4 +23,9 @@ export interface OkrDetail {
   id: number;
   title: string;
   keyResults: KeyResultType[];
+  category: {
+    id: number;
+    title: string;
+    colorInt: number;
+  };
 }
