@@ -1,16 +1,18 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
-import { queryClient } from "@utils/react-query/queryClient";
+
+import { queryClient } from "~utils/react-query/queryClient";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+import "react-toggle/style.css";
 import "./index.css";
 
 Sentry.init({
@@ -24,17 +26,15 @@ Sentry.init({
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RecoilRoot>
-        <BrowserRouter>
-          <Suspense fallback={<div>Loading...</div>}>
-            <App />
-          </Suspense>
-        </BrowserRouter>
-      </RecoilRoot>
-    </QueryClientProvider>
-  </React.StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <RecoilRoot>
+      <BrowserRouter>
+        <Suspense fallback={<div>Loading...</div>}>
+          <App />
+        </Suspense>
+      </BrowserRouter>
+    </RecoilRoot>
+  </QueryClientProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -3,8 +3,9 @@ import axios from "axios";
 import { FallbackProps } from "react-error-boundary";
 import { useQueryErrorResetBoundary } from "react-query";
 
-import BaseErrorBoundary from "@components/ErrorBoundary/BaseErrorBoundary";
 import * as Sentry from "@sentry/react";
+
+import BaseErrorBoundary from "~components/ErrorBoundary/BaseErrorBoundary";
 
 interface Props {
   children: React.ReactElement;
@@ -17,6 +18,15 @@ const ApiErrorBoundary: FC<Props> = ({ children }) => {
     if (!axios.isAxiosError(error)) {
       throw error;
     }
+    if (
+      axios.isAxiosError(error) &&
+      error.config &&
+      error.response &&
+      error.response.status === 401
+    ) {
+      Sentry.captureException(error);
+    }
+
     // 500 ~ server error
     if (
       axios.isAxiosError(error) &&

@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
-const AppContainer = styled.div`
-  max-width: 414px;
+export const AppContainer = styled.div`
+  max-width: 393px;
   margin: 0 auto;
 `;
-
-export default AppContainer;

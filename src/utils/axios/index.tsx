@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const isProduction = process.env.NODE_ENV === "production";
+export const isProduction = process.env.NODE_ENV === "production";
 
-const serverEndPoint = isProduction ? "" : "http://localhost:8080";
+export const serverEndPoint = isProduction ? "https://keyme.kr/api/v1" : "https://keyme.kr/api/v1";
 
 export const axiosClient = axios.create({
   baseURL: serverEndPoint,
+  withCredentials: true,
 });
